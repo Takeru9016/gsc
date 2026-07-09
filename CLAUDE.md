@@ -115,7 +115,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-02  Folder structure + base files (layout, globals, utils)
 [x] 1A-03  Design system — CSS tokens, fonts, theme provider, dark/light toggle
 [x] 1A-04  Base components — Button, Badge, SectionWrapper, AnimatedText
-[ ] 1A-05  Navbar — desktop + mobile, scroll behaviour, theme toggle
+[x] 1A-05  Navbar — desktop + mobile, scroll behaviour, theme toggle
 [ ] 1A-06  Footer — columns, emergency contacts, social links
 [ ] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
 [ ] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
@@ -178,8 +178,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-05 — Navbar — desktop + mobile, scroll behaviour, theme toggle
-**Last Completed**: 1A-04 — Base components — Button, Badge, SectionWrapper, AnimatedText
+**Active Task**: 1A-06 — Footer — columns, emergency contacts, social links
+**Last Completed**: 1A-05 — Navbar — desktop + mobile, scroll behaviour, theme toggle
 
 > Update this section when running /done after each task.
 

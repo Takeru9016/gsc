@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
+import { Navbar } from "@/components/layout/Navbar.tsx";
 import {
   ThemeProvider,
   ThemeScript,
@@ -35,8 +36,8 @@ export default function SiteLayout({
       </head>
       <body>
         <ThemeProvider>
+          <Navbar />
           {children}
-          {/* TODO: Navbar — 1A-05 */}
           {/* TODO: Footer — 1A-06 */}
         </ThemeProvider>
       </body>
