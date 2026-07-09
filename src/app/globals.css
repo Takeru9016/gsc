@@ -1,1 +1,78 @@
 @import "tailwindcss";
+
+@theme {
+  /* Primary */
+  --color-primary: #1e88e5;
+  --color-primary-dark: #1565c0;
+  --color-primary-hover: #1976d2;
+
+  /* Accents */
+  --color-accent-gold: #ffb300;
+  --color-accent-red: #e53935;
+  --color-accent-green: #43a047;
+
+  /* Dark mode surfaces */
+  --color-bg-dark: #0a0e1a;
+  --color-surface-dark: #111827;
+  --color-elevated-dark: #1a2235;
+
+  /* Light mode surfaces */
+  --color-bg-light: #f8faff;
+  --color-surface-light: #ffffff;
+
+  /* Text */
+  --color-text-primary-dark: #f9fafb;
+  --color-text-secondary-dark: #9ca3af;
+  --color-text-primary-light: #0f172a;
+  --color-text-secondary-light: #6b7280;
+
+  /* Borders */
+  --color-border-dark: rgba(255, 255, 255, 0.08);
+  --color-border-light: rgba(0, 0, 0, 0.08);
+
+  /* Theme-aware tokens — flipped by [data-theme] blocks below */
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-text-primary: var(--color-text-primary-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-border: var(--color-border-light);
+
+  /* Fonts */
+  --font-display: var(--font-barlow-condensed), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+}
+
+@variant dark (&:where(.dark, .dark *));
+
+/* Default (light) theme-aware tokens */
+[data-theme="light"] {
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-text-primary: var(--color-text-primary-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-border: var(--color-border-light);
+}
+
+/* Global dark mode (via .dark class on <html>) */
+.dark {
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-text-primary: var(--color-text-primary-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-border: var(--color-border-dark);
+}
+
+/* Forced-dark sections (hero), regardless of global theme */
+[data-theme="dark"] {
+  --color-bg: var(--color-bg-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-text-primary: var(--color-text-primary-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-border: var(--color-border-dark);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+}
