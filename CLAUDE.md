@@ -111,7 +111,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ### Phase 1A — Foundation (11 tasks)
 ```
-[ ] 1A-01  Project init — Next.js 16, TypeScript, Tailwind v4, shadcn/ui
+[x] 1A-01  Project init — Next.js 16, TypeScript, Tailwind v4, shadcn/ui
 [ ] 1A-02  Folder structure + base files (layout, globals, utils)
 [ ] 1A-03  Design system — CSS tokens, fonts, theme provider, dark/light toggle
 [ ] 1A-04  Base components — Button, Badge, SectionWrapper, AnimatedText
@@ -178,8 +178,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-01
-**Last Completed**: None — project not started
+**Active Task**: 1A-02
+**Last Completed**: 1A-01 — Project init — Next.js 16, TypeScript, Tailwind v4, shadcn/ui
 
 > Update this section when running /done after each task.
 

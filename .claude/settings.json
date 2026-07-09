@@ -1,7 +1,7 @@
 {
-  "model": "claude-sonnet-4-6",
+  "model": "claude-sonnet-5",
   "defaultMode": "acceptEdits",
-
+  "effortLevel": "high",
   "permissions": {
     "allow": [
       "Bash(pnpm:*)",
@@ -31,7 +31,6 @@
       "Write(src/components/ui/*)"
     ]
   },
-
   "hooks": {
     "PostToolUse": [
       {
@@ -46,10 +45,18 @@
             "command": "pnpm tsc --noEmit 2>&1 | tail -8"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "pnpm run fix --skip=correctness/noUnusedImports",
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit"
       }
     ]
   },
-
   "env": {
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "8192"
   }
