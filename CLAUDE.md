@@ -114,7 +114,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-01  Project init — Next.js 16, TypeScript, Tailwind v4, shadcn/ui
 [x] 1A-02  Folder structure + base files (layout, globals, utils)
 [x] 1A-03  Design system — CSS tokens, fonts, theme provider, dark/light toggle
-[ ] 1A-04  Base components — Button, Badge, SectionWrapper, AnimatedText
+[x] 1A-04  Base components — Button, Badge, SectionWrapper, AnimatedText
 [ ] 1A-05  Navbar — desktop + mobile, scroll behaviour, theme toggle
 [ ] 1A-06  Footer — columns, emergency contacts, social links
 [ ] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
@@ -178,8 +178,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-04 — Base components — Button, Badge, SectionWrapper, AnimatedText
-**Last Completed**: 1A-03 — Design system — CSS tokens, fonts, theme provider, dark/light toggle
+**Active Task**: 1A-05 — Navbar — desktop + mobile, scroll behaviour, theme toggle
+**Last Completed**: 1A-04 — Base components — Button, Badge, SectionWrapper, AnimatedText
 
 > Update this section when running /done after each task.
 
