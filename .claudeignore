@@ -1,0 +1,81 @@
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+# Never read. Massive. Contains nothing Claude should reference.
+node_modules/
+.pnpm-store/
+
+# ─── Build Output ─────────────────────────────────────────────────────────────
+# Generated files. Never source of truth.
+.next/
+out/
+dist/
+
+# ─── Cache ────────────────────────────────────────────────────────────────────
+.turbo/
+.cache/
+.sanity/
+
+# ─── Lock Files ───────────────────────────────────────────────────────────────
+# Binary-like. No value to Claude. Let pnpm manage.
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+*.lock
+
+# ─── Database Migrations ──────────────────────────────────────────────────────
+# Generated SQL. Schema is in lib/db/schema.ts — that's what Claude reads.
+drizzle/meta/
+drizzle/*.sql
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+.pnpm-debug.log*
+
+# ─── OS / Editor ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ─── Secrets ──────────────────────────────────────────────────────────────────
+# NEVER expose. .env.example is intentionally NOT ignored.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ─── Binary Media ─────────────────────────────────────────────────────────────
+# Not readable as text. Wastes context.
+public/images/
+public/fonts/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+*.mp4
+*.mp3
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.pdf
+
+# ─── shadcn/ui Primitives ─────────────────────────────────────────────────────
+# Generated. Claude must NEVER edit these directly.
+components/ui/
+src/components/ui/
+
+# ─── Sanity Plumbing ──────────────────────────────────────────────────────────
+# Not relevant to build tasks.
+sanity.cli.ts
+
+# ─── TypeScript Declaration Files ─────────────────────────────────────────────
+# Generated or vendor types.
+**/*.d.ts
+
+# ─── Test Output ──────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
