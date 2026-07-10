@@ -113,7 +113,7 @@ export function Navbar() {
         className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
         <Link
-          className="font-display text-primary-dark text-2xl tracking-wide"
+          className="font-display text-2xl text-primary-dark tracking-wide"
           href="/"
         >
           GSC
