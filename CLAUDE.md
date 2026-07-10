@@ -125,7 +125,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-06  Footer — columns, emergency contacts, social links
 [x] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
 [x] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
-[ ] 1A-09  Resend + email templates — booking, membership, contact confirmations
+[x] 1A-09  Resend + email templates — booking, membership, contact confirmations
 [ ] 1A-10  API routes — all 5 form submission endpoints + ISR webhook
 [ ] 1A-11  Vercel deploy — env vars, first successful production build
 ```
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-09 — Resend + email templates — booking, membership, contact confirmations
-**Last Completed**: 1A-08 — Drizzle + Neon — schema, client, migrations, db/ lib
+**Active Task**: 1A-10 — API routes — all 5 form submission endpoints + ISR webhook
+**Last Completed**: 1A-09 — Resend + email templates — booking, membership, contact confirmations
 
 > Update this section when running /done after each task.
 
