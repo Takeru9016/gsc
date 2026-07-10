@@ -134,7 +134,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ```
 [x] 1B-01  Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
 [x] 1B-02  /about — History, Stats, Milestones timeline, Committee section
-[ ] 1B-03  /about/team — Committee grid with role filters
+[x] 1B-03  /about/team — Committee grid with role filters
 [ ] 1B-04  /about/bye-laws + /contact — Document viewer + contact form
 [ ] 1B-05  /legal + /legal/cancellation — CMS-driven legal pages
 [ ] 1B-06  /sports — Hub page + GSAP fallback scroll experience
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1B
-**Active Task**: 1B-03 — /about/team — Committee grid with role filters
-**Last Completed**: 1B-02 — /about — History, Stats, Milestones timeline, Committee section
+**Active Task**: 1B-04 — /about/bye-laws + /contact — Document viewer + contact form
+**Last Completed**: 1B-03 — /about/team — Committee grid with role filters
 
 > Update this section when running /done after each task.
 
