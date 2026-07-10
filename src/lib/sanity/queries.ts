@@ -342,6 +342,17 @@ export async function getEventBySlug(
   );
 }
 
+export async function getRelatedEvents(
+  type: string,
+  excludeSlug: string
+): Promise<EventListItem[]> {
+  return await client.fetch<EventListItem[]>(
+    `*[_type == "event" && type == $type && slug.current != $excludeSlug] | order(startDate asc) [0...3] { ${EVENT_LIST_FIELDS} }`,
+    { excludeSlug, type },
+    { next: { tags: ["events"] } }
+  );
+}
+
 // ─── banquetHall ─────────────────────────────────────────────────────────────
 
 export interface BanquetHallListItem {
