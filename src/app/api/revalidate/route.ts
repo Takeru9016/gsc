@@ -6,6 +6,7 @@ const TAG_MAP: Record<string, string> = {
   achievement: "achievements",
   annualReport: "annual-reports",
   banquetHall: "banquets",
+  bookingConfig: "booking-config",
   committeeMember: "committee",
   diningVenue: "dining",
   download: "downloads",

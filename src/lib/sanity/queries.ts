@@ -471,6 +471,32 @@ export async function getDiningVenueBySlug(
   );
 }
 
+// ─── bookingConfig ───────────────────────────────────────────────────────────
+
+export interface BookingConfigRoom {
+  capacity: number | null;
+  name: string;
+  type: string | null;
+}
+
+export interface BookingConfig {
+  bookingEmail: string | null;
+  responseTime: string | null;
+  rooms: BookingConfigRoom[];
+}
+
+export async function getBookingConfig(): Promise<BookingConfig | null> {
+  return await client.fetch<BookingConfig | null>(
+    `*[_type == "bookingConfig"][0] {
+      bookingEmail,
+      responseTime,
+      rooms
+    }`,
+    {},
+    { next: { tags: ["booking-config"] } }
+  );
+}
+
 // ─── membershipType ──────────────────────────────────────────────────────────
 
 export interface MembershipTypeListItem {
