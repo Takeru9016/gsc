@@ -117,7 +117,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-04  Base components — Button, Badge, SectionWrapper, AnimatedText
 [x] 1A-05  Navbar — desktop + mobile, scroll behaviour, theme toggle
 [x] 1A-06  Footer — columns, emergency contacts, social links
-[ ] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
+[x] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
 [ ] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
 [ ] 1A-09  Resend + email templates — booking, membership, contact confirmations
 [ ] 1A-10  API routes — all 5 form submission endpoints + ISR webhook
@@ -178,8 +178,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-07 — Sanity v3 — studio route, all schema types, GROQ query library
-**Last Completed**: 1A-06 — Footer — columns, emergency contacts, social links
+**Active Task**: 1A-08 — Drizzle + Neon — schema, client, migrations, db/ lib
+**Last Completed**: 1A-07 — Sanity v3 — studio route, all schema types, GROQ query library
 
 > Update this section when running /done after each task.
 
