@@ -56,7 +56,19 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Facilities",
   },
   { href: "/booking", label: "Booking" },
-  { href: "/membership", label: "Membership" },
+  {
+    children: [
+      { href: "/membership/life", label: "Life" },
+      { href: "/membership/corporate", label: "Corporate" },
+      { href: "/membership/ward", label: "Ward" },
+      { href: "/membership/service", label: "Service" },
+      { href: "/membership/yearly", label: "Yearly" },
+      { href: "/membership/affiliated-clubs", label: "Affiliated Clubs" },
+      { href: "/membership", label: "View All Membership" },
+    ],
+    href: "/membership",
+    label: "Membership",
+  },
   { href: "/achievements", label: "Achievements" },
   { href: "/partners", label: "Partners" },
   {
