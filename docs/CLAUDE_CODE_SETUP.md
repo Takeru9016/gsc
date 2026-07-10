@@ -231,7 +231,7 @@ Before the first `/build`, verify:
 - Verify `@/*` alias maps to project root
 
 ### Biome hook fails after every write
-- Check `biome.json` exists and is valid
+- Check `biome.jsonc` exists and is valid
 - Run `pnpm biome check --write [filename]` manually to see the error
 - Biome version mismatch: check `pnpm list @biomejs/biome`
 

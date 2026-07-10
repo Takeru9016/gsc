@@ -19,13 +19,13 @@
 ## Stack (Locked — Do Not Deviate)
 
 ```
-Framework        Next.js 16.2.7 (App Router)
+Framework        Next.js 16.2.10 (App Router)
 Language         TypeScript 5.x (strict mode — no any, no ts-ignore)
 UI               React 19 + Tailwind CSS v4
 Components       shadcn/ui (selective: Dialog, Tabs, Select, Tooltip only)
 Icons            Lucide React
 CMS              Sanity v3 + next-sanity
-Database         Neon (serverless Postgres) + Drizzle ORM 0.45.2
+Database         Neon (serverless Postgres) + Drizzle ORM 1.0.0-rc.4
 3D               @react-three/fiber 9.6.1 + @react-three/drei 10.7.7
 Animation        GSAP 3.x + Lenis (smooth scroll)
 Email            Resend
@@ -50,6 +50,12 @@ Analytics        [TBD]
 - All config in `app/globals.css` via `@theme`
 - Dark mode: `@variant dark (&:where(.dark, .dark *))`
 - No `darkMode: 'class'` config needed
+
+### Critical Drizzle ORM 1.0.0-rc.4 Notes
+- The `schema` option is no longer accepted on the pg-core client config (`drizzle({ client, schema })` does not type-check). Relational queries (`db.query.x.findMany()`) now go through a separate `relations` config instead — not used in this project. Client setup is `drizzle({ client: sql })`; import tables directly from `lib/db/schema.ts` for `db.insert(...)`/`db.select(...)`.
+- `drizzle-kit generate` outputs a timestamped subfolder (`drizzle/<timestamp>_<name>/migration.sql` + `snapshot.json`) instead of the old flat `drizzle/0000_name.sql` + `drizzle/meta/` layout. Still commit the whole `drizzle/` folder.
+- `drizzle-kit` only auto-loads `.env`, not `.env.local` — `drizzle.config.ts` must call `dotenv.config({ path: '.env.local' })` before reading `DATABASE_URL_UNPOOLED`.
+- See `docs/DB.md` for the working reference implementation.
 
 ---
 
@@ -118,7 +124,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-05  Navbar — desktop + mobile, scroll behaviour, theme toggle
 [x] 1A-06  Footer — columns, emergency contacts, social links
 [x] 1A-07  Sanity v3 — studio route, all schema types, GROQ query library
-[ ] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
+[x] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
 [ ] 1A-09  Resend + email templates — booking, membership, contact confirmations
 [ ] 1A-10  API routes — all 5 form submission endpoints + ISR webhook
 [ ] 1A-11  Vercel deploy — env vars, first successful production build
@@ -178,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1A
-**Active Task**: 1A-08 — Drizzle + Neon — schema, client, migrations, db/ lib
-**Last Completed**: 1A-07 — Sanity v3 — studio route, all schema types, GROQ query library
+**Active Task**: 1A-09 — Resend + email templates — booking, membership, contact confirmations
+**Last Completed**: 1A-08 — Drizzle + Neon — schema, client, migrations, db/ lib
 
 > Update this section when running /done after each task.
 

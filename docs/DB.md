@@ -3,6 +3,16 @@
 
 ---
 
+## Version Note
+
+Installed: `drizzle-orm@1.0.0-rc.4` + `drizzle-kit@1.0.0-rc.4` (not the `0.45.2` stable line this doc originally targeted). Two behavioral differences that matter for the code below:
+
+1. **No `schema` option on the pg-core client config.** `drizzle(sql, { schema })` and `drizzle({ client: sql, schema })` both fail to type-check — `DrizzlePgConfig` omits `schema` entirely in this rc, in favor of a separate `relations` API for the relational query builder. Since this project only uses `db.insert(...).returning()` / `db.select()` (see `docs/FORMS.md`), not `db.query.x.findMany()`, the client is created without `schema` — import tables directly from `lib/db/schema.ts` wherever needed.
+2. **Migration output is folder-based.** `drizzle-kit generate` writes `drizzle/<timestamp>_<name>/migration.sql` + `snapshot.json`, not the old flat `drizzle/0000_name.sql` + `drizzle/meta/` structure. Commit the whole `drizzle/` folder either way.
+3. **`drizzle-kit` doesn't auto-read `.env.local`** (only `.env`), so `drizzle.config.ts` loads it explicitly via `dotenv`.
+
+---
+
 ## Setup
 
 ### 1. Create Neon Project
@@ -19,14 +29,22 @@ pnpm add -D drizzle-kit
 
 ### 3. `drizzle.config.ts`
 ```typescript
+import { config } from 'dotenv'
 import type { Config } from 'drizzle-kit'
+
+config({ path: '.env.local' })  // drizzle-kit only auto-reads .env, not .env.local
+
+const databaseUrl = process.env.DATABASE_URL_UNPOOLED
+if (!databaseUrl) {
+  throw new Error('DATABASE_URL_UNPOOLED is not set')
+}
 
 export default {
   schema: './lib/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL_UNPOOLED!,  // Direct connection for migrations
+    url: databaseUrl,  // Direct connection for migrations
   },
 } satisfies Config
 ```
@@ -50,12 +68,18 @@ export default {
 ```typescript
 import { neon } from '@neondatabase/serverless'
 import { drizzle } from 'drizzle-orm/neon-http'
-import * as schema from './schema'
 
-const sql = neon(process.env.DATABASE_URL!)
+const databaseUrl = process.env.DATABASE_URL
+if (!databaseUrl) {
+  throw new Error('DATABASE_URL is not set')
+}
 
-export const db = drizzle(sql, { schema })
+const sql = neon(databaseUrl)
+
+export const db = drizzle({ client: sql })
 ```
+
+No `schema` passed to the client — see Version Note above. Import tables directly from `./schema` in API routes (`import { bookingInquiries } from '@/lib/db/schema'`).
 
 ---
 

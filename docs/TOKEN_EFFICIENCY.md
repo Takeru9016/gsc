@@ -123,7 +123,7 @@ GSC.md                Project bible (always)
 .env.example          Variable names only — no values
 package.json          Dependencies and scripts
 tsconfig.json         TypeScript config
-biome.json            Linter config
+biome.jsonc           Linter config
 next.config.ts        Next.js config
 drizzle.config.ts     Drizzle config
 ```

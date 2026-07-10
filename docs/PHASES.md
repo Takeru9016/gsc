@@ -22,7 +22,7 @@ These tasks must be completed in order. Each task depends on the previous.
    pnpm add next-sanity @sanity/image-url @sanity/webhook
    pnpm add drizzle-orm @neondatabase/serverless drizzle-zod
    pnpm add @react-three/fiber @react-three/drei three
-   pnpm add gsap @studio-freight/lenis
+   pnpm add gsap lenis
    pnpm add resend @react-email/components
    pnpm add cloudinary next-cloudinary
    pnpm add react-pdf @react-pdf/renderer
@@ -36,7 +36,7 @@ These tasks must be completed in order. Each task depends on the previous.
    pnpm add -D @biomejs/biome ultracite
    ```
 4. Init Biome: `pnpm biome init`
-5. Configure `biome.json` with Ultracite preset
+5. Configure `biome.jsonc` with Ultracite preset (see `docs/INSTALL.md` Step 4)
 6. Add scripts to `package.json`
 7. Delete default Next.js boilerplate (page.tsx, globals.css content, layout.tsx content)
 
@@ -163,6 +163,8 @@ These tasks must be completed in order. Each task depends on the previous.
 7. Verify all tables exist in Neon console
 
 **Done when**: All 5 tables exist in Neon. `pnpm drizzle-kit studio` shows tables with correct columns.
+
+**Note**: installed `drizzle-orm`/`drizzle-kit` is `1.0.0-rc.4`, not the `0.45.2` line — see the Version Note in `docs/DB.md` for the client setup and config differences this requires.
 
 ---
 

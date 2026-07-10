@@ -46,6 +46,7 @@ pnpm add next-sanity @sanity/image-url @sanity/webhook
 ```bash
 pnpm add drizzle-orm @neondatabase/serverless drizzle-zod
 ```
+Note: this currently resolves to the `1.0.0-rc.4` line, not a `0.x` stable release. See the Version Note in `docs/DB.md` before writing `lib/db/index.ts` — the client setup differs from older Drizzle docs/tutorials.
 
 ### 3D — React Three Fiber
 ```bash
@@ -54,7 +55,7 @@ pnpm add @react-three/fiber @react-three/drei three
 
 ### Animation — GSAP + Lenis
 ```bash
-pnpm add gsap @studio-freight/lenis
+pnpm add gsap lenis
 ```
 
 ### Email — Resend + React Email
@@ -109,28 +110,61 @@ pnpm add -D @biomejs/biome ultracite
 pnpm biome init
 ```
 
-Then replace the generated `biome.json` with:
+Then replace the generated config with `biome.jsonc` (note: `.jsonc`, not `.json` — installed Biome is `2.5.2`, and Ultracite `7.9.3` splits its preset into domain-specific configs rather than one `"ultracite"` string):
 
-```json
+```jsonc
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "extends": ["ultracite"],
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
-    "ignore": [
-      "node_modules",
-      ".next",
-      "dist",
-      "drizzle",
-      "sanity/schemas"
-    ]
+    "ignoreUnknown": true,
+    "includes": ["!node_modules", "!.next", "!dist", "!build", "!**/*.css"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
   },
   "linter": {
+    "enabled": true,
     "rules": {
+      "preset": "recommended",
+      "suspicious": {
+        "noUnknownAtRules": "off"
+      },
       "correctness": {
-        "noUnusedImports": "error"
+        "noUnusedImports": "error",
+        "noUnresolvedImports": "off"
+      },
+      "performance": {
+        "noBarrelFile": "off"
+      },
+      "style": {
+        "useFilenamingConvention": "off"
+      }
+    },
+    "domains": {
+      "next": "recommended",
+      "react": "recommended"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
       }
     }
-  }
+  },
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next",
+    "ultracite/biome/type-aware"
+  ]
 }
 ```
 
@@ -198,7 +232,7 @@ drizzle-zod
 @react-three/drei
 three
 gsap
-@studio-freight/lenis
+lenis
 resend
 @react-email/components
 cloudinary
@@ -229,4 +263,4 @@ ultracite
 - **`next-cloudinary`** is optional if Cloudinary upload is handled client-side only (achievement form). Can be removed if not used server-side.
 - **`@react-pdf/renderer`** is for generating PDFs. **`react-pdf`** is for viewing them. Both are needed.
 - **`drizzle-zod`** generates Zod schemas directly from Drizzle table definitions — used in API route validation.
-- **`@studio-freight/lenis`** — this is the correct package name for Lenis v1. If a future version changes the package name, verify before installing.
+- **`lenis`** — Studio Freight rebranded and the package moved from the scoped `@studio-freight/lenis` to the unscoped `lenis` (currently on v1.3.x). Use `lenis`, not the old scoped name.
