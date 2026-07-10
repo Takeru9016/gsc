@@ -149,7 +149,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ```
 [x] 2-01   /facilities — Hub page + category navigation
 [x] 2-02   /facilities/rooms — Room listing + inquiry CTA
-[ ] 2-03   /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
+[x] 2-03   /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
 [ ] 2-04   /facilities/dining + /facilities/dining/[venue] — Dining hub + 6 venues
 [ ] 2-05   /facilities/recreation + sub-pages (kids-zone, cards-room, housie)
 [ ] 2-06   /facilities/[remaining] — sports-shop, massage-chairs, library, medical-cell
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 2
-**Active Task**: 2-03 — /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
-**Last Completed**: 2-02 — /facilities/rooms — Room listing + inquiry CTA
+**Active Task**: 2-04 — /facilities/dining + /facilities/dining/[venue] — Dining hub + 6 venues
+**Last Completed**: 2-03 — /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
 
 > Update this section when running /done after each task.
 

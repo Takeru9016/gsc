@@ -386,9 +386,9 @@ export async function getBanquetHallBySlug(
   return await client.fetch<BanquetHallDetail | null>(
     `*[_type == "banquetHall" && slug.current == $slug][0] {
       ${BANQUET_HALL_LIST_FIELDS},
-      setupOptions,
+      "setupOptions": coalesce(setupOptions, []),
       amenities,
-      gallery,
+      "gallery": coalesce(gallery, []),
       description,
       floorPlanImage,
       metaTitle,
