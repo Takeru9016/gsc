@@ -141,7 +141,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1B-07  /sports/[slug] — Sport detail template (24 pages from one template)
 [x] 1B-08  /sports/coaching — Coaching hub + sport filter
 [x] 1B-09  /booking — Unified booking inquiry form (4 types)
-[ ] 1B-10  /membership — Hub page + membership type cards
+[x] 1B-10  /membership — Hub page + membership type cards
 [ ] 1B-11  /membership/[type] + /membership/affiliated-clubs
 ```
 
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1B
-**Active Task**: 1B-10 — /membership — Hub page + membership type cards
-**Last Completed**: 1B-09 — /booking — Unified booking inquiry form (4 types)
+**Active Task**: 1B-11 — /membership/[type] + /membership/affiliated-clubs
+**Last Completed**: 1B-10 — /membership — Hub page + membership type cards
 
 > Update this section when running /done after each task.
 

@@ -475,6 +475,8 @@ export async function getDiningVenueBySlug(
 
 export interface MembershipTypeListItem {
   _id: string;
+  benefits: PortableTextBlock[] | null;
+  eligibility: PortableTextBlock[] | null;
   isActive: boolean;
   slug: string;
   tagline: string | null;
@@ -483,8 +485,6 @@ export interface MembershipTypeListItem {
 }
 
 export interface MembershipTypeDetail extends MembershipTypeListItem {
-  benefits: PortableTextBlock[] | null;
-  eligibility: PortableTextBlock[] | null;
   feeStructure: PortableTextBlock[] | null;
 }
 
@@ -494,7 +494,9 @@ const MEMBERSHIP_TYPE_LIST_FIELDS = `
   "slug": slug.current,
   title,
   tagline,
-  isActive
+  isActive,
+  eligibility,
+  benefits
 `;
 
 export async function getMembershipTypes(): Promise<MembershipTypeListItem[]> {
@@ -511,8 +513,6 @@ export async function getMembershipTypeBySlug(
   return await client.fetch<MembershipTypeDetail | null>(
     `*[_type == "membershipType" && slug.current == $slug][0] {
       ${MEMBERSHIP_TYPE_LIST_FIELDS},
-      eligibility,
-      benefits,
       feeStructure
     }`,
     { slug },
