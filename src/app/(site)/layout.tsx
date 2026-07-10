@@ -39,9 +39,15 @@ export default async function SiteLayout({
         <ThemeScript />
       </head>
       <body>
+        <a
+          className="fixed top-4 left-4 z-[100] -translate-y-full rounded-full bg-primary px-6 py-3 text-white transition-transform focus:-translate-y-0 focus:translate-y-0"
+          href="#main-content"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider>
           <Navbar />
-          {children}
+          <main id="main-content">{children}</main>
           <Footer siteConfig={siteConfig} />
         </ThemeProvider>
       </body>

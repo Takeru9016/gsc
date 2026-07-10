@@ -127,7 +127,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1A-08  Drizzle + Neon — schema, client, migrations, db/ lib
 [x] 1A-09  Resend + email templates — booking, membership, contact confirmations
 [x] 1A-10  API routes — all 5 form submission endpoints + ISR webhook
-[ ] 1A-11  Vercel deploy — env vars, first successful production build
+[x] 1A-11  Vercel deploy — env vars, first successful production build
 ```
 
 ### Phase 1B — Core Pages (11 tasks)
@@ -183,9 +183,9 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ## Active Task
 
-**Current Phase**: 1A
-**Active Task**: 1A-11 — Vercel deploy — env vars, first successful production build
-**Last Completed**: 1A-10 — API routes — all 5 form submission endpoints + ISR webhook
+**Current Phase**: 1B
+**Active Task**: 1B-01 — Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
+**Last Completed**: 1A-11 — Vercel deploy — env vars, first successful production build
 
 > Update this section when running /done after each task.
 

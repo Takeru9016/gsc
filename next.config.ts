@@ -7,7 +7,15 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
         protocol: "https",
       },
+      {
+        hostname: "res.cloudinary.com",
+        protocol: "https",
+      },
     ],
+  },
+  reactCompiler: false,
+  async redirects() {
+    return [];
   },
 };
 
