@@ -151,7 +151,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 2-02   /facilities/rooms — Room listing + inquiry CTA
 [x] 2-03   /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
 [x] 2-04   /facilities/dining + /facilities/dining/[venue] — Dining hub + 6 venues
-[ ] 2-05   /facilities/recreation + sub-pages (kids-zone, cards-room, housie)
+[x] 2-05   /facilities/recreation + sub-pages (kids-zone, cards-room, housie)
 [ ] 2-06   /facilities/[remaining] — sports-shop, massage-chairs, library, medical-cell
 [ ] 2-07   /events — Filterable events hub (upcoming/past/type filters)
 [ ] 2-08   /events/[slug] — Event detail template
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 2
-**Active Task**: 2-05 — /facilities/recreation + sub-pages (kids-zone, cards-room, housie)
-**Last Completed**: 2-04 — /facilities/dining + /facilities/dining/[venue] — Dining hub + 6 venues
+**Active Task**: 2-06 — /facilities/[remaining] — sports-shop, massage-chairs, library, medical-cell
+**Last Completed**: 2-05 — /facilities/recreation + sub-pages (kids-zone, cards-room, housie)
 
 > Update this section when running /done after each task.
 
