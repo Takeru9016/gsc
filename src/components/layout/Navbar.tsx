@@ -59,7 +59,15 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/membership", label: "Membership" },
   { href: "/achievements", label: "Achievements" },
   { href: "/partners", label: "Partners" },
-  { href: "/about", label: "About" },
+  {
+    children: [
+      { href: "/about/team", label: "Committee" },
+      { href: "/about/bye-laws", label: "Bye-Laws" },
+      { href: "/about", label: "View All About" },
+    ],
+    href: "/about",
+    label: "About",
+  },
 ];
 
 // Last item in each dropdown ("View All X") duplicates the parent link — render a divider before it.
@@ -95,7 +103,7 @@ export function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-200",
         isScrolled
-          ? "border-border-dark border-b bg-(--color-surface-dark)"
+          ? "border-border-dark border-b bg-surface-dark"
           : "bg-transparent"
       )}
       data-theme="dark"
@@ -105,7 +113,7 @@ export function Navbar() {
         className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
       >
         <Link
-          className="font-display text-(--color-primary-dark) text-2xl tracking-wide"
+          className="font-display text-primary-dark text-2xl tracking-wide"
           href="/"
         >
           GSC
@@ -134,7 +142,7 @@ export function Navbar() {
 
                 {item.children ? (
                   <div className="invisible absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                    <ul className="min-w-56 rounded-2xl border border-border-dark bg-(--color-elevated-dark) p-2 shadow-md">
+                    <ul className="min-w-56 rounded-2xl border border-border-dark bg-elevated-dark p-2 shadow-md">
                       {item.children.map((child, index, children) => {
                         const isBeforeLast =
                           index ===
