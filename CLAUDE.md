@@ -132,7 +132,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ### Phase 1B — Core Pages (11 tasks)
 ```
-[ ] 1B-01  Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
+[x] 1B-01  Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
 [ ] 1B-02  /about — History, Stats, Milestones timeline, Committee section
 [ ] 1B-03  /about/team — Committee grid with role filters
 [ ] 1B-04  /about/bye-laws + /contact — Document viewer + contact form
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1B
-**Active Task**: 1B-01 — Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
-**Last Completed**: 1A-11 — Vercel deploy — env vars, first successful production build
+**Active Task**: 1B-02 — /about — History, Stats, Milestones timeline, Committee section
+**Last Completed**: 1B-01 — Homepage — Hero (GSAP fallback), Stats, Sports Grid, Facilities, Events, CTA
 
 > Update this section when running /done after each task.
 

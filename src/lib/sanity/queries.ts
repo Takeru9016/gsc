@@ -19,8 +19,15 @@ export interface SiteConfigSocialLinks {
   youtube: string;
 }
 
+export interface CorporatePartner {
+  logo: SanityImageSource | null;
+  name: string;
+  url: string | null;
+}
+
 export interface SiteConfig {
   address: string;
+  corporatePartners: CorporatePartner[];
   email: string;
   emergencyPhone: string;
   emergencyPhone2: string;
@@ -34,6 +41,7 @@ export interface SiteConfig {
 // every fetch resolves null and we fall back to these placeholders.
 const DEFAULT_SITE_CONFIG: SiteConfig = {
   address: "[PENDING_CONTENT]",
+  corporatePartners: [],
   email: "[PENDING_CONTENT]",
   emergencyPhone: "[PENDING_CONTENT]",
   emergencyPhone2: "[PENDING_CONTENT]",
@@ -56,7 +64,8 @@ const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0]{
   address,
   emergencyPhone,
   emergencyPhone2,
-  socialLinks
+  socialLinks,
+  corporatePartners
 }`;
 
 export async function getSiteConfig(): Promise<SiteConfig> {
