@@ -154,6 +154,27 @@ export async function getSportBySlug(
   );
 }
 
+export interface CoachingSport extends SportListItem {
+  coachingLevel: string | null;
+  coachingSchedule: string | null;
+  coachName: string | null;
+  externalRegistrationUrl: string | null;
+}
+
+export async function getCoachingSports(): Promise<CoachingSport[]> {
+  return await client.fetch<CoachingSport[]>(
+    `*[_type == "sport" && hasCoaching == true] | order(order asc) {
+      ${SPORT_LIST_FIELDS},
+      coachName,
+      coachingSchedule,
+      coachingLevel,
+      externalRegistrationUrl
+    }`,
+    {},
+    { next: { tags: ["sports"] } }
+  );
+}
+
 // ─── committeeMember ─────────────────────────────────────────────────────────
 
 export interface CommitteeMember {
