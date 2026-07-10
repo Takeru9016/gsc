@@ -147,7 +147,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ### Phase 2 — Full Site (15 tasks)
 ```
-[ ] 2-01   /facilities — Hub page + category navigation
+[x] 2-01   /facilities — Hub page + category navigation
 [ ] 2-02   /facilities/rooms — Room listing + inquiry CTA
 [ ] 2-03   /facilities/banquets + /facilities/banquets/[hall] — Banquet hub + 3 halls
 [ ] 2-04   /facilities/dining + /facilities/dining/[venue] — Dining hub + 6 venues
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 2
-**Active Task**: 2-01 — /facilities — Hub page + category navigation
-**Last Completed**: 1B-11 — /membership/[type] + /membership/affiliated-clubs
+**Active Task**: 2-02 — /facilities/rooms — Room listing + inquiry CTA
+**Last Completed**: 2-01 — /facilities — Hub page + category navigation
 
 > Update this section when running /done after each task.
 
