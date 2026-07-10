@@ -138,7 +138,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 1B-04  /about/bye-laws + /contact — Document viewer + contact form
 [x] 1B-05  /legal + /legal/cancellation — CMS-driven legal pages
 [x] 1B-06  /sports — Hub page + GSAP fallback scroll experience
-[ ] 1B-07  /sports/[slug] — Sport detail template (24 pages from one template)
+[x] 1B-07  /sports/[slug] — Sport detail template (24 pages from one template)
 [ ] 1B-08  /sports/coaching — Coaching hub + sport filter
 [ ] 1B-09  /booking — Unified booking inquiry form (4 types)
 [ ] 1B-10  /membership — Hub page + membership type cards
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 1B
-**Active Task**: 1B-07 — /sports/[slug] — Sport detail template (24 pages from one template)
-**Last Completed**: 1B-06 — /sports — Hub page + GSAP fallback scroll experience
+**Active Task**: 1B-08 — /sports/coaching — Coaching hub + sport filter
+**Last Completed**: 1B-07 — /sports/[slug] — Sport detail template (24 pages from one template)
 
 > Update this section when running /done after each task.
 
