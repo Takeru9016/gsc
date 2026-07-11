@@ -125,3 +125,18 @@ body {
     animation: none;
   }
 }
+
+/* Set on <html> by useWebGL() (components/three/WebGLDetector.tsx) when
+   WebGL is unavailable or on mobile. Pair .webgl-only / .webgl-fallback
+   elements for CSS-only 3D fallback targeting. */
+.webgl-disabled .webgl-only {
+  display: none;
+}
+
+.webgl-fallback {
+  display: none;
+}
+
+.webgl-disabled .webgl-fallback {
+  display: block;
+}

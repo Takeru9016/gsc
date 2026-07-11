@@ -166,7 +166,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ### Phase 3 — 3D & Polish (11 tasks)
 ```
-[ ] 3-01   R3F setup — Canvas wrapper, Suspense, WebGL detection
+[x] 3-01   R3F setup — Canvas wrapper, Suspense, WebGL detection
 [ ] 3-02   Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
 [ ] 3-03   Homepage hero — WebGL particle scene (desktop only)
 [ ] 3-04   Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 3
-**Active Task**: 3-01 — R3F setup — Canvas wrapper, Suspense, WebGL detection
-**Last Completed**: 2-15 — SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
+**Active Task**: 3-02 — Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
+**Last Completed**: 3-01 — R3F setup — Canvas wrapper, Suspense, WebGL detection
 
 > Update this section when running /done after each task.
 
