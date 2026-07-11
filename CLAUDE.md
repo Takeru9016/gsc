@@ -156,7 +156,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 2-07   /events — Filterable events hub (upcoming/past/type filters)
 [x] 2-08   /events/[slug] — Event detail template
 [x] 2-09   /events/leagues — All 18 leagues on single page
-[ ] 2-10   /achievements — Filterable achievement wall (4 filter tags)
+[x] 2-10   /achievements — Filterable achievement wall (4 filter tags)
 [ ] 2-11   /partners — Corporate pitch page
 [ ] 2-12   /partners/team-spirit — 3 editions per year
 [ ] 2-13   /partners/annual-report — PDF viewer (2–3 reports)
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 2
-**Active Task**: 2-10 — /achievements — Filterable achievement wall (4 filter tags)
-**Last Completed**: 2-09 — /events/leagues — All 18 leagues on single page
+**Active Task**: 2-11 — /partners — Corporate pitch page
+**Last Completed**: 2-10 — /achievements — Filterable achievement wall (4 filter tags)
 
 > Update this section when running /done after each task.
 
