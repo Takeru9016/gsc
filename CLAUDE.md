@@ -160,7 +160,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 2-11   /partners — Corporate pitch page
 [x] 2-12   /partners/team-spirit — 3 editions per year
 [x] 2-13   /partners/annual-report — PDF viewer (2–3 reports)
-[ ] 2-14   /downloads — Notices + document downloads hub
+[x] 2-14   /downloads — Notices + document downloads hub
 [ ] 2-15   SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
 ```
 
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 2
-**Active Task**: 2-14 — /downloads — Notices + document downloads hub
-**Last Completed**: 2-13 — /partners/annual-report — PDF viewer (2–3 reports)
+**Active Task**: 2-15 — SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
+**Last Completed**: 2-14 — /downloads — Notices + document downloads hub
 
 > Update this section when running /done after each task.
 

@@ -14,15 +14,6 @@ const nextConfig: NextConfig = {
     ],
   },
   reactCompiler: false,
-  async redirects() {
-    return [
-      {
-        destination: "/sports/open-gym",
-        permanent: true,
-        source: "/facilities/open-gym",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
