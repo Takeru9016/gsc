@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
-import { PDFViewer } from "@/components/shared/PDFViewer.tsx";
+import { PDFViewerLazy } from "@/components/shared/PDFViewerLazy.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 // [PENDING_CONTENT] — Cloudinary-hosted bye-laws PDF URL from manager
@@ -24,7 +24,7 @@ export default function ByeLawsPage() {
       />
       <SectionWrapper>
         {BYE_LAWS_PDF_URL ? (
-          <PDFViewer title="Club Bye-Laws" url={BYE_LAWS_PDF_URL} />
+          <PDFViewerLazy title="Club Bye-Laws" url={BYE_LAWS_PDF_URL} />
         ) : (
           <div className="flex aspect-3/4 max-h-[80vh] items-center justify-center rounded-2xl border border-(--color-border) bg-surface-dark">
             <p className="text-text-secondary-dark">

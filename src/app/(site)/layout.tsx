@@ -21,9 +21,25 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gsc.in";
+
 export const metadata: Metadata = {
-  description: "Mumbai's Premier Sports Destination",
-  title: "Goregaon Sports Club",
+  description:
+    "Mumbai's premier sports club — 30+ years, 23+ sports, 12,000+ members.",
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    description:
+      "Mumbai's premier sports club — 30+ years, 23+ sports, 12,000+ members.",
+    siteName: "Goregaon Sports Club",
+    type: "website",
+  },
+  title: {
+    default: "Goregaon Sports Club",
+    template: "%s | Goregaon Sports Club",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default async function SiteLayout({
@@ -40,7 +56,7 @@ export default async function SiteLayout({
       </head>
       <body>
         <a
-          className="fixed top-4 left-4 z-[100] -translate-y-full rounded-full bg-primary px-6 py-3 text-white transition-transform focus:-translate-y-0 focus:translate-y-0"
+          className="fixed top-4 left-4 z-100 -translate-y-full rounded-full bg-primary px-6 py-3 text-white transition-transform focus:translate-y-0"
           href="#main-content"
         >
           Skip to main content

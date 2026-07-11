@@ -161,7 +161,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 2-12   /partners/team-spirit — 3 editions per year
 [x] 2-13   /partners/annual-report — PDF viewer (2–3 reports)
 [x] 2-14   /downloads — Notices + document downloads hub
-[ ] 2-15   SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
+[x] 2-15   SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
 ```
 
 ### Phase 3 — 3D & Polish (11 tasks)
@@ -183,9 +183,9 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 ## Active Task
 
-**Current Phase**: 2
-**Active Task**: 2-15 — SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
-**Last Completed**: 2-14 — /downloads — Notices + document downloads hub
+**Current Phase**: 3
+**Active Task**: 3-01 — R3F setup — Canvas wrapper, Suspense, WebGL detection
+**Last Completed**: 2-15 — SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
 
 > Update this section when running /done after each task.
 

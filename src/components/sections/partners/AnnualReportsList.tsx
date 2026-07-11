@@ -4,7 +4,7 @@ import { Download } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
-import { PDFViewer } from "@/components/shared/PDFViewer.tsx";
+import { PDFViewerLazy } from "@/components/shared/PDFViewerLazy.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { AnnualReport } from "@/lib/sanity/queries.ts";
@@ -120,7 +120,7 @@ function ReportCard({ report }: { report: DisplayReport }) {
 
       {isPreviewOpen && report.pdfFile ? (
         <div className="mt-6">
-          <PDFViewer
+          <PDFViewerLazy
             showDownload={false}
             title={report.title}
             url={report.pdfFile}
