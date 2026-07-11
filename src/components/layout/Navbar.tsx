@@ -70,7 +70,15 @@ export const NAV_ITEMS: NavItem[] = [
     label: "Membership",
   },
   { href: "/achievements", label: "Achievements" },
-  { href: "/partners", label: "Partners" },
+  {
+    children: [
+      { href: "/partners/team-spirit", label: "Team Spirit" },
+      { href: "/partners/annual-report", label: "Annual Report" },
+      { href: "/partners", label: "View All Partners" },
+    ],
+    href: "/partners",
+    label: "Partners",
+  },
   {
     children: [
       { href: "/about/team", label: "Committee" },
