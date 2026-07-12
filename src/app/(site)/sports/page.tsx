@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { CoachingCTA } from "@/components/sections/sports/CoachingCTA.tsx";
 import { SportsCategoryGrid } from "@/components/sections/sports/SportsCategoryGrid.tsx";
-import { SportsScrollExperience } from "@/components/sections/sports/SportsScrollExperience.tsx";
+import { SportsScrollFallback } from "@/components/sections/sports/SportsScrollFallback.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
+import { WebGLOnly } from "@/components/three/WebGLDetector.tsx";
 import { getSports } from "@/lib/sanity/queries.ts";
 
 export function generateMetadata(): Metadata {
@@ -19,7 +20,10 @@ export default async function SportsPage() {
   return (
     <>
       <PageHero headline="23+ Sports. One Club." />
-      <SportsScrollExperience sports={sports} />
+      {/* WebGL scroll scenes ship in Tasks 3-05 through 3-08; the fallback is the desktop experience until then */}
+      <WebGLOnly fallback={<SportsScrollFallback sports={sports} />}>
+        <SportsScrollFallback sports={sports} />
+      </WebGLOnly>
       <SportsCategoryGrid sports={sports} />
       <CoachingCTA />
     </>
