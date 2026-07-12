@@ -170,7 +170,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 3-02   Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
 [x] 3-03   Homepage hero — WebGL particle scene (desktop only)
 [x] 3-04   Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
-[ ] 3-05   Sports scroll — Scene 1 Cricket (WebGL, desktop only)
+[x] 3-05   Sports scroll — Scene 1 Cricket (WebGL, desktop only)
 [ ] 3-06   Sports scroll — Scene 2 Swimming + Scene 3 Badminton
 [ ] 3-07   Sports scroll — Scene 4 Tennis + Scene 5 Squash
 [ ] 3-08   Sports scroll — Scene 6 Gym + scroll orchestration
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 3
-**Active Task**: 3-05 — Sports scroll — Scene 1 Cricket (WebGL, desktop only)
-**Last Completed**: 3-04 — Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
+**Active Task**: 3-06 — Sports scroll — Scene 2 Swimming + Scene 3 Badminton
+**Last Completed**: 3-05 — Sports scroll — Scene 1 Cricket (WebGL, desktop only)
 
 > Update this section when running /done after each task.
 
