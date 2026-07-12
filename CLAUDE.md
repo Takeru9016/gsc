@@ -168,7 +168,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ```
 [x] 3-01   R3F setup — Canvas wrapper, Suspense, WebGL detection
 [x] 3-02   Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
-[ ] 3-03   Homepage hero — WebGL particle scene (desktop only)
+[x] 3-03   Homepage hero — WebGL particle scene (desktop only)
 [ ] 3-04   Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
 [ ] 3-05   Sports scroll — Scene 1 Cricket (WebGL, desktop only)
 [ ] 3-06   Sports scroll — Scene 2 Swimming + Scene 3 Badminton
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 3
-**Active Task**: 3-03 — Homepage hero — WebGL particle scene (desktop only)
-**Last Completed**: 3-02 — Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
+**Active Task**: 3-04 — Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
+**Last Completed**: 3-03 — Homepage hero — WebGL particle scene (desktop only)
 
 > Update this section when running /done after each task.
 

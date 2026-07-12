@@ -1,9 +1,20 @@
 "use client";
 
 import { gsap } from "gsap";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { SceneCanvas } from "@/components/three/SceneCanvas.tsx";
+import { WebGLOnly } from "@/components/three/WebGLDetector.tsx";
 import { HeroFallback } from "./HeroFallback.tsx";
+
+const HeroScene = dynamic(
+  () => import("@/components/three/HeroScene.tsx").then((mod) => mod.HeroScene),
+  {
+    loading: () => null,
+    ssr: false,
+  }
+);
 
 export function HeroSection() {
   const badgeRef = useRef<HTMLSpanElement>(null);
@@ -46,8 +57,13 @@ export function HeroSection() {
       data-theme="dark"
     >
       <div className="absolute inset-0 bg-bg-dark" />
-      {/* [PENDING_3D_HERO] — WebGL particle scene lands in 3-03; GSAP CSS fallback here, permanent on mobile */}
-      <HeroFallback />
+      <WebGLOnly fallback={<HeroFallback />}>
+        <div className="absolute inset-0">
+          <SceneCanvas camera={{ fov: 75, position: [0, 0, 5] }}>
+            <HeroScene />
+          </SceneCanvas>
+        </div>
+      </WebGLOnly>
       <div className="absolute inset-0 bg-linear-to-b from-bg-dark/0 via-bg-dark/20 to-bg-dark" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
