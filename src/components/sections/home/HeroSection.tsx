@@ -3,6 +3,7 @@
 import { gsap } from "gsap";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { HeroFallback } from "./HeroFallback.tsx";
 
 export function HeroSection() {
   const badgeRef = useRef<HTMLSpanElement>(null);
@@ -45,8 +46,8 @@ export function HeroSection() {
       data-theme="dark"
     >
       <div className="absolute inset-0 bg-bg-dark" />
-      {/* [PENDING_3D_HERO] — WebGL particle scene lands in Phase 3; CSS fallback here */}
-      <div className="hero-particles absolute inset-0" />
+      {/* [PENDING_3D_HERO] — WebGL particle scene lands in 3-03; GSAP CSS fallback here, permanent on mobile */}
+      <HeroFallback />
       <div className="absolute inset-0 bg-linear-to-b from-bg-dark/0 via-bg-dark/20 to-bg-dark" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">

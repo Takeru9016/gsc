@@ -77,31 +77,6 @@ body {
   background-color: var(--color-bg);
 }
 
-/* [PENDING_3D_HERO] — CSS placeholder swirl, replaced by WebGL particles in Phase 3 */
-.hero-particles {
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(30, 136, 229, 0.25), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(255, 179, 0, 0.15), transparent 35%),
-    radial-gradient(circle at 50% 80%, rgba(30, 136, 229, 0.2), transparent 45%);
-  animation: hero-particles-drift 12s ease-in-out infinite;
-}
-
-@keyframes hero-particles-drift {
-  0%,
-  100% {
-    background-position: 0% 0%, 0% 0%, 0% 0%;
-  }
-  50% {
-    background-position: 5% 8%, -6% 4%, -4% -6%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-particles {
-    animation: none;
-  }
-}
-
 /* Auto-scrolling strips — Achievements Reel, Partners Strip */
 .marquee-track {
   animation: marquee-scroll var(--marquee-duration, 30s) linear infinite;
