@@ -54,8 +54,8 @@ const PIN_LENGTH_PERCENT = SCENE_COUNT * 100;
 
 const CAMERA_POSITION: [number, number, number] = [0, -1, 4];
 
-// Per-scene camera keyframes. Scenes 3-5 aren't built yet (Tasks 3-07/3-08),
-// so they reuse Scene 2's framing as a harmless placeholder until then.
+// Per-scene camera keyframes. Scene 6 (Gym) isn't built yet (Task 3-08), so
+// it reuses Scene 3's framing as a harmless placeholder until then.
 const CAMERA_KEYFRAMES: {
   lookAt: [number, number, number];
   position: [number, number, number];
@@ -63,8 +63,8 @@ const CAMERA_KEYFRAMES: {
   { lookAt: [0, 0, 0], position: [0, -1, 4] },
   { lookAt: [0, 0, 0], position: [0, 3, 2] },
   { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
-  { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
-  { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
+  { lookAt: [0, 0, 0], position: [0, 2, 8] },
+  { lookAt: [0, 1, 0], position: [0, 1.5, 3] },
   { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
 ];
 const CAMERA_TWEEN_DURATION = 0.8;
@@ -957,6 +957,742 @@ function BadmintonScene({ opacityRef }: { opacityRef: OpacityRef }) {
   );
 }
 
+function clampValue(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+const TENNIS_COURT_WIDTH = 10.97;
+const TENNIS_COURT_LENGTH = 23.77;
+const TENNIS_SINGLES_WIDTH = 8.23;
+const TENNIS_SERVICE_LINE_Z = 6.4;
+const TENNIS_CLAY_COLOR = "#C4622D";
+const TENNIS_LINE_COLOR = "#FFFFFF";
+const TENNIS_NET_COLOR = "#FFFFFF";
+const TENNIS_NET_HEIGHT = 0.91;
+const TENNIS_BALL_COLOR = "#CFE03B";
+const TENNIS_BALL_RADIUS = 0.13;
+const TENNIS_KEY_LIGHT_COLOR = "#FFF3E0";
+const TENNIS_AMBIENT_COLOR = "#FFECB3";
+
+const TENNIS_COURT_LINES: CourtLineSpec[] = [
+  {
+    position: [0, 0.01, TENNIS_COURT_LENGTH / 2],
+    size: [TENNIS_COURT_WIDTH, 0.01, 0.05],
+  },
+  {
+    position: [0, 0.01, -TENNIS_COURT_LENGTH / 2],
+    size: [TENNIS_COURT_WIDTH, 0.01, 0.05],
+  },
+  {
+    position: [-TENNIS_COURT_WIDTH / 2, 0.01, 0],
+    size: [0.05, 0.01, TENNIS_COURT_LENGTH],
+  },
+  {
+    position: [TENNIS_COURT_WIDTH / 2, 0.01, 0],
+    size: [0.05, 0.01, TENNIS_COURT_LENGTH],
+  },
+  {
+    position: [-TENNIS_SINGLES_WIDTH / 2, 0.01, 0],
+    size: [0.05, 0.01, TENNIS_COURT_LENGTH],
+  },
+  {
+    position: [TENNIS_SINGLES_WIDTH / 2, 0.01, 0],
+    size: [0.05, 0.01, TENNIS_COURT_LENGTH],
+  },
+  {
+    position: [0, 0.01, TENNIS_SERVICE_LINE_Z],
+    size: [TENNIS_SINGLES_WIDTH, 0.01, 0.05],
+  },
+  {
+    position: [0, 0.01, -TENNIS_SERVICE_LINE_Z],
+    size: [TENNIS_SINGLES_WIDTH, 0.01, 0.05],
+  },
+  {
+    position: [0, 0.01, 0],
+    size: [0.05, 0.01, TENNIS_SERVICE_LINE_Z * 2],
+  },
+];
+
+const TENNIS_BALL_PATH_POINTS: [number, number, number][] = [
+  [0, 1.4, 9],
+  [0, 0.9, 5],
+  [0, 0.9, 1],
+  [0, 0.4, -3],
+  [0, 0.05, -7],
+  [0, 1.1, -4],
+  [0, 1.0, 0],
+  [0, 1.3, 5],
+];
+const TENNIS_LOOP_DURATION = 4;
+const TENNIS_BALL_MIN_Y = 0.05;
+const TENNIS_BALL_MAX_Y = 1.4;
+const TENNIS_BALL_SQUASHED_SCALE = 0.7;
+const TENNIS_BALL_STRETCHED_SCALE = 1.2;
+const TENNIS_TRAIL_LENGTH = 20;
+const TENNIS_TRAIL_MAX_OPACITY = 0.5;
+
+function TennisCourt({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame(() => {
+    const mesh = meshRef.current;
+    if (!mesh) {
+      return;
+    }
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+    const material = mesh.material as MeshStandardMaterialType;
+    material.opacity = opacity;
+  });
+
+  return (
+    // biome-ignore lint/suspicious/noUnknownAttribute: "rotation" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+    <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+      <planeGeometry args={[TENNIS_COURT_WIDTH, TENNIS_COURT_LENGTH]} />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <meshStandardMaterial color={TENNIS_CLAY_COLOR} transparent />
+    </mesh>
+  );
+}
+
+function TennisCourtLines({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRefs = useRef<(Mesh | null)[]>([]);
+
+  useFrame(() => {
+    const opacity = opacityRef.current.value;
+    for (const mesh of meshRefs.current) {
+      if (!mesh) {
+        continue;
+      }
+      mesh.visible = opacity > 0.001;
+      const material = mesh.material as MeshBasicMaterialType;
+      material.opacity = opacity;
+    }
+  });
+
+  const setLineRef = useCallback(
+    (index: number) => (el: Mesh | null) => {
+      meshRefs.current[index] = el;
+      el?.position.set(...TENNIS_COURT_LINES[index].position);
+    },
+    []
+  );
+
+  return (
+    <>
+      {TENNIS_COURT_LINES.map((line, index) => (
+        <mesh
+          key={`tennis-line-${line.position.join("-")}`}
+          ref={setLineRef(index)}
+        >
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+          <boxGeometry args={line.size} />
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+          <meshBasicMaterial color={TENNIS_LINE_COLOR} transparent />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+function TennisNet({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useEffect(() => {
+    meshRef.current?.position.set(0, TENNIS_NET_HEIGHT / 2, 0);
+  }, []);
+
+  useFrame(() => {
+    const mesh = meshRef.current;
+    if (!mesh) {
+      return;
+    }
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+    const material = mesh.material as MeshBasicMaterialType;
+    material.opacity = opacity * 0.8;
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+      <boxGeometry args={[0.02, TENNIS_NET_HEIGHT, TENNIS_COURT_WIDTH]} />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <meshBasicMaterial color={TENNIS_NET_COLOR} transparent />
+    </mesh>
+  );
+}
+
+function TennisBall({ opacityRef }: { opacityRef: OpacityRef }) {
+  const ballRef = useRef<Mesh>(null);
+
+  const curve = useMemo(
+    () =>
+      new CatmullRomCurve3(
+        TENNIS_BALL_PATH_POINTS.map(([x, y, z]) => new Vector3(x, y, z)),
+        true
+      ),
+    []
+  );
+
+  const trailPositions = useMemo(
+    () =>
+      Array.from(
+        { length: TENNIS_TRAIL_LENGTH },
+        () => new Vector3(...TENNIS_BALL_PATH_POINTS[0])
+      ),
+    []
+  );
+
+  // Individual 2-point segments (rather than one polyline) so each can fade
+  // to a different opacity, giving the trail a tail that dims with age.
+  const trailSegments = useMemo(
+    () =>
+      Array.from({ length: TENNIS_TRAIL_LENGTH - 1 }, () => {
+        const geometry = new BufferGeometry();
+        geometry.setAttribute(
+          "position",
+          new BufferAttribute(new Float32Array(6), 3)
+        );
+        const material = new LineBasicMaterial({
+          color: TENNIS_BALL_COLOR,
+          transparent: true,
+        });
+        return new Line(geometry, material);
+      }),
+    []
+  );
+
+  useEffect(
+    () => () => {
+      for (const segment of trailSegments) {
+        segment.geometry.dispose();
+        (segment.material as LineBasicMaterial).dispose();
+      }
+    },
+    [trailSegments]
+  );
+
+  useFrame(({ clock }) => {
+    const mesh = ballRef.current;
+    if (!mesh) {
+      return;
+    }
+
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+
+    const t =
+      (clock.getElapsedTime() % TENNIS_LOOP_DURATION) / TENNIS_LOOP_DURATION;
+    const point = curve.getPointAt(t);
+    mesh.position.copy(point);
+
+    const heightT = clampValue(
+      (point.y - TENNIS_BALL_MIN_Y) / (TENNIS_BALL_MAX_Y - TENNIS_BALL_MIN_Y),
+      0,
+      1
+    );
+    mesh.scale.y =
+      TENNIS_BALL_SQUASHED_SCALE +
+      heightT * (TENNIS_BALL_STRETCHED_SCALE - TENNIS_BALL_SQUASHED_SCALE);
+
+    for (let i = trailPositions.length - 1; i > 0; i -= 1) {
+      trailPositions[i].copy(trailPositions[i - 1]);
+    }
+    trailPositions[0].copy(point);
+
+    for (const [index, segment] of trailSegments.entries()) {
+      const from = trailPositions[index];
+      const to = trailPositions[index + 1];
+      const positionAttr = segment.geometry.attributes
+        .position as BufferAttribute;
+      positionAttr.setXYZ(0, from.x, from.y, from.z);
+      positionAttr.setXYZ(1, to.x, to.y, to.z);
+      positionAttr.needsUpdate = true;
+
+      segment.visible = opacity > 0.001;
+      const material = segment.material as LineBasicMaterial;
+      material.opacity =
+        opacity *
+        TENNIS_TRAIL_MAX_OPACITY *
+        (1 - index / (trailSegments.length - 1));
+    }
+
+    const material = mesh.material as MeshStandardMaterialType;
+    material.opacity = opacity;
+  });
+
+  return (
+    <>
+      <mesh ref={ballRef}>
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+        <sphereGeometry args={[TENNIS_BALL_RADIUS, 16, 16]} />
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+        <meshStandardMaterial color={TENNIS_BALL_COLOR} transparent />
+      </mesh>
+      {trailSegments.map((segment) => (
+        <primitive
+          key={segment.uuid}
+          // biome-ignore lint/suspicious/noUnknownAttribute: "object" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+          object={segment}
+        />
+      ))}
+    </>
+  );
+}
+
+function TennisScene({ opacityRef }: { opacityRef: OpacityRef }) {
+  const groupRef = useRef<Group>(null);
+
+  useFrame(() => {
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+    group.visible = opacityRef.current.value > 0.001;
+  });
+
+  return (
+    <group ref={groupRef}>
+      <directionalLight
+        color={TENNIS_KEY_LIGHT_COLOR}
+        // biome-ignore lint/suspicious/noUnknownAttribute: "intensity" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+        intensity={1.5}
+        // biome-ignore lint/suspicious/noUnknownAttribute: "position" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+        position={[5, 10, 5]}
+      />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "intensity" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <ambientLight color={TENNIS_AMBIENT_COLOR} intensity={0.5} />
+      <TennisCourt opacityRef={opacityRef} />
+      <TennisCourtLines opacityRef={opacityRef} />
+      <TennisNet opacityRef={opacityRef} />
+      <TennisBall opacityRef={opacityRef} />
+      <SceneLabel
+        label="Tennis"
+        opacityRef={opacityRef}
+        position={[0, 3, -10]}
+      />
+    </group>
+  );
+}
+
+const SQUASH_WIDTH = 6.4;
+const SQUASH_LENGTH = 9.75;
+const SQUASH_HEIGHT = 5.64;
+const SQUASH_WALL_COLOR = "#E8E8E0";
+const SQUASH_FLOOR_COLOR = "#C8C8C0";
+const SQUASH_LINE_COLOR = "#FFFFFF";
+const SQUASH_TIN_HEIGHT = 0.48;
+const SQUASH_SERVICE_LINE_HEIGHT = 1.78;
+const SQUASH_BALL_COLOR = "#18181B";
+const SQUASH_BALL_RADIUS = 0.08;
+const SQUASH_BALL_SPEED = 2.2;
+const SQUASH_BALL_MARGIN = SQUASH_BALL_RADIUS + 0.05;
+const SQUASH_BURST_COUNT = 6;
+const SQUASH_BURST_PARTICLE_RADIUS = 0.025;
+const SQUASH_BURST_DURATION = 0.3;
+const SQUASH_BURST_MAX_RADIUS = 0.35;
+const SQUASH_BURST_MAX_OPACITY = 0.9;
+const SQUASH_BURST_COLOR = "#FFFFFF";
+const SQUASH_FILL_COLOR = "#D6E8FF";
+const SQUASH_LIGHT_COLOR = "#FFFFFF";
+
+interface SquashWallSpec {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  size: [number, number];
+}
+
+const SQUASH_WALLS: SquashWallSpec[] = [
+  {
+    position: [0, SQUASH_HEIGHT / 2, -SQUASH_LENGTH / 2],
+    rotation: [0, 0, 0],
+    size: [SQUASH_WIDTH, SQUASH_HEIGHT],
+  },
+  {
+    position: [0, SQUASH_HEIGHT / 2, SQUASH_LENGTH / 2],
+    rotation: [0, Math.PI, 0],
+    size: [SQUASH_WIDTH, SQUASH_HEIGHT],
+  },
+  {
+    position: [-SQUASH_WIDTH / 2, SQUASH_HEIGHT / 2, 0],
+    rotation: [0, Math.PI / 2, 0],
+    size: [SQUASH_LENGTH, SQUASH_HEIGHT],
+  },
+  {
+    position: [SQUASH_WIDTH / 2, SQUASH_HEIGHT / 2, 0],
+    rotation: [0, -Math.PI / 2, 0],
+    size: [SQUASH_LENGTH, SQUASH_HEIGHT],
+  },
+];
+
+const SQUASH_COURT_LINES: CourtLineSpec[] = [
+  {
+    position: [0, SQUASH_TIN_HEIGHT, -SQUASH_LENGTH / 2 + 0.02],
+    size: [SQUASH_WIDTH, 0.05, 0.02],
+  },
+  {
+    position: [0, SQUASH_SERVICE_LINE_HEIGHT, -SQUASH_LENGTH / 2 + 0.02],
+    size: [SQUASH_WIDTH, 0.05, 0.02],
+  },
+];
+
+function SquashWalls({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRefs = useRef<(Mesh | null)[]>([]);
+
+  useEffect(() => {
+    for (const mesh of meshRefs.current) {
+      const material = mesh?.material as MeshStandardMaterialType | undefined;
+      if (material) {
+        material.side = DoubleSide;
+      }
+    }
+  }, []);
+
+  useFrame(() => {
+    const opacity = opacityRef.current.value;
+    for (const mesh of meshRefs.current) {
+      if (!mesh) {
+        continue;
+      }
+      mesh.visible = opacity > 0.001;
+      const material = mesh.material as MeshStandardMaterialType;
+      material.opacity = opacity;
+    }
+  });
+
+  const setWallRef = useCallback(
+    (index: number) => (el: Mesh | null) => {
+      meshRefs.current[index] = el;
+    },
+    []
+  );
+
+  return (
+    <>
+      {SQUASH_WALLS.map((wall, index) => (
+        <mesh
+          key={`squash-wall-${wall.position.join("-")}`}
+          // biome-ignore lint/suspicious/noUnknownAttribute: "position" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+          position={wall.position}
+          ref={setWallRef(index)}
+          // biome-ignore lint/suspicious/noUnknownAttribute: "rotation" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+          rotation={wall.rotation}
+        >
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+          <planeGeometry args={wall.size} />
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+          <meshStandardMaterial color={SQUASH_WALL_COLOR} transparent />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+function SquashFloor({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame(() => {
+    const mesh = meshRef.current;
+    if (!mesh) {
+      return;
+    }
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+    const material = mesh.material as MeshStandardMaterialType;
+    material.opacity = opacity;
+  });
+
+  return (
+    // biome-ignore lint/suspicious/noUnknownAttribute: "rotation" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+    <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+      <planeGeometry args={[SQUASH_WIDTH, SQUASH_LENGTH]} />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <meshStandardMaterial color={SQUASH_FLOOR_COLOR} transparent />
+    </mesh>
+  );
+}
+
+function SquashCourtLines({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRefs = useRef<(Mesh | null)[]>([]);
+
+  useFrame(() => {
+    const opacity = opacityRef.current.value;
+    for (const mesh of meshRefs.current) {
+      if (!mesh) {
+        continue;
+      }
+      mesh.visible = opacity > 0.001;
+      const material = mesh.material as MeshBasicMaterialType;
+      material.opacity = opacity;
+    }
+  });
+
+  const setLineRef = useCallback(
+    (index: number) => (el: Mesh | null) => {
+      meshRefs.current[index] = el;
+      el?.position.set(...SQUASH_COURT_LINES[index].position);
+    },
+    []
+  );
+
+  return (
+    <>
+      {SQUASH_COURT_LINES.map((line, index) => (
+        <mesh
+          key={`squash-line-${line.position.join("-")}`}
+          ref={setLineRef(index)}
+        >
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+          <boxGeometry args={line.size} />
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+          <meshBasicMaterial color={SQUASH_LINE_COLOR} transparent />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+interface SquashBurstState {
+  active: boolean;
+  directions: Vector3[];
+  origin: Vector3;
+  startTime: number;
+}
+
+interface SquashBounds {
+  xBound: number;
+  yMax: number;
+  yMin: number;
+  zBound: number;
+}
+
+// Straight-line travel with axis-flip reflections at the court bounds — a
+// lightweight stand-in for wall physics, not a physics engine.
+function reflectWithinBounds(
+  pos: Vector3,
+  vel: Vector3,
+  bounds: SquashBounds
+): boolean {
+  let bounced = false;
+  if (pos.x > bounds.xBound || pos.x < -bounds.xBound) {
+    pos.x = clampValue(pos.x, -bounds.xBound, bounds.xBound);
+    vel.x *= -1;
+    bounced = true;
+  }
+  if (pos.y > bounds.yMax || pos.y < bounds.yMin) {
+    pos.y = clampValue(pos.y, bounds.yMin, bounds.yMax);
+    vel.y *= -1;
+    bounced = true;
+  }
+  if (pos.z > bounds.zBound || pos.z < -bounds.zBound) {
+    pos.z = clampValue(pos.z, -bounds.zBound, bounds.zBound);
+    vel.z *= -1;
+    bounced = true;
+  }
+  return bounced;
+}
+
+function triggerSquashBurst(
+  state: SquashBurstState,
+  origin: Vector3,
+  startTime: number
+): void {
+  state.active = true;
+  state.startTime = startTime;
+  state.origin.copy(origin);
+  for (const dir of state.directions) {
+    dir
+      .set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5)
+      .normalize();
+  }
+}
+
+function updateSquashBurst(
+  burstMesh: InstancedMesh,
+  state: SquashBurstState,
+  elapsed: number,
+  opacity: number
+): void {
+  if (!state.active) {
+    burstMesh.visible = false;
+    return;
+  }
+
+  const t = (elapsed - state.startTime) / SQUASH_BURST_DURATION;
+  if (t >= 1) {
+    state.active = false;
+    burstMesh.visible = false;
+    return;
+  }
+
+  burstMesh.visible = opacity > 0.001;
+  const radius = t * SQUASH_BURST_MAX_RADIUS;
+  for (const [index, dir] of state.directions.entries()) {
+    dummy.position.copy(state.origin).addScaledVector(dir, radius);
+    dummy.updateMatrix();
+    burstMesh.setMatrixAt(index, dummy.matrix);
+  }
+  burstMesh.instanceMatrix.needsUpdate = true;
+  const burstMaterial = burstMesh.material as MeshBasicMaterialType;
+  burstMaterial.opacity = (1 - t) * opacity * SQUASH_BURST_MAX_OPACITY;
+}
+
+function SquashBall({ opacityRef }: { opacityRef: OpacityRef }) {
+  const ballRef = useRef<Mesh>(null);
+  const burstMeshRef = useRef<InstancedMesh>(null);
+
+  const position = useRef(new Vector3(0, SQUASH_HEIGHT / 2, 0));
+  const velocity = useRef(
+    new Vector3(
+      Math.random() - 0.5,
+      Math.random() * 0.4 + 0.1,
+      Math.random() - 0.5
+    )
+      .normalize()
+      .multiplyScalar(SQUASH_BALL_SPEED)
+  );
+  const burst = useRef<SquashBurstState>({
+    active: false,
+    directions: Array.from({ length: SQUASH_BURST_COUNT }, () => new Vector3()),
+    origin: new Vector3(),
+    startTime: 0,
+  });
+
+  const xBound = SQUASH_WIDTH / 2 - SQUASH_BALL_MARGIN;
+  const zBound = SQUASH_LENGTH / 2 - SQUASH_BALL_MARGIN;
+  const yMin = SQUASH_BALL_MARGIN;
+  const yMax = SQUASH_HEIGHT - SQUASH_BALL_MARGIN;
+
+  useFrame(({ clock }, delta) => {
+    const mesh = ballRef.current;
+    if (!mesh) {
+      return;
+    }
+
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+
+    const pos = position.current;
+    const vel = velocity.current;
+    pos.addScaledVector(vel, delta);
+    const bounced = reflectWithinBounds(pos, vel, {
+      xBound,
+      yMax,
+      yMin,
+      zBound,
+    });
+
+    mesh.position.copy(pos);
+    const material = mesh.material as MeshStandardMaterialType;
+    material.opacity = opacity;
+
+    const elapsed = clock.getElapsedTime();
+    const state = burst.current;
+    if (bounced) {
+      triggerSquashBurst(state, pos, elapsed);
+    }
+
+    const burstMesh = burstMeshRef.current;
+    if (burstMesh) {
+      updateSquashBurst(burstMesh, state, elapsed, opacity);
+    }
+  });
+
+  return (
+    <>
+      <mesh ref={ballRef}>
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+        <sphereGeometry args={[SQUASH_BALL_RADIUS, 16, 16]} />
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+        <meshStandardMaterial color={SQUASH_BALL_COLOR} transparent />
+      </mesh>
+      <instancedMesh
+        // biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+        args={[undefined, undefined, SQUASH_BURST_COUNT]}
+        ref={burstMeshRef}
+      >
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+        <sphereGeometry args={[SQUASH_BURST_PARTICLE_RADIUS, 8, 8]} />
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+        <meshBasicMaterial color={SQUASH_BURST_COLOR} transparent />
+      </instancedMesh>
+    </>
+  );
+}
+
+const SQUASH_LIGHT_POSITIONS: [number, number, number][] = [
+  [-1.5, SQUASH_HEIGHT - 0.3, 0],
+  [1.5, SQUASH_HEIGHT - 0.3, 0],
+];
+
+function SquashLights() {
+  const lightRefs = useRef<(import("three").SpotLight | null)[]>([]);
+
+  useEffect(() => {
+    for (const [index, position] of SQUASH_LIGHT_POSITIONS.entries()) {
+      const light = lightRefs.current[index];
+      if (!light) {
+        continue;
+      }
+      light.position.set(...position);
+      light.angle = Math.PI / 4;
+      light.penumbra = 0.3;
+      light.intensity = 1.4;
+    }
+  }, []);
+
+  const setLightRef = useCallback(
+    (index: number) => (el: import("three").SpotLight | null) => {
+      lightRefs.current[index] = el;
+    },
+    []
+  );
+
+  return (
+    <>
+      {SQUASH_LIGHT_POSITIONS.map((position, index) => (
+        <spotLight
+          color={SQUASH_LIGHT_COLOR}
+          key={`squash-light-${position[0]}`}
+          ref={setLightRef(index)}
+        />
+      ))}
+    </>
+  );
+}
+
+function SquashScene({ opacityRef }: { opacityRef: OpacityRef }) {
+  const groupRef = useRef<Group>(null);
+
+  useFrame(() => {
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+    group.visible = opacityRef.current.value > 0.001;
+  });
+
+  return (
+    <group ref={groupRef}>
+      <SquashLights />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "intensity" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <ambientLight color={SQUASH_FILL_COLOR} intensity={0.4} />
+      <SquashWalls opacityRef={opacityRef} />
+      <SquashFloor opacityRef={opacityRef} />
+      <SquashCourtLines opacityRef={opacityRef} />
+      <SquashBall opacityRef={opacityRef} />
+      <SceneLabel
+        label="Squash"
+        opacityRef={opacityRef}
+        position={[0, 4.5, -3]}
+      />
+    </group>
+  );
+}
+
 function useReducedMotion(): boolean {
   return useMemo(
     () =>
@@ -1116,6 +1852,8 @@ export function SportsScroll() {
         <CricketScene opacityRef={sceneOpacityRefs[0]} />
         <SwimmingScene opacityRef={sceneOpacityRefs[1]} />
         <BadmintonScene opacityRef={sceneOpacityRefs[2]} />
+        <TennisScene opacityRef={sceneOpacityRefs[3]} />
+        <SquashScene opacityRef={sceneOpacityRefs[4]} />
       </SceneCanvas>
       <ProgressDots activeIndex={activeIndex} containerRef={containerRef} />
     </div>
