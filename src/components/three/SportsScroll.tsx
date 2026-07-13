@@ -34,11 +34,13 @@ import {
   SphereGeometry,
   Vector3,
 } from "three";
+import { RectAreaLightUniformsLib } from "three/addons/lights/RectAreaLightUniformsLib.js";
 import { SceneCanvas } from "@/components/three/SceneCanvas.tsx";
 import { cn } from "@/lib/utils.ts";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+  RectAreaLightUniformsLib.init();
 }
 
 const SCENE_COUNT = 6;
@@ -54,8 +56,7 @@ const PIN_LENGTH_PERCENT = SCENE_COUNT * 100;
 
 const CAMERA_POSITION: [number, number, number] = [0, -1, 4];
 
-// Per-scene camera keyframes. Scene 6 (Gym) isn't built yet (Task 3-08), so
-// it reuses Scene 3's framing as a harmless placeholder until then.
+// Per-scene camera keyframes, one per scene in SCENE_LABELS order.
 const CAMERA_KEYFRAMES: {
   lookAt: [number, number, number];
   position: [number, number, number];
@@ -65,7 +66,7 @@ const CAMERA_KEYFRAMES: {
   { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
   { lookAt: [0, 0, 0], position: [0, 2, 8] },
   { lookAt: [0, 1, 0], position: [0, 1.5, 3] },
-  { lookAt: [0, 1, 0], position: [0, 1.5, 6] },
+  { lookAt: [0, 1, 0], position: [0, 0.5, 4] },
 ];
 const CAMERA_TWEEN_DURATION = 0.8;
 
@@ -1702,6 +1703,354 @@ function useReducedMotion(): boolean {
   );
 }
 
+const GYM_SPOT_COLOR = "#E53935";
+const GYM_AMBIENT_COLOR = "#0A0E1A";
+const GYM_RECT_LIGHT_COLOR = "#1E88E5";
+const GYM_FLOOR_COLOR = "#111111";
+const GYM_METAL_COLOR = "#2A2A2A";
+const GYM_METAL_METALNESS = 0.8;
+const GYM_METAL_ROUGHNESS = 0.3;
+
+const GYM_WEIGHT_X_POSITIONS: number[] = [-2, 0, 2];
+const GYM_BAR_LENGTH = 1.4;
+const GYM_BAR_RADIUS = 0.04;
+const GYM_PLATE_RADIUS = 0.3;
+const GYM_PLATE_TUBE = 0.09;
+const GYM_PLATE_OFFSET = 0.6;
+
+const GYM_LIFT_MAX = 0.6;
+const GYM_LIFT_HALF_DURATION = 1.25;
+const GYM_LIFT_EASE = "power1.inOut";
+
+const GYM_PARTICLE_COUNT = 150;
+const GYM_PARTICLE_COLOR = "#E53935";
+const GYM_PARTICLE_MAX_OPACITY = 0.2;
+const GYM_PARTICLE_RADIUS = 0.025;
+const GYM_PARTICLE_RISE_HEIGHT = 2;
+const GYM_PARTICLE_SPREAD = 0.9;
+const GYM_PARTICLE_BURST_DURATION = 1;
+const GYM_PARTICLE_PEAK_THRESHOLD = 0.05;
+const GYM_PARTICLE_RESET_THRESHOLD = 0.1;
+
+function useGymLift(reducedMotion: boolean): OpacityRef {
+  const liftRef = useRef({ value: 0 });
+
+  useEffect(() => {
+    if (reducedMotion) {
+      return;
+    }
+    const tween = gsap.to(liftRef.current, {
+      duration: GYM_LIFT_HALF_DURATION,
+      ease: GYM_LIFT_EASE,
+      repeat: -1,
+      value: GYM_LIFT_MAX,
+      yoyo: true,
+    });
+    return () => {
+      tween.kill();
+    };
+  }, [reducedMotion]);
+
+  return liftRef;
+}
+
+function GymFloor({ opacityRef }: { opacityRef: OpacityRef }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame(() => {
+    const mesh = meshRef.current;
+    if (!mesh) {
+      return;
+    }
+    const opacity = opacityRef.current.value;
+    mesh.visible = opacity > 0.001;
+    const material = mesh.material as MeshStandardMaterialType;
+    material.opacity = opacity;
+  });
+
+  return (
+    // biome-ignore lint/suspicious/noUnknownAttribute: "rotation" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+    <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+      <planeGeometry args={[8, 6]} />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <meshStandardMaterial color={GYM_FLOOR_COLOR} transparent />
+    </mesh>
+  );
+}
+
+interface WeightSetProps {
+  liftRef: OpacityRef;
+  opacityRef: OpacityRef;
+  xPosition: number;
+}
+
+function WeightSet({ liftRef, opacityRef, xPosition }: WeightSetProps) {
+  const groupRef = useRef<Group>(null);
+  const barRef = useRef<Mesh>(null);
+  const plateRefs = useRef<(Mesh | null)[]>([]);
+
+  useEffect(() => {
+    const barMaterial = barRef.current?.material as
+      | MeshStandardMaterialType
+      | undefined;
+    if (barMaterial) {
+      barMaterial.metalness = GYM_METAL_METALNESS;
+      barMaterial.roughness = GYM_METAL_ROUGHNESS;
+    }
+    for (const plate of plateRefs.current) {
+      const plateMaterial = plate?.material as
+        | MeshStandardMaterialType
+        | undefined;
+      if (plateMaterial) {
+        plateMaterial.metalness = GYM_METAL_METALNESS;
+        plateMaterial.roughness = GYM_METAL_ROUGHNESS;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    groupRef.current?.position.set(xPosition, 0, 0);
+  }, [xPosition]);
+
+  const setPlateRef = useCallback(
+    (index: number) => (el: Mesh | null) => {
+      plateRefs.current[index] = el;
+      el?.position.set(
+        0,
+        0,
+        index === 0 ? -GYM_PLATE_OFFSET : GYM_PLATE_OFFSET
+      );
+    },
+    []
+  );
+
+  useFrame(() => {
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+    const opacity = opacityRef.current.value;
+    group.visible = opacity > 0.001;
+    group.position.y = liftRef.current.value;
+
+    const barMaterial = barRef.current?.material as
+      | MeshStandardMaterialType
+      | undefined;
+    if (barMaterial) {
+      barMaterial.opacity = opacity;
+    }
+    for (const plate of plateRefs.current) {
+      const plateMaterial = plate?.material as
+        | MeshStandardMaterialType
+        | undefined;
+      if (plateMaterial) {
+        plateMaterial.opacity = opacity;
+      }
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "rotation" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+      <mesh ref={barRef} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry
+          // biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+          args={[GYM_BAR_RADIUS, GYM_BAR_RADIUS, GYM_BAR_LENGTH, 12]}
+        />
+        {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+        <meshStandardMaterial color={GYM_METAL_COLOR} transparent />
+      </mesh>
+      {[0, 1].map((index) => (
+        <mesh key={`plate-${xPosition}-${index}`} ref={setPlateRef(index)}>
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute */}
+          <torusGeometry args={[GYM_PLATE_RADIUS, GYM_PLATE_TUBE, 8, 20]} />
+          {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+          <meshStandardMaterial color={GYM_METAL_COLOR} transparent />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+interface GymParticleData {
+  angle: number;
+  radialOffset: number;
+  riseSpeed: number;
+}
+
+function buildGymParticles(): GymParticleData[] {
+  const particles: GymParticleData[] = [];
+
+  for (let i = 0; i < GYM_PARTICLE_COUNT; i += 1) {
+    particles.push({
+      angle: Math.random() * Math.PI * 2,
+      radialOffset: Math.random() * GYM_PARTICLE_SPREAD,
+      riseSpeed: 0.6 + Math.random() * 0.8,
+    });
+  }
+
+  return particles;
+}
+
+function EnergyParticles({
+  liftRef,
+  opacityRef,
+}: {
+  liftRef: OpacityRef;
+  opacityRef: OpacityRef;
+}) {
+  const meshRef = useRef<InstancedMesh>(null);
+  const particles = useMemo(() => buildGymParticles(), []);
+  const geometry = useMemo(
+    () => new SphereGeometry(GYM_PARTICLE_RADIUS, 6, 6),
+    []
+  );
+  const burstActiveRef = useRef(false);
+  const burstStartRef = useRef(0);
+  const triggeredRef = useRef(false);
+
+  useEffect(() => {
+    const currentGeometry = geometry;
+    return () => {
+      currentGeometry.dispose();
+    };
+  }, [geometry]);
+
+  useFrame(({ clock }) => {
+    const mesh = meshRef.current;
+    if (!mesh) {
+      return;
+    }
+
+    const opacity = opacityRef.current.value;
+    const lift = liftRef.current.value;
+    const elapsed = clock.getElapsedTime();
+
+    if (
+      lift > GYM_LIFT_MAX - GYM_PARTICLE_PEAK_THRESHOLD &&
+      !triggeredRef.current
+    ) {
+      triggeredRef.current = true;
+      burstActiveRef.current = true;
+      burstStartRef.current = elapsed;
+    } else if (lift < GYM_PARTICLE_RESET_THRESHOLD) {
+      triggeredRef.current = false;
+    }
+
+    if (!burstActiveRef.current) {
+      mesh.visible = false;
+      return;
+    }
+
+    const t = (elapsed - burstStartRef.current) / GYM_PARTICLE_BURST_DURATION;
+    if (t >= 1) {
+      burstActiveRef.current = false;
+      mesh.visible = false;
+      return;
+    }
+
+    mesh.visible = opacity > 0.001;
+
+    // Emit from the lifted bar height (GYM_LIFT_MAX), not the floor — the
+    // burst triggers at the top of the lift cycle.
+    for (const [index, particle] of particles.entries()) {
+      const radius = particle.radialOffset * (0.4 + t * 0.6);
+      const y =
+        GYM_LIFT_MAX + t * GYM_PARTICLE_RISE_HEIGHT * particle.riseSpeed;
+      dummy.position.set(
+        Math.cos(particle.angle) * radius,
+        y,
+        Math.sin(particle.angle) * radius
+      );
+      dummy.updateMatrix();
+      mesh.setMatrixAt(index, dummy.matrix);
+    }
+
+    mesh.instanceMatrix.needsUpdate = true;
+    const material = mesh.material as MeshBasicMaterialType;
+    material.opacity = (1 - t) * opacity * GYM_PARTICLE_MAX_OPACITY;
+  });
+
+  return (
+    <instancedMesh
+      // biome-ignore lint/suspicious/noUnknownAttribute: "args" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+      args={[geometry, undefined, GYM_PARTICLE_COUNT]}
+      ref={meshRef}
+    >
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "transparent" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <meshBasicMaterial color={GYM_PARTICLE_COLOR} transparent />
+    </instancedMesh>
+  );
+}
+
+function GymScene({ opacityRef }: { opacityRef: OpacityRef }) {
+  const groupRef = useRef<Group>(null);
+  const spotLightRef = useRef<import("three").SpotLight>(null);
+  const spotTargetRef = useRef<Object3D>(null);
+  const rectLightRef = useRef<import("three").RectAreaLight>(null);
+  const reducedMotion = useReducedMotion();
+  const liftRef = useGymLift(reducedMotion);
+
+  useEffect(() => {
+    const light = spotLightRef.current;
+    const target = spotTargetRef.current;
+    if (!(light && target)) {
+      return;
+    }
+    light.position.set(0, 6, 0);
+    light.angle = 0.4;
+    light.intensity = 3;
+    target.position.set(0, 0, 0);
+    light.target = target;
+  }, []);
+
+  useEffect(() => {
+    const rectLight = rectLightRef.current;
+    if (!rectLight) {
+      return;
+    }
+    rectLight.position.set(-4, 2, 0);
+    rectLight.lookAt(0, 1, 0);
+  }, []);
+
+  useFrame(() => {
+    const group = groupRef.current;
+    if (!group) {
+      return;
+    }
+    group.visible = opacityRef.current.value > 0.001;
+  });
+
+  return (
+    <group ref={groupRef}>
+      <spotLight color={GYM_SPOT_COLOR} ref={spotLightRef} />
+      <object3D ref={spotTargetRef} />
+      {/* biome-ignore lint/suspicious/noUnknownAttribute: "color" and "intensity" are valid react-three-fiber intrinsic props, not DOM attributes */}
+      <ambientLight color={GYM_AMBIENT_COLOR} intensity={0.1} />
+      <rectAreaLight
+        color={GYM_RECT_LIGHT_COLOR}
+        height={4}
+        // biome-ignore lint/suspicious/noUnknownAttribute: "intensity" is a valid react-three-fiber intrinsic prop, not a DOM attribute
+        intensity={4}
+        ref={rectLightRef}
+        width={2}
+      />
+      <GymFloor opacityRef={opacityRef} />
+      {GYM_WEIGHT_X_POSITIONS.map((xPosition) => (
+        <WeightSet
+          key={`weight-set-${xPosition}`}
+          liftRef={liftRef}
+          opacityRef={opacityRef}
+          xPosition={xPosition}
+        />
+      ))}
+      <EnergyParticles liftRef={liftRef} opacityRef={opacityRef} />
+      <SceneLabel label="Gym" opacityRef={opacityRef} position={[0, 3, -1]} />
+    </group>
+  );
+}
+
 const CROSSFADE_WIDTH = 0.15;
 
 function clamp01(value: number): number {
@@ -1854,6 +2203,7 @@ export function SportsScroll() {
         <BadmintonScene opacityRef={sceneOpacityRefs[2]} />
         <TennisScene opacityRef={sceneOpacityRefs[3]} />
         <SquashScene opacityRef={sceneOpacityRefs[4]} />
+        <GymScene opacityRef={sceneOpacityRefs[5]} />
       </SceneCanvas>
       <ProgressDots activeIndex={activeIndex} containerRef={containerRef} />
     </div>
