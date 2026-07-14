@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 const MEMBERSHIP_TYPES = ["Life", "Corporate", "Ward", "Service", "Yearly"];
@@ -29,12 +29,9 @@ export function MembershipCTA() {
               </span>
             ))}
           </div>
-          <Link
-            className="mt-8 inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-            href="/membership"
-          >
+          <Button className="mt-8" href="/membership">
             Express Interest
-          </Link>
+          </Button>
         </div>
       </SectionWrapper>
     </div>

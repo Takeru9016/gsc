@@ -2,6 +2,7 @@
 
 import { Download as DownloadIcon } from "lucide-react";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import type { Download } from "@/lib/sanity/queries.ts";
 
 interface DownloadsListProps {
@@ -84,16 +85,10 @@ function DownloadButton({
   }
 
   return (
-    <a
-      aria-label={`Download ${title}`}
-      className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-sm text-white transition-all duration-200 hover:bg-primary-hover"
-      href={file}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
+    <Button ariaLabel={`Download ${title}`} external href={file} size="sm">
       <DownloadIcon aria-hidden="true" size={16} />
       Download
-    </a>
+    </Button>
   );
 }
 

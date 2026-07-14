@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 interface SportCoachingProps {
@@ -37,21 +37,17 @@ export function SportCoaching({
           {coachingSchedule ?? "[PENDING_CONTENT] — Coaching schedule."}
         </p>
         {externalRegistrationUrl ? (
-          <a
-            className="inline-flex min-w-[120px] shrink-0 items-center justify-center self-start rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
+          <Button
+            className="self-start"
+            external
             href={externalRegistrationUrl}
-            rel="noopener noreferrer"
-            target="_blank"
           >
             Register
-          </a>
+          </Button>
         ) : (
-          <Link
-            className="inline-flex min-w-[120px] shrink-0 items-center justify-center self-start rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-            href="/contact"
-          >
+          <Button className="self-start" href="/contact">
             Contact Us to Register
-          </Link>
+          </Button>
         )}
       </div>
     </SectionWrapper>

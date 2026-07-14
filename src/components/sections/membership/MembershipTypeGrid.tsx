@@ -1,13 +1,10 @@
-import Link from "next/link";
+import { Button } from "@/components/shared/Button.tsx";
 import { MEMBERSHIP_TYPES_FALLBACK } from "@/lib/membershipTypes.ts";
 import type { MembershipTypeListItem } from "@/lib/sanity/queries.ts";
 import {
   getPortableTextListItems,
   getPortableTextSnippet,
 } from "@/lib/utils.ts";
-
-const BUTTON_CLASS =
-  "inline-flex min-w-[120px] shrink-0 items-center justify-center self-start rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover";
 
 interface MembershipTypeGridProps {
   membershipTypes: MembershipTypeListItem[];
@@ -57,12 +54,12 @@ export function MembershipTypeGrid({
                 [PENDING_CONTENT] — Benefits list.
               </p>
             )}
-            <Link
-              className={BUTTON_CLASS}
+            <Button
+              className="self-start"
               href={`/membership/${fallback.slug}`}
             >
               Express Interest
-            </Link>
+            </Button>
           </div>
         );
       })}

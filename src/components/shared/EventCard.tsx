@@ -27,7 +27,7 @@ export function EventCard({ event, className }: EventCardProps) {
         {event.heroImage ? (
           <Image
             alt={event.title}
-            className="object-cover"
+            className="object-cover transition-transform duration-200 group-hover:scale-105"
             fill
             src={urlFor(event.heroImage).width(600).height(340).url()}
           />

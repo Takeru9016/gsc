@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function RoomBookingCTA() {
@@ -17,12 +17,9 @@ export function RoomBookingCTA() {
             Contact us to check room availability and rates.
           </p>
         </div>
-        <Link
-          className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href="/booking?type=room"
-        >
+        <Button className="shrink-0" href="/booking?type=room">
           Check Availability
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

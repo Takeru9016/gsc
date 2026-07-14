@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AffiliatedClubsCTA } from "@/components/sections/membership/AffiliatedClubsCTA.tsx";
 import { EnrollmentBanner } from "@/components/sections/membership/EnrollmentBanner.tsx";
 import { MembershipTypeGrid } from "@/components/sections/membership/MembershipTypeGrid.tsx";
+import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import {
@@ -31,12 +32,19 @@ export default async function MembershipPage() {
       <EnrollmentBanner membershipConfig={membershipConfig} />
       <SectionWrapper>
         <div className="mb-8 md:mb-12 lg:mb-16">
-          <h2 className="font-body font-semibold text-(--color-text-primary) text-4xl">
+          <AnimatedText
+            as="h2"
+            className="font-body font-semibold text-(--color-text-primary) text-4xl"
+          >
             Membership Types
-          </h2>
-          <p className="mt-2 text-(--color-text-secondary)">
+          </AnimatedText>
+          <AnimatedText
+            as="p"
+            className="mt-2 text-(--color-text-secondary)"
+            delay={0.1}
+          >
             Choose the tier that fits you and express your interest.
-          </p>
+          </AnimatedText>
         </div>
         <MembershipTypeGrid membershipTypes={membershipTypes} />
       </SectionWrapper>

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function BanquetInquiryCTA() {
@@ -17,12 +17,9 @@ export function BanquetInquiryCTA() {
             Tell us about your event and we'll help you find the perfect hall.
           </p>
         </div>
-        <Link
-          className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href="/booking?type=banquet"
-        >
+        <Button className="shrink-0" href="/booking?type=banquet">
           Plan Your Event
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function LeadershipSection() {
@@ -21,12 +21,9 @@ export function LeadershipSection() {
           office bearers, and a governing council — each committed to preserving
           the club's legacy while steering its future growth.
         </AnimatedText>
-        <Link
-          className="mt-8 inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-          href="/about/team"
-        >
+        <Button className="mt-8" href="/about/team" variant="secondary">
           Meet Our Committee
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

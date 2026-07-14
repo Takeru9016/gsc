@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/Footer.tsx";
 import { Navbar } from "@/components/layout/Navbar.tsx";
+import { PageTransitionProvider } from "@/components/layout/PageTransitionProvider.tsx";
 import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider.tsx";
 import {
   ThemeProvider,
@@ -65,7 +66,9 @@ export default async function SiteLayout({
         <ThemeProvider>
           <SmoothScrollProvider>
             <Navbar />
-            <main id="main-content">{children}</main>
+            <main id="main-content">
+              <PageTransitionProvider>{children}</PageTransitionProvider>
+            </main>
             <Footer siteConfig={siteConfig} />
           </SmoothScrollProvider>
         </ThemeProvider>

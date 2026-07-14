@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useCallback } from "react";
 import {
   Controller,
   type ControllerRenderProps,
   useForm,
 } from "react-hook-form";
+import { Button } from "@/components/shared/Button.tsx";
 import {
   Select,
   SelectContent,
@@ -182,16 +182,9 @@ export function ContactForm() {
         </p>
       ) : null}
 
-      <button
-        className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
-        disabled={isSubmitting}
-        type="submit"
-      >
-        {isSubmitting ? (
-          <Loader2 aria-hidden="true" className="size-4 animate-spin" />
-        ) : null}
+      <Button loading={isSubmitting} type="submit">
         Send Message
-      </button>
+      </Button>
     </form>
   );
 }

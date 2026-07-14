@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { cn } from "@/lib/utils.ts";
 
 const FACILITIES = [
@@ -35,7 +36,7 @@ export function FacilitiesShowcase() {
           Premium Facilities
         </AnimatedText>
       </div>
-      <div className="flex flex-col gap-12 md:gap-16 lg:gap-20">
+      <StaggerReveal className="flex flex-col gap-12 md:gap-16 lg:gap-20">
         {FACILITIES.map((facility, index) => (
           <div
             className={cn(
@@ -56,16 +57,13 @@ export function FacilitiesShowcase() {
               <p className="mt-3 text-(--color-text-secondary)">
                 {facility.description}
               </p>
-              <Link
-                className="mt-6 inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-                href={facility.href}
-              >
+              <Button className="mt-6" href={facility.href} variant="secondary">
                 Explore {facility.name}
-              </Link>
+              </Button>
             </div>
           </div>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

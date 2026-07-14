@@ -1,6 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { CSSProperties } from "react";
+import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { CorporatePartner } from "@/lib/sanity/queries.ts";
@@ -43,15 +44,15 @@ export function PartnersStrip({ partners }: PartnersStripProps) {
   return (
     <SectionWrapper className="py-12 md:py-16">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="font-body font-medium text-(--color-text-secondary) text-sm uppercase tracking-wide">
-          Our Partners
-        </h2>
-        <Link
-          className="inline-flex items-center justify-center rounded-full border border-primary px-4 py-2 font-medium text-primary text-sm transition-all duration-200 hover:bg-primary/10"
-          href="/partners"
+        <AnimatedText
+          as="h2"
+          className="font-body font-medium text-(--color-text-secondary) text-sm uppercase tracking-wide"
         >
+          Our Partners
+        </AnimatedText>
+        <Button href="/partners" size="sm" variant="secondary">
           Partner With Us
-        </Link>
+        </Button>
       </div>
       <div className="overflow-hidden">
         <div

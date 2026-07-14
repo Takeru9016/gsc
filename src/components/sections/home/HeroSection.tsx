@@ -2,8 +2,8 @@
 
 import { gsap } from "gsap";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { Button } from "@/components/shared/Button.tsx";
 import { SceneCanvas } from "@/components/three/SceneCanvas.tsx";
 import { WebGLOnly } from "@/components/three/WebGLDetector.tsx";
 import { HeroFallback } from "./HeroFallback.tsx";
@@ -87,18 +87,10 @@ export function HeroSection() {
           Members
         </p>
         <div className="mt-10 flex flex-wrap gap-4" ref={ctaRef}>
-          <Link
-            className="inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-            href="/membership"
-          >
-            Explore Membership
-          </Link>
-          <Link
-            className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-            href="/facilities"
-          >
+          <Button href="/membership">Explore Membership</Button>
+          <Button href="/facilities" variant="secondary">
             View Facilities
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

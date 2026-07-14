@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { CommitteeMember } from "@/lib/sanity/queries.ts";
 
@@ -55,7 +56,7 @@ export function CommitteeGrid({ members, activeRole }: CommitteeGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filtered.map((member) => (
         <div
           className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6"
@@ -82,6 +83,6 @@ export function CommitteeGrid({ members, activeRole }: CommitteeGridProps) {
           </Badge>
         </div>
       ))}
-    </div>
+    </StaggerReveal>
   );
 }

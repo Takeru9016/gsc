@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function ByeLawsCTA() {
@@ -17,12 +17,9 @@ export function ByeLawsCTA() {
             Access our official bye-laws and governance documents.
           </p>
         </div>
-        <Link
-          className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-          href="/about/bye-laws"
-        >
+        <Button className="shrink-0" href="/about/bye-laws" variant="secondary">
           View Bye-Laws
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

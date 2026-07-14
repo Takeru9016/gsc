@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { MobileMenu } from "@/components/layout/MobileMenu.tsx";
+import { NavActiveUnderline } from "@/components/layout/NavActiveUnderline.tsx";
 import { ThemeToggle } from "@/components/layout/ThemeToggle.tsx";
 import { cn } from "@/lib/utils.ts";
 
@@ -121,7 +122,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-200",
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         isScrolled
           ? "border-border-dark border-b bg-surface-dark"
           : "bg-transparent"
@@ -156,8 +157,10 @@ export function Navbar() {
                 >
                   {item.label.toUpperCase()}
                   {active ? (
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-primary" />
-                  ) : null}
+                    <NavActiveUnderline key={pathname} />
+                  ) : (
+                    <span className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary/60 transition-transform duration-200 group-hover:scale-x-100" />
+                  )}
                 </Link>
 
                 {item.children ? (

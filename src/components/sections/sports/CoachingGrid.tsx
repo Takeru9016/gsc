@@ -1,10 +1,7 @@
-import Link from "next/link";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import type { CoachingSport } from "@/lib/sanity/queries.ts";
 import { getSportCategoryLabel } from "@/lib/sportCategories.ts";
-
-const BUTTON_CLASS =
-  "inline-flex min-w-[120px] shrink-0 items-center justify-center self-start rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover";
 
 interface CoachingGridProps {
   activeCategory: string;
@@ -53,18 +50,17 @@ export function CoachingGrid({ sports, activeCategory }: CoachingGridProps) {
             </Badge>
           ) : null}
           {sport.externalRegistrationUrl ? (
-            <a
-              className={BUTTON_CLASS}
+            <Button
+              className="self-start"
+              external
               href={sport.externalRegistrationUrl}
-              rel="noopener noreferrer"
-              target="_blank"
             >
               Register
-            </a>
+            </Button>
           ) : (
-            <Link className={BUTTON_CLASS} href="/contact?subject=coaching">
+            <Button className="self-start" href="/contact?subject=coaching">
               Inquire
-            </Link>
+            </Button>
           )}
         </div>
       ))}

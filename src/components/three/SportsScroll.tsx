@@ -9,6 +9,7 @@ import {
   type RefObject,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -2080,7 +2081,7 @@ function useSceneOrchestration(
 ) {
   const reducedMotion = useReducedMotion();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) {
       return;

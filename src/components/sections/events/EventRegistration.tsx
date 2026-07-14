@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 interface EventRegistrationProps {
@@ -35,14 +35,9 @@ export function EventRegistration({
                 </p>
               ) : null}
             </div>
-            <Link
-              className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-              href={registrationUrl}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Button className="shrink-0" external href={registrationUrl}>
               Register Now
-            </Link>
+            </Button>
           </div>
         ) : (
           <>

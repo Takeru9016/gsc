@@ -175,7 +175,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 3-07   Sports scroll — Scene 4 Tennis + Scene 5 Squash
 [x] 3-08   Sports scroll — Scene 6 Gym + scroll orchestration
 [x] 3-09   Sport hero objects — Cricket ball, Shuttlecock, Tennis ball, Water sphere
-[ ] 3-10   GSAP polish pass — page transitions, scroll reveals, micro-interactions
+[x] 3-10   GSAP polish pass — page transitions, scroll reveals, micro-interactions
 [ ] 3-11   Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
 ```
 
@@ -184,8 +184,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 3
-**Active Task**: 3-10 — GSAP polish pass — page transitions, scroll reveals, micro-interactions
-**Last Completed**: 3-09 — Sport hero objects — Cricket ball, Shuttlecock, Tennis ball, Water sphere
+**Active Task**: 3-11 — Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
+**Last Completed**: 3-10 — GSAP polish pass — page transitions, scroll reveals, micro-interactions
 
 > Update this section when running /done after each task.
 

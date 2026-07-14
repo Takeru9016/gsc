@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { Button } from "@/components/shared/Button.tsx";
 import { EventCard } from "@/components/shared/EventCard.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { EventListItem } from "@/lib/sanity/queries.ts";
 
 interface EventsGridProps {
@@ -19,12 +20,7 @@ export function EventsGrid({
         <p className="text-(--color-text-secondary)">
           No events currently. Check back soon.
         </p>
-        <Link
-          className="inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href="/events/leagues"
-        >
-          View Leagues
-        </Link>
+        <Button href="/events/leagues">View Leagues</Button>
       </div>
     );
   }
@@ -44,10 +40,10 @@ export function EventsGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filtered.map((event) => (
         <EventCard event={event} key={event._id} />
       ))}
-    </div>
+    </StaggerReveal>
   );
 }

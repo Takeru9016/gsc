@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function RecreationDownloadsCTA() {
@@ -17,12 +17,9 @@ export function RecreationDownloadsCTA() {
             Find the latest Housie night notice in the downloads section.
           </p>
         </div>
-        <Link
-          className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href="/downloads"
-        >
+        <Button className="shrink-0" href="/downloads">
           View Downloads
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { Button } from "@/components/shared/Button.tsx";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
@@ -49,14 +50,9 @@ export function PDFViewer({
         <p className="text-(--color-text-secondary)">
           Could not load document. Download instead.
         </p>
-        <a
-          className="mt-4 inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href={url}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <Button className="mt-4" external href={url}>
           Download PDF
-        </a>
+        </Button>
       </div>
     );
   }
@@ -72,15 +68,10 @@ export function PDFViewer({
           <span />
         )}
         {showDownload ? (
-          <a
-            className="inline-flex items-center gap-2 rounded-full border border-primary px-4 py-2 font-medium text-primary text-sm transition-all duration-200 hover:bg-primary/10"
-            href={url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <Button external href={url} size="sm" variant="secondary">
             <Download aria-hidden="true" className="size-4" />
             Download
-          </a>
+          </Button>
         ) : null}
       </div>
 

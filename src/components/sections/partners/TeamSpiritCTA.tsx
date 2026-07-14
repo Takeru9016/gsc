@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 export function TeamSpiritCTA() {
@@ -18,12 +18,13 @@ export function TeamSpiritCTA() {
             Year. Reach members directly in their homes.
           </p>
         </div>
-        <Link
-          className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
+        <Button
+          className="shrink-0"
           href="/partners/team-spirit"
+          variant="secondary"
         >
           View Team Spirit
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

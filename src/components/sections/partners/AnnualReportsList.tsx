@@ -4,6 +4,7 @@ import { Download } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { PDFViewerLazy } from "@/components/shared/PDFViewerLazy.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
@@ -92,22 +93,13 @@ function ReportCard({ report }: { report: DisplayReport }) {
           <div className="mt-6 flex flex-wrap gap-3">
             {report.pdfFile ? (
               <>
-                <a
-                  className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-                  href={report.pdfFile}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
+                <Button external href={report.pdfFile}>
                   <Download aria-hidden="true" size={16} />
                   Download PDF
-                </a>
-                <button
-                  className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-                  onClick={togglePreview}
-                  type="button"
-                >
+                </Button>
+                <Button onClick={togglePreview} variant="secondary">
                   {isPreviewOpen ? "Close Preview" : "Preview"}
-                </button>
+                </Button>
               </>
             ) : (
               <span className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-(--color-border) px-6 py-3 font-medium text-(--color-text-secondary)">

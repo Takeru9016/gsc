@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 const SPORT_CATEGORIES = [
@@ -21,12 +22,9 @@ export function SportsGrid() {
         >
           World-Class Sports
         </AnimatedText>
-        <Link
-          className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-          href="/sports"
-        >
+        <Button href="/sports" variant="secondary">
           View All Sports
-        </Link>
+        </Button>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
         {SPORT_CATEGORIES.map((category) => (

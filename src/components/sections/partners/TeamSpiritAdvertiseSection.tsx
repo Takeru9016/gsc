@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { PortableTextRenderer } from "@/components/shared/PortableTextRenderer.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import type { TeamSpiritEdition } from "@/lib/sanity/queries.ts";
@@ -30,12 +30,9 @@ export function TeamSpiritAdvertiseSection({
             Ad specifications and rates available on request.
           </p>
         )}
-        <Link
-          className="mt-6 inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-          href="/contact?subject=partnership"
-        >
+        <Button className="mt-6" href="/contact?subject=partnership">
           Get Ad Specs
-        </Link>
+        </Button>
       </div>
     </SectionWrapper>
   );

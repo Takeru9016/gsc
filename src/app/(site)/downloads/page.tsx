@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { DownloadsFilterBar } from "@/components/sections/downloads/DownloadsFilterBar.tsx";
 import { DownloadsList } from "@/components/sections/downloads/DownloadsList.tsx";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { getDownloads } from "@/lib/sanity/queries.ts";
@@ -54,12 +54,9 @@ export default async function DownloadsPage({
               Contact the club office.
             </p>
           </div>
-          <Link
-            className="inline-flex min-w-[120px] shrink-0 items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-            href="/contact"
-          >
+          <Button className="shrink-0" href="/contact">
             Contact Us
-          </Link>
+          </Button>
         </div>
       </SectionWrapper>
     </>

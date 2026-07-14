@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import type { DisplayAchievement } from "@/components/shared/AchievementCard.tsx";
 import { AchievementCard } from "@/components/shared/AchievementCard.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import {
   Dialog,
   DialogContent,
@@ -65,7 +66,7 @@ export function AchievementsGrid({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
         {filtered.map((achievement) => (
           <AchievementCard
             achievement={achievement}
@@ -73,7 +74,7 @@ export function AchievementsGrid({
             onOpenLightbox={setSelected}
           />
         ))}
-      </div>
+      </StaggerReveal>
 
       <Dialog onOpenChange={handleOpenChange} open={selected !== null}>
         <DialogContent className="max-w-2xl p-0">

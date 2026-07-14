@@ -1,9 +1,9 @@
 "use client";
 
 import { gsap } from "gsap";
-import Link from "next/link";
 import { useCallback, useEffect, useRef } from "react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 
 const PLACEHOLDER_COUNT = 8;
@@ -50,12 +50,9 @@ export function AchievementsReel() {
         >
           Our Champions
         </AnimatedText>
-        <Link
-          className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-          href="/achievements"
-        >
+        <Button href="/achievements" variant="secondary">
           View All Achievements
-        </Link>
+        </Button>
       </div>
       {/* biome-ignore lint/a11y/noStaticElementInteractions: decorative hover-pause on a CSS marquee, content is fully accessible without it */}
       {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: same reasoning */}

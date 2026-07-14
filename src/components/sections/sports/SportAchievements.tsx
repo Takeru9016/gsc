@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { Achievement } from "@/lib/sanity/queries.ts";
@@ -50,12 +50,13 @@ export function SportAchievements({
           </div>
         ))}
       </div>
-      <Link
-        className="mt-8 inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
+      <Button
+        className="mt-8"
         href={`/achievements?sport=${sportSlug}`}
+        variant="secondary"
       >
         View All {sportName} Achievements
-      </Link>
+      </Button>
     </SectionWrapper>
   );
 }

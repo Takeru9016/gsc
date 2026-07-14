@@ -2,6 +2,7 @@ import { Download } from "lucide-react";
 import Image from "next/image";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { TeamSpiritEdition } from "@/lib/sanity/queries.ts";
@@ -94,22 +95,13 @@ function EditionCard({ edition }: { edition: TeamSpiritEdition }) {
       <div className="mt-6 flex flex-wrap gap-3">
         {edition.pdfFile ? (
           <>
-            <a
-              className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-              href={edition.pdfFile}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Button external href={edition.pdfFile} variant="secondary">
               View Edition
-            </a>
-            <a
-              className="inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-              download
-              href={edition.pdfFile}
-            >
+            </Button>
+            <Button download href={edition.pdfFile}>
               <Download aria-hidden="true" size={16} />
               Download
-            </a>
+            </Button>
           </>
         ) : (
           <Badge variant="outline">Coming Soon</Badge>

@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
+import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import type { PartnershipOpportunity } from "@/lib/sanity/queries.ts";
 import { cn, getPortableTextSnippet } from "@/lib/utils.ts";
@@ -110,12 +111,9 @@ export function PartnershipOpportunitiesGrid({
                 ))}
               </ul>
             ) : null}
-            <a
-              className="mt-auto inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-              href="#inquiry"
-            >
+            <Button className="mt-auto" href="#inquiry">
               Inquire Now
-            </a>
+            </Button>
           </div>
         ))}
       </div>

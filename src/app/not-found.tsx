@@ -1,5 +1,5 @@
 import { Barlow_Condensed, Inter } from "next/font/google";
-import Link from "next/link";
+import { Button } from "@/components/shared/Button.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
 import "./globals.css";
 
@@ -25,18 +25,10 @@ export default function NotFound() {
           minHeight="screen"
           subline="The page you're looking for doesn't exist or has been moved."
         >
-          <Link
-            className="inline-flex min-w-[120px] items-center justify-center rounded-full bg-primary px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-primary-hover"
-            href="/"
-          >
-            Go Home
-          </Link>
-          <Link
-            className="inline-flex min-w-[120px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-all duration-200 hover:bg-primary/10"
-            href="/contact"
-          >
+          <Button href="/">Go Home</Button>
+          <Button href="/contact" variant="secondary">
             Contact Us
-          </Link>
+          </Button>
         </PageHero>
       </body>
     </html>
