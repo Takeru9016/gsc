@@ -48,6 +48,7 @@ export function DiningVenueGallery({
                   alt={`${venueName} — venue photo`}
                   className="object-cover"
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   src={urlFor(image).width(500).height(500).url()}
                 />
               </div>

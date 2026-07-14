@@ -43,6 +43,7 @@ export function AchievementCard({
           alt={achievement.title}
           className="object-cover transition-transform duration-200 group-hover:scale-105"
           fill
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
           src={urlFor(achievement.image).width(600).height(600).url()}
         />
       ) : (

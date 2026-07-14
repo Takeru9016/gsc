@@ -76,6 +76,7 @@ function EditionCard({ edition }: { edition: TeamSpiritEdition }) {
             alt={edition.editionName}
             className="object-cover"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={urlFor(edition.coverImage).width(600).height(800).url()}
           />
         ) : (

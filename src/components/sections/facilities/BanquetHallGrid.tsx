@@ -51,6 +51,7 @@ function HallCard({ hall }: { hall: BanquetHallListItem }) {
             alt={hall.name}
             className="object-cover transition-transform duration-200 group-hover:scale-105"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={urlFor(hall.heroImage).width(600).height(340).url()}
           />
         ) : (

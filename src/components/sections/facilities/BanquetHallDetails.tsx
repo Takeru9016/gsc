@@ -61,6 +61,7 @@ export function BanquetHallDetails({
                 alt={`${hallName} floor plan`}
                 className="object-contain"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 src={urlFor(floorPlanImage).width(800).height(450).url()}
               />
             </div>

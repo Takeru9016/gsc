@@ -71,6 +71,7 @@ function ReportCard({ report }: { report: DisplayReport }) {
               alt={report.title}
               className="object-cover"
               fill
+              sizes="(max-width: 768px) 100vw, 288px"
               src={urlFor(report.coverImage).width(600).height(338).url()}
             />
           ) : (

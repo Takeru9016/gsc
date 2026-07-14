@@ -86,6 +86,7 @@ export function AchievementsGrid({
                     alt={selected.title}
                     className="object-cover"
                     fill
+                    sizes="(max-width: 672px) 100vw, 672px"
                     src={urlFor(selected.image).width(1200).height(675).url()}
                   />
                 ) : null}

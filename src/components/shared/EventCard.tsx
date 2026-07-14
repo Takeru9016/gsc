@@ -29,6 +29,7 @@ export function EventCard({ event, className }: EventCardProps) {
             alt={event.title}
             className="object-cover transition-transform duration-200 group-hover:scale-105"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={urlFor(event.heroImage).width(600).height(340).url()}
           />
         ) : null}

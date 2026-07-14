@@ -176,16 +176,16 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 3-08   Sports scroll — Scene 6 Gym + scroll orchestration
 [x] 3-09   Sport hero objects — Cricket ball, Shuttlecock, Tennis ball, Water sphere
 [x] 3-10   GSAP polish pass — page transitions, scroll reveals, micro-interactions
-[ ] 3-11   Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
+[x] 3-11   Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
 ```
 
 ---
 
 ## Active Task
 
-**Current Phase**: 3
-**Active Task**: 3-11 — Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
-**Last Completed**: 3-10 — GSAP polish pass — page transitions, scroll reveals, micro-interactions
+**Current Phase**: 3 (complete — all 68 tasks across Phases 1A/1B/2/3 done)
+**Active Task**: None — all phases complete. Remaining work is the manual/live verification and ops items in `docs/LAUNCH_CHECKLIST.md` (Lighthouse, live WebGL profiling, live ISR round-trip, live redirect check, mobile device QA, env vars, domain, credentials).
+**Last Completed**: 3-11 — Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
 
 > Update this section when running /done after each task.
 

@@ -34,6 +34,7 @@ export function SportCard({ sport, className }: SportCardProps) {
             alt={sport.name}
             className="object-cover transition-transform duration-200 group-hover:scale-105"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={urlFor(sport.heroImage).width(600).height(340).url()}
           />
         ) : (

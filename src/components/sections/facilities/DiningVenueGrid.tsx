@@ -96,6 +96,7 @@ function VenueCard({ venue }: { venue: DiningVenueListItem }) {
             alt={venue.name}
             className="object-cover transition-transform duration-200 group-hover:scale-105"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={urlFor(venue.heroImage).width(600).height(340).url()}
           />
         ) : (

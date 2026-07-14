@@ -36,6 +36,7 @@ export function SportAchievements({
                 alt={achievement.title}
                 className="object-cover"
                 fill
+                sizes="(max-width: 640px) 100vw, 33vw"
                 src={urlFor(achievement.image).width(400).height(400).url()}
               />
             </div>

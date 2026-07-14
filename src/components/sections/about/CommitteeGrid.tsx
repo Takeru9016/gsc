@@ -68,6 +68,7 @@ export function CommitteeGrid({ members, activeRole }: CommitteeGridProps) {
                 alt={member.name}
                 className="object-cover"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 src={urlFor(member.photo).width(400).height(400).url()}
               />
             ) : null}

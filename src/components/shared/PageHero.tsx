@@ -82,6 +82,7 @@ export function PageHero({
             className="object-cover"
             fill
             priority
+            sizes="100vw"
             src={urlFor(image).width(1920).height(1080).url()}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-bg-dark/0 via-bg-dark/40 to-bg-dark/80" />
