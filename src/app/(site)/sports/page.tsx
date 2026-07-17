@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CoachingCTA } from "@/components/sections/sports/CoachingCTA.tsx";
 import { SportsCategoryGrid } from "@/components/sections/sports/SportsCategoryGrid.tsx";
-import { SportsScrollWebGL } from "@/components/sections/sports/SportsScrollWebGL.tsx";
+import { SportsScroll } from "@/components/sections/sports/SportsScroll.tsx";
 import { PageHero } from "@/components/shared/PageHero.tsx";
 import { getSports } from "@/lib/sanity/queries.ts";
 
@@ -19,8 +19,7 @@ export default async function SportsPage() {
   return (
     <>
       <PageHero headline="23+ Sports. One Club." />
-      {/* Scene 1 (Cricket) ships in Task 3-05; Scenes 2-6 ship in Tasks 3-06 through 3-08 */}
-      <SportsScrollWebGL sports={sports} />
+      <SportsScroll sports={sports} />
       <SportsCategoryGrid sports={sports} />
       <CoachingCTA />
     </>
