@@ -39,6 +39,13 @@ export const siteConfig = defineType({
       type: "text",
     }),
     defineField({
+      description:
+        "Cloudinary or hosted URL for the homepage hero background video",
+      name: "heroVideoUrl",
+      title: "Hero Video URL",
+      type: "url",
+    }),
+    defineField({
       description: "PENDING — confirm with club management",
       name: "emergencyPhone",
       title: "Emergency Phone (Medical Cell)",

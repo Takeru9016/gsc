@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
     <>
-      <HeroSection />
+      <HeroSection siteConfig={siteConfig} />
       <StatsBar />
       <SportsGrid />
       <FacilitiesShowcase />

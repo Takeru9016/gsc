@@ -446,110 +446,87 @@ From `download` documents. Category filter. Date sorted. Download buttons.
 
 ---
 
-## Phase 3 — 3D & Polish (11 tasks)
+## Phase 3 — Motion & Polish (5 tasks)
 
-Build in order. Each task depends on the previous.
-
----
-
-### 3-01 — R3F Setup
-
-**Goal**: Canvas wrapper, Suspense, WebGL detection utility.
-
-- `components/three/WebGLDetector.tsx` — detects `window.WebGLRenderingContext` + checks for mobile
-- `components/three/SceneCanvas.tsx` — R3F `<Canvas>` wrapper with Suspense + ErrorBoundary
-- WebGL disabled on mobile — CSS class `.webgl-disabled` applied to `<html>`
+No WebGL. Stack: Video hero (GSC.mp4) + Lottie sport animations + GSAP scroll experience.
+Build in order. Read docs/3D.md in full before starting.
 
 ---
 
-### 3-02 — Homepage Hero Fallback
+### 3-01 — Smooth Scroll + Video Hero
 
-**Goal**: CSS GSAP particle animation — mobile-safe, no WebGL.
+**Goal**: Lenis + GSAP smooth scroll wired up. Homepage hero shows GSC video background.
 
-Pure CSS + GSAP animated particles. Looks similar to WebGL version. Must work on all devices.
+- `components/layout/SmoothScrollProvider.tsx` — Lenis init, GSAP ticker sync, mounted in (site)/layout.tsx
+- Update Sanity `siteConfig` schema — add `heroVideoUrl` field
+- `components/sections/home/HeroSection.tsx` — full rewrite:
+  - `<video autoPlay muted loop playsInline>` as background
+  - Dark gradient overlay
+  - GSAP stagger on text: badge → headline → subline → CTAs
+  - Scroll-out: content fades + lifts as hero scrolls out of view
+- `public/videos/` directory with README — placeholder for GSC.mp4
+- `public/images/hero-poster.jpg` — placeholder, replace with first frame of video
 
----
-
-### 3-03 — Homepage Hero WebGL
-
-**Goal**: Full R3F particle hero scene (desktop only).
-
-2000 instanced particles. Swirl + cursor displacement. Logo convergence on load. Scroll-out transition via GSAP ScrollTrigger.
-
----
-
-### 3-04 — Sports Scroll Fallback
-
-**Goal**: GSAP CSS scroll experience for mobile — 6 sport categories.
-
-Stacked sections with GSAP scroll-triggered animations. Sport category images + text. Works on all devices.
+**Video source**: `https://www.gsc.in/public/user/images/GSC.mp4` — download and compress to < 8MB.
 
 ---
 
-### 3-05 — Sports Scroll Scene 1 — Cricket
+### 3-02 — Lottie Setup + Sport Animations
 
-**Goal**: First WebGL scene in sports scroll experience.
+**Goal**: LottiePlayer component ready. Sport pages show Lottie animation in hero.
 
-GSAP ScrollTrigger pin. Cricket scene: low camera angle, #FFB300 key light, dust particles. Scene transitions to Scene 2 on scroll.
+- `components/shared/LottiePlayer.tsx` — lottie-react wrapper component
+- `components/sections/sports/LottieScenePlayer.tsx` — dynamic import per sport (avoids loading all 6 JSON on every page)
+- `public/lottie/` directory with README — 6 files needed: cricket.json, swimming.json, badminton.json, tennis.json, squash.json, gym.json
+- Update `/sports/[slug]` hero — replace `[PENDING_3D_OBJECT]` div with `LottieScenePlayer`
+- `threeObjectType` field in Sanity maps to Lottie files (no schema change needed — just update the component map)
 
----
-
-### 3-06 — Sports Scroll Scenes 2 + 3
-
-**Goal**: Swimming (Scene 2) + Badminton (Scene 3).
-
-Swimming: caustic shader, #1E88E5 ambient. Badminton: shuttlecock arc trail, fluorescent lighting.
+**Lottie source**: lottiefiles.com — search sport name + "minimal" or "loop". Dark-compatible styles preferred.
 
 ---
 
-### 3-07 — Sports Scroll Scenes 4 + 5
+### 3-03 — Sports Scroll Experience
 
-**Goal**: Tennis (Scene 4) + Squash (Scene 5).
+**Goal**: GSAP horizontal scroll with 6 sport panels. Lottie animation per panel (desktop).
 
-Tennis: clay court, ball bounce trail. Squash: enclosed court, impact burst.
-
----
-
-### 3-08 — Sports Scroll Scene 6 + Orchestration
-
-**Goal**: Gym scene (Scene 6) + full scroll orchestration.
-
-Gym: dark + #E53935 spot light, energy particles. Full orchestration: 6-scene cross-fade on scroll, progress dots overlay UI.
-
----
-
-### 3-09 — Sport Hero Objects
-
-**Goal**: Contained 3D objects in `/sports/[slug]` hero (desktop only).
-
-4 objects to build: cricket ball (priority), shuttlecock, tennis ball, water sphere. Ambient rotation. Fade on scroll. Mobile: hidden, static image shown.
+- `components/sections/sports/SportsScroll.tsx` — full horizontal scroll implementation
+  - 6 panels, side by side, GSAP scrolls them left as user scrolls down
+  - ScrollTrigger: pin + scrub:1 + snap to each panel
+  - Per panel: sport name (Display L), panel number, stat, accent color, CTA, Lottie right column
+  - Background: sport.heroImage from Sanity + dark overlay
+  - Progress dots: fixed right side, onUpdate callback updates active dot
+- `components/sections/sports/SportsScrollMobile.tsx` — stacked vertical version for < lg breakpoint
+  - 6 full-height sections, GSAP scroll-triggered fade-in per section
+  - No pinning. No Lottie. Sport image + text only.
+- Replace existing placeholder in `/sports` page with this component
 
 ---
 
-### 3-10 — GSAP Polish Pass
+### 3-04 — GSAP Polish Pass
 
-**Goal**: Page transitions, scroll reveals, micro-interactions across all pages.
+**Goal**: Page transitions, scroll reveals, card stagger, micro-interactions across all pages.
 
-- Page transition: fade-in on route change
-- Scroll reveals: AnimatedText on all headings
-- Card hover states: subtle lift + shadow
-- Navbar scroll behaviour refinement
-- Lenis smooth scroll tuning
+- Page transition: fade-in on route change via PageTransition component wrapping `<main>`
+- Scroll reveals: verify AnimatedText on all section headings and sublines across all pages
+- Card stagger: apply GSAP stagger to all card grids (SportsGrid, EventsGrid, AchievementGrid, CommitteeGrid, BanquetCards, DiningCards)
+- Hero scroll-out: content fades + shifts up as hero scrolls past on all PageHero sections
+- Navbar: transition-colors on background change, active route underline animates in
+- Footer: fade + slide-up on scroll-enter
+- Hover states: verify all cards have transition-all duration-200 translate-y-[-2px]
+- All animations: prefers-reduced-motion check
 
 ---
 
-### 3-11 — Performance Audit + Launch
+### 3-05 — Performance Audit + Launch
 
-**Goal**: Lighthouse scores acceptable. WebGL budget met. ISR validated. Launch.
+**Goal**: Site is production-ready. All checklist items resolved.
 
-Checklist:
-- [ ] Lighthouse: Performance > 85 (mobile), > 90 (desktop)
-- [ ] WebGL: < 100ms load, < 16ms frame time
-- [ ] All ISR tags revalidating correctly via webhook test
-- [ ] All 301 redirects verified
-- [ ] All PENDING_CONTENT items resolved or flagged to client
-- [ ] DPDP Act compliance reviewed with legal
-- [ ] Emergency contacts in footer — real numbers confirmed
-- [ ] Sanity studio access credentials shared with GSC staff
-- [ ] Environment variables set correctly in Vercel production
-- [ ] Custom domain gsc.in pointed to Vercel
+- `pnpm build` passes with 0 errors
+- Lighthouse: Performance > 85 mobile, > 90 desktop
+- Video hero: plays on Chrome, Safari iOS, Chrome Android. Poster shows instantly.
+- Lottie: all 6 files loading, no console errors, hidden on mobile
+- Sports scroll: pins correctly on desktop, stacked version works on mobile
+- ISR: webhook fires on Sanity update, page refreshes within 10 seconds
+- All 301 redirects verified
+- PENDING_CONTENT audit: compile client handoff list
+- Pre-launch: env vars, domain, SSL, Studio access, Resend domain, form tests

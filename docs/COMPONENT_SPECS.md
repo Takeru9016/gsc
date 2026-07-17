@@ -393,74 +393,83 @@ Subject options: General | Membership | Event | Partnership | Media | Leagues
 
 ---
 
-## Three.js Components
+## Motion Components
 
-### `WebGLDetector`
-**File**: `components/three/WebGLDetector.tsx`
+### `LottiePlayer`
+**File**: `components/shared/LottiePlayer.tsx`
 **Type**: Client Component
 
 ```typescript
-// No props — utility component
-// Returns: boolean (via hook) or component (via wrapper)
-
-export function useWebGL(): boolean
-export function WebGLOnly({ children, fallback }: { children: ReactNode; fallback: ReactNode }): JSX.Element
-```
-
-**Detection**:
-```typescript
-const hasWebGL = typeof window !== 'undefined' &&
-  !!window.WebGLRenderingContext &&
-  !isMobile()  // user-agent check
-
-function isMobile(): boolean {
-  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
-}
-```
-
----
-
-### `SceneCanvas`
-**File**: `components/three/SceneCanvas.tsx`
-**Type**: Client Component
-
-```typescript
-interface SceneCanvasProps {
-  children: React.ReactNode
+interface LottiePlayerProps {
+  src: object                     // imported JSON animation data
   className?: string
-  camera?: { fov?: number; position?: [number, number, number] }
-  dpr?: [number, number]          // Default [1, 2]
+  loop?: boolean                  // Default true
+  autoplay?: boolean              // Default true
+  speed?: number                  // Default 1
 }
 ```
 
-**Wraps**: R3F `<Canvas>` with `<Suspense>` + `<ErrorBoundary>`.
-Performance: `gl={{ antialias: false }}` on mobile (if somehow reached), `dpr` capped at 2.
+**Behavior**: Wraps `lottie-react`. Renders SVG animation. Used on `/sports/[slug]` hero (desktop only) and inside each panel of `SportsScroll`.
 
 ---
 
-### `HeroScene`
-**File**: `components/three/HeroScene.tsx`
+### `LottieScenePlayer`
+**File**: `components/sections/sports/LottieScenePlayer.tsx`
 **Type**: Client Component
 
-Full homepage WebGL particle scene. See `docs/3D.md` for full spec.
+```typescript
+type LottieSport = 'cricket' | 'swimming' | 'badminton' | 'tennis' | 'squash' | 'gym'
+
+interface LottieScenePlayerProps {
+  sport: LottieSport
+  className?: string
+}
+```
+
+**Behavior**: Dynamically imports the correct Lottie JSON for the sport on mount. Avoids loading all 6 JSON files on every page. Shows nothing while loading (no layout shift — container has fixed dimensions).
+
+**Sport → JSON mapping**:
+```
+cricket   → public/lottie/cricket.json
+swimming  → public/lottie/swimming.json
+badminton → public/lottie/badminton.json
+tennis    → public/lottie/tennis.json
+squash    → public/lottie/squash.json
+gym       → public/lottie/gym.json
+```
+
+**Sanity field → Lottie sport mapping** (in sport/[slug] page):
+```
+threeObjectType: 'cricket-ball'  → sport: 'cricket'
+threeObjectType: 'shuttlecock'   → sport: 'badminton'
+threeObjectType: 'tennis-ball'   → sport: 'tennis'
+threeObjectType: 'water-sphere'  → sport: 'swimming'
+```
 
 ---
 
 ### `SportsScroll`
-**File**: `components/three/SportsScroll.tsx`
+**File**: `components/sections/sports/SportsScroll.tsx`
 **Type**: Client Component
 
-6-scene GSAP ScrollTrigger pinned scroll experience. See `docs/3D.md` for full spec.
+```typescript
+interface SportsScrollProps {
+  sports: SportQuery[]            // from getSports() — needs heroImage per sport
+}
+```
+
+**Behavior**: GSAP horizontal scroll, 6 panels. Pins section on scroll, snaps between panels. Progress dots on right side. LottieScenePlayer in right column (desktop). On mobile (< lg): renders `SportsScrollMobile` instead.
 
 ---
 
-### Sport Objects (4 components)
+### `SportsScrollMobile`
+**File**: `components/sections/sports/SportsScrollMobile.tsx` (or colocated in SportsScroll.tsx)
+**Type**: Client Component
 
-```
-components/three/objects/CricketBall.tsx
-components/three/objects/Shuttlecock.tsx
-components/three/objects/TennisBall.tsx
-components/three/objects/WaterSphere.tsx
+```typescript
+interface SportsScrollMobileProps {
+  sports: SportQuery[]
+}
 ```
 
-Each: ambient rotation animation, fade on scroll. See `docs/3D.md` for full spec.
+**Behavior**: Stacked vertical sections, one per sport category. GSAP scroll-triggered fade-in per section. No pinning. No Lottie. Hero image background + dark overlay + sport name + CTA.

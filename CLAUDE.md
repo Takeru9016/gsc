@@ -164,28 +164,22 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 2-15   SEO — sitemap.xml, robots.txt, metadata API, 301 redirects
 ```
 
-### Phase 3 — 3D & Polish (11 tasks)
+### Phase 3 — Motion & Polish (5 tasks)
 ```
-[x] 3-01   R3F setup — Canvas wrapper, Suspense, WebGL detection
-[x] 3-02   Homepage hero fallback — GSAP particle CSS animation (mobile-safe)
-[x] 3-03   Homepage hero — WebGL particle scene (desktop only)
-[x] 3-04   Sports scroll fallback — GSAP CSS scroll experience (mobile-safe)
-[x] 3-05   Sports scroll — Scene 1 Cricket (WebGL, desktop only)
-[x] 3-06   Sports scroll — Scene 2 Swimming + Scene 3 Badminton
-[x] 3-07   Sports scroll — Scene 4 Tennis + Scene 5 Squash
-[x] 3-08   Sports scroll — Scene 6 Gym + scroll orchestration
-[x] 3-09   Sport hero objects — Cricket ball, Shuttlecock, Tennis ball, Water sphere
-[x] 3-10   GSAP polish pass — page transitions, scroll reveals, micro-interactions
-[x] 3-11   Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
+[x] 3-01   Smooth scroll provider (Lenis+GSAP) + video hero (GSC.mp4 background)
+[ ] 3-02   Lottie setup + sport animations (6 JSON files, LottiePlayer component)
+[ ] 3-03   Sports scroll — GSAP horizontal scroll experience (6 panels, Lottie per panel)
+[ ] 3-04   GSAP polish pass — page transitions, scroll reveals, card stagger, micro-interactions
+[ ] 3-05   Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
 ```
 
 ---
 
 ## Active Task
 
-**Current Phase**: 3 (complete — all 68 tasks across Phases 1A/1B/2/3 done)
-**Active Task**: None — all phases complete. Remaining work is the manual/live verification and ops items in `docs/LAUNCH_CHECKLIST.md` (Lighthouse, live WebGL profiling, live ISR round-trip, live redirect check, mobile device QA, env vars, domain, credentials).
-**Last Completed**: 3-11 — Performance audit — Lighthouse, WebGL budget, ISR validation, launch checklist
+**Current Phase**: 3 — Motion & Polish (redefined scope — replaces the old R3F/WebGL-based Phase 3; old 3D scenes/pages are being torn out and replaced with Lenis+GSAP scroll and Lottie)
+**Active Task**: 3-02 — Lottie setup + sport animations (6 JSON files, LottiePlayer component)
+**Last Completed**: 3-01 — Smooth scroll provider (Lenis+GSAP) + video hero (GSC.mp4 background)
 
 > Update this section when running /done after each task.
 
@@ -263,5 +257,5 @@ NEXT_PUBLIC_SITE_URL=https://gsc.in
 | docs/SANITY_CMS.md       | GROQ queries, ISR, singleton pattern            |
 | docs/DB.md               | Drizzle schema, Neon setup, migrations          |
 | docs/FORMS.md            | Form fields, Zod schemas, API route pattern     |
-| docs/3D.md               | R3F scenes, animation rules, performance        |
+| docs/3D.md               | Video hero, Lottie setup, GSAP scroll spec      |
 | docs/WORKFLOW.md         | Session ritual, git format, how to use commands |

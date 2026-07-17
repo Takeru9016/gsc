@@ -125,7 +125,7 @@ claude               # opens Claude Code in project directory
 
 ```json
 {
-  "model": "claude-sonnet-4-6",
+  "model": "claude-sonnet-5",
   "defaultMode": "acceptEdits",
 
   "permissions": {
@@ -184,16 +184,16 @@ claude               # opens Claude Code in project directory
 
 ### Settings Explained
 
-| Setting | Value | Why |
-|---|---|---|
-| `model` | `claude-sonnet-4-6` | Best quality/cost for all GSC build tasks |
-| `defaultMode` | `acceptEdits` | No confirmation dialogs on file writes |
-| `allow: pnpm:*` | all pnpm commands | install, dev, build, tsc, lint |
-| `deny: rm -rf:*` | blocked | prevents accidental deletion |
-| `deny: Write(.env*)` | blocked | prevents secret exposure |
-| `deny: Write(components/ui/*)` | blocked | shadcn must not be edited |
-| PostToolUse hooks | Biome + TSC | auto-runs after every file write |
-| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | 8192 | allows longer code generation outputs |
+| Setting                         | Value               | Why                                       |
+| ------------------------------- | ------------------- | ----------------------------------------- |
+| `model`                         | `claude-sonnet-5` | Best quality/cost for all GSC build tasks |
+| `defaultMode`                   | `acceptEdits`       | No confirmation dialogs on file writes    |
+| `allow: pnpm:*`                 | all pnpm commands   | install, dev, build, tsc, lint            |
+| `deny: rm -rf:*`                | blocked             | prevents accidental deletion              |
+| `deny: Write(.env*)`            | blocked             | prevents secret exposure                  |
+| `deny: Write(components/ui/*)`  | blocked             | shadcn must not be edited                 |
+| PostToolUse hooks               | Biome + TSC         | auto-runs after every file write          |
+| `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | 8192                | allows longer code generation outputs     |
 
 ---
 
@@ -231,7 +231,7 @@ Before the first `/build`, verify:
 - Verify `@/*` alias maps to project root
 
 ### Biome hook fails after every write
-- Check `biome.jsonc` exists and is valid
+- Check `biome.json` exists and is valid
 - Run `pnpm biome check --write [filename]` manually to see the error
 - Biome version mismatch: check `pnpm list @biomejs/biome`
 

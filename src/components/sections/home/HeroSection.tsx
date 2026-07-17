@@ -1,22 +1,18 @@
 "use client";
 
 import { gsap } from "gsap";
-import dynamic from "next/dynamic";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/shared/Button.tsx";
-import { SceneCanvas } from "@/components/three/SceneCanvas.tsx";
-import { WebGLOnly } from "@/components/three/WebGLDetector.tsx";
-import { HeroFallback } from "./HeroFallback.tsx";
+import type { SiteConfig } from "@/lib/sanity/queries.ts";
 
-const HeroScene = dynamic(
-  () => import("@/components/three/HeroScene.tsx").then((mod) => mod.HeroScene),
-  {
-    loading: () => null,
-    ssr: false,
-  }
-);
+const FALLBACK_VIDEO_URL = "/videos/gsc-hero.mp4";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  siteConfig: SiteConfig;
+}
+
+export function HeroSection({ siteConfig }: HeroSectionProps) {
   const badgeRef = useRef<HTMLSpanElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
@@ -51,22 +47,28 @@ export function HeroSection() {
     return () => ctx.revert();
   }, []);
 
+  const videoUrl = siteConfig.heroVideoUrl ?? FALLBACK_VIDEO_URL;
+
   return (
     <section
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-24"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-24"
       data-theme="dark"
     >
-      <div className="absolute inset-0 bg-bg-dark" />
-      <WebGLOnly fallback={<HeroFallback />}>
-        <div className="absolute inset-0">
-          <SceneCanvas camera={{ fov: 75, position: [0, 0, 5] }}>
-            <HeroScene />
-          </SceneCanvas>
-        </div>
-      </WebGLOnly>
-      <div className="absolute inset-0 bg-linear-to-b from-bg-dark/0 via-bg-dark/20 to-bg-dark" />
+      {/* [PENDING_CONTENT] — hero-poster.jpg is a solid-color placeholder. Replace with the first frame of the hero video. */}
+      <video
+        autoPlay
+        className="absolute inset-0 h-full w-full object-cover"
+        loop
+        muted
+        playsInline
+        poster="/images/hero-poster.jpg"
+      >
+        <source src={videoUrl} type="video/mp4" />
+      </video>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="absolute inset-0 bg-linear-to-b from-bg-dark/60 via-bg-dark/50 to-bg-dark/80" />
+
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <span
           className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary text-sm"
           ref={badgeRef}
@@ -74,24 +76,28 @@ export function HeroSection() {
           Mumbai's Premier Sports Destination
         </span>
         <h1
-          className="max-w-4xl font-display text-6xl text-text-primary-dark uppercase tracking-wide md:text-8xl lg:text-[96px]"
+          className="font-display text-6xl text-text-primary-dark uppercase tracking-wide md:text-8xl lg:text-[96px]"
           ref={headlineRef}
         >
           Goregaon Sports Club
         </h1>
         <p
-          className="mt-6 max-w-2xl text-lg text-text-secondary-dark"
+          className="mx-auto mt-6 max-w-2xl text-lg text-text-secondary-dark"
           ref={sublineRef}
         >
           Mumbai's Premier Sports Destination — 30+ Years, 23+ Sports, 40,000+
           Members
         </p>
-        <div className="mt-10 flex flex-wrap gap-4" ref={ctaRef}>
+        <div className="mt-10 flex flex-wrap justify-center gap-4" ref={ctaRef}>
           <Button href="/membership">Explore Membership</Button>
           <Button href="/facilities" variant="secondary">
             View Facilities
           </Button>
         </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <ChevronDown aria-hidden="true" className="size-6 text-white/50" />
       </div>
     </section>
   );

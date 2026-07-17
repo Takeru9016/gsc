@@ -46,16 +46,15 @@ pnpm add next-sanity @sanity/image-url @sanity/webhook
 ```bash
 pnpm add drizzle-orm @neondatabase/serverless drizzle-zod
 ```
-Note: this currently resolves to the `1.0.0-rc.4` line, not a `0.x` stable release. See the Version Note in `docs/DB.md` before writing `lib/db/index.ts` — the client setup differs from older Drizzle docs/tutorials.
-
-### 3D — React Three Fiber
-```bash
-pnpm add @react-three/fiber @react-three/drei three
-```
 
 ### Animation — GSAP + Lenis
 ```bash
 pnpm add gsap lenis
+```
+
+### Lottie (replaces 3D sport animations)
+```bash
+pnpm add lottie-react
 ```
 
 ### Email — Resend + React Email
@@ -85,11 +84,6 @@ pnpm add react-hook-form @hookform/resolvers zod
 ### Database tooling
 ```bash
 pnpm add -D drizzle-kit
-```
-
-### TypeScript types
-```bash
-pnpm add -D @types/three
 ```
 
 ### Sanity Studio
@@ -228,11 +222,9 @@ next-sanity
 drizzle-orm
 @neondatabase/serverless
 drizzle-zod
-@react-three/fiber
-@react-three/drei
-three
 gsap
 lenis
+lottie-react
 resend
 @react-email/components
 cloudinary
@@ -247,7 +239,6 @@ zod
 ### devDependencies
 ```
 drizzle-kit
-@types/three
 sanity
 @biomejs/biome
 ultracite
@@ -255,12 +246,32 @@ ultracite
 
 ---
 
+## Removed vs Original Plan
+
+These packages from the original 3D plan are NOT installed:
+```
+@react-three/fiber          — removed (no WebGL)
+@react-three/drei           — removed (no WebGL)
+three                       — removed (no WebGL)
+@types/three                — removed (no WebGL)
+```
+
+Replaced by:
+```
+lottie-react                — sport-specific Lottie animations
+```
+Video hero uses native HTML <video> — no extra package needed.
+
+---
+
 ## Notes
 
-- **Do not install ESLint** — `--no-eslint` flag is set in Step 1. Biome handles linting.
+- **Do not install ESLint** — `--no-eslint` is explicit in Step 1. Biome handles all linting.
 - **Do not install prettier** — Biome handles formatting.
-- **shadcn/ui components** are added individually via `pnpm dlx shadcn@latest add [component]` as needed — not pre-installed as a package.
-- **`next-cloudinary`** is optional if Cloudinary upload is handled client-side only (achievement form). Can be removed if not used server-side.
-- **`@react-pdf/renderer`** is for generating PDFs. **`react-pdf`** is for viewing them. Both are needed.
-- **`drizzle-zod`** generates Zod schemas directly from Drizzle table definitions — used in API route validation.
-- **`lenis`** — Studio Freight rebranded and the package moved from the scoped `@studio-freight/lenis` to the unscoped `lenis` (currently on v1.3.x). Use `lenis`, not the old scoped name.
+- **shadcn/ui components** added individually via `pnpm dlx shadcn@latest add [component]` as needed — not pre-installed as a package.
+- **`next-cloudinary`** handles Cloudinary on both server and client. If achievement upload is client-only, can be replaced with a direct fetch to the Cloudinary API.
+- **`@react-pdf/renderer`** is for generating PDFs. **`react-pdf`** is for viewing them. Both needed.
+- **`drizzle-zod`** generates Zod schemas from Drizzle table definitions — used in API route validation.
+- **`@studio-freight/lenis`** — correct package name for Lenis v1. Verify if this has changed before installing.
+- **Video hero** — uses native HTML `<video>` element. No package needed. See docs/3D.md for implementation spec.
+- **Lottie files** — source from LottieFiles.com (lottiefiles.com) or commission from graphic team. Store in `public/lottie/`. See docs/3D.md for the 6 files needed and sport mapping.

@@ -31,6 +31,7 @@ export interface SiteConfig {
   email: string;
   emergencyPhone: string;
   emergencyPhone2: string;
+  heroVideoUrl: string | null;
   phone: string;
   siteName: string;
   socialLinks: SiteConfigSocialLinks;
@@ -45,6 +46,7 @@ const DEFAULT_SITE_CONFIG: SiteConfig = {
   email: "[PENDING_CONTENT]",
   emergencyPhone: "[PENDING_CONTENT]",
   emergencyPhone2: "[PENDING_CONTENT]",
+  heroVideoUrl: null,
   phone: "[PENDING_CONTENT]",
   siteName: "Goregaon Sports Club",
   socialLinks: {
@@ -64,6 +66,7 @@ const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0]{
   address,
   emergencyPhone,
   emergencyPhone2,
+  heroVideoUrl,
   socialLinks,
   corporatePartners
 }`;
