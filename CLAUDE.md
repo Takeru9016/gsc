@@ -167,7 +167,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ### Phase 3 — Motion & Polish (5 tasks)
 ```
 [x] 3-01   Smooth scroll provider (Lenis+GSAP) + video hero (GSC.mp4 background)
-[ ] 3-02   Lottie setup + sport animations (6 JSON files, LottiePlayer component)
+[x] 3-02   Lottie setup + sport animations (6 JSON files, LottiePlayer component)
 [ ] 3-03   Sports scroll — GSAP horizontal scroll experience (6 panels, Lottie per panel)
 [ ] 3-04   GSAP polish pass — page transitions, scroll reveals, card stagger, micro-interactions
 [ ] 3-05   Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
@@ -178,8 +178,8 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 ## Active Task
 
 **Current Phase**: 3 — Motion & Polish (redefined scope — replaces the old R3F/WebGL-based Phase 3; old 3D scenes/pages are being torn out and replaced with Lenis+GSAP scroll and Lottie)
-**Active Task**: 3-02 — Lottie setup + sport animations (6 JSON files, LottiePlayer component)
-**Last Completed**: 3-01 — Smooth scroll provider (Lenis+GSAP) + video hero (GSC.mp4 background)
+**Active Task**: 3-03 — Sports scroll — GSAP horizontal scroll experience (6 panels, Lottie per panel)
+**Last Completed**: 3-02 — Lottie setup + sport animations (6 JSON files, LottiePlayer component)
 
 > Update this section when running /done after each task.
 
