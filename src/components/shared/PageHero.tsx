@@ -1,12 +1,17 @@
 "use client";
 
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
 import type { SanityImageSource } from "@/lib/sanity/image.ts";
 import { urlFor } from "@/lib/sanity/image.ts";
 import { cn } from "@/lib/utils.ts";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type PageHeroMinHeight = "screen" | "60vh" | "50vh";
 
@@ -33,6 +38,8 @@ export function PageHero({
   minHeight = "60vh",
   children,
 }: PageHeroProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLSpanElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const sublineRef = useRef<HTMLParagraphElement>(null);
@@ -50,18 +57,30 @@ export function PageHero({
       childrenRef.current,
     ].filter((element): element is HTMLElement => element !== null);
 
-    if (elements.length === 0) {
-      return;
-    }
-
     const ctx = gsap.context(() => {
-      gsap.from(elements, {
-        duration: 0.6,
-        ease: "power2.out",
-        opacity: 0,
-        stagger: 0.1,
-        y: 30,
-      });
+      if (elements.length > 0) {
+        gsap.from(elements, {
+          duration: 0.6,
+          ease: "power2.out",
+          opacity: 0,
+          stagger: 0.1,
+          y: 30,
+        });
+      }
+
+      if (sectionRef.current && contentRef.current) {
+        gsap.to(contentRef.current, {
+          ease: "none",
+          opacity: 0,
+          scrollTrigger: {
+            end: "bottom top",
+            scrub: true,
+            start: "top top",
+            trigger: sectionRef.current,
+          },
+          y: -30,
+        });
+      }
     });
 
     return () => ctx.revert();
@@ -74,6 +93,7 @@ export function PageHero({
         minHeightClasses[minHeight]
       )}
       data-theme="dark"
+      ref={sectionRef}
     >
       {image ? (
         <>
@@ -91,7 +111,10 @@ export function PageHero({
         <div className="absolute inset-0 bg-bg-dark" />
       )}
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"
+        ref={contentRef}
+      >
         {badge ? (
           <span
             className="mb-4 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary text-sm"

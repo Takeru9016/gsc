@@ -59,7 +59,7 @@ export function CommitteeGrid({ members, activeRole }: CommitteeGridProps) {
     <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filtered.map((member) => (
         <div
-          className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6"
+          className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md"
           key={member._id}
         >
           <div className="relative aspect-square overflow-hidden rounded-2xl bg-surface-dark">

@@ -1,6 +1,7 @@
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
 import { SportCard } from "@/components/shared/SportCard.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { SportListItem } from "@/lib/sanity/queries.ts";
 import { SPORT_CATEGORIES } from "@/lib/sportCategories.ts";
 
@@ -52,11 +53,11 @@ function CategoryBody({
   }
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <StaggerReveal className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {categorySports.map((sport) => (
         <SportCard key={sport._id} sport={sport} />
       ))}
-    </div>
+    </StaggerReveal>
   );
 }
 
@@ -70,9 +71,13 @@ export function SportsCategoryGrid({ sports }: SportsCategoryGridProps) {
         >
           Every Sport, One Club
         </AnimatedText>
-        <p className="mt-3 max-w-2xl text-(--color-text-secondary)">
+        <AnimatedText
+          as="p"
+          className="mt-3 max-w-2xl text-(--color-text-secondary)"
+          delay={0.1}
+        >
           23+ disciplines across five categories — find yours below.
-        </p>
+        </AnimatedText>
       </div>
       <div className="flex flex-col gap-16 md:gap-20">
         {SPORT_CATEGORIES.map((category) => {

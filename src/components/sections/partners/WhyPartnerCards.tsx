@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { Eye, HeartHandshake, Users } from "lucide-react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 
 interface ValueProp {
   description: string;
@@ -39,7 +40,7 @@ export function WhyPartnerCards() {
           Why Partner With GSC
         </AnimatedText>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
         {VALUE_PROPS.map((prop) => (
           <div
             className="flex flex-col gap-4 rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 md:p-8"
@@ -58,7 +59,7 @@ export function WhyPartnerCards() {
             </div>
           </div>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

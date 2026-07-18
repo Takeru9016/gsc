@@ -1,6 +1,7 @@
 import { Users } from "lucide-react";
 import { Badge } from "@/components/shared/Badge.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { BookingConfigRoom } from "@/lib/sanity/queries.ts";
 
 interface RoomGridProps {
@@ -46,11 +47,11 @@ export function RoomGrid({ rooms }: RoomGridProps) {
 
   return (
     <SectionWrapper>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {displayRooms.map((room) => (
           <RoomCard key={room.name} room={room} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

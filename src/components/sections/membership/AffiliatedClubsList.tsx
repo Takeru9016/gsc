@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { AffiliatedClub } from "@/lib/sanity/queries.ts";
 
@@ -61,11 +62,11 @@ export function AffiliatedClubsList({ clubs }: AffiliatedClubsListProps) {
 
   return (
     <SectionWrapper className="pt-0">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {displayClubs.map((club) => (
           <AffiliatedClubCard club={club} key={club.name} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

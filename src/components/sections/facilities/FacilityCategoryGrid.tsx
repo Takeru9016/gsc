@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 
 interface FacilityCategory {
   description: string;
@@ -86,7 +87,7 @@ export function FacilityCategoryGrid() {
           Everything a member needs, all under one roof.
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:gap-8">
         {FACILITY_CATEGORIES.map((category) => (
           <Link
             className="group flex flex-col gap-4 rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md md:p-8"
@@ -114,7 +115,7 @@ export function FacilityCategoryGrid() {
             </span>
           </Link>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

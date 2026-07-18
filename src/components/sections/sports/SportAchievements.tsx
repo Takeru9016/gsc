@@ -3,6 +3,7 @@ import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { Achievement } from "@/lib/sanity/queries.ts";
 
@@ -25,10 +26,10 @@ export function SportAchievements({
       >
         Achievements
       </AnimatedText>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+      <StaggerReveal className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
         {achievements.map((achievement) => (
           <div
-            className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface)"
+            className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface) transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md"
             key={achievement._id}
           >
             <div className="relative aspect-square">
@@ -50,7 +51,7 @@ export function SportAchievements({
             </div>
           </div>
         ))}
-      </div>
+      </StaggerReveal>
       <Button
         className="mt-8"
         href={`/achievements?sport=${sportSlug}`}

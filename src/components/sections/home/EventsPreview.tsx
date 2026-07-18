@@ -2,6 +2,7 @@ import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { EventCard } from "@/components/shared/EventCard.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { EventListItem } from "@/lib/sanity/queries.ts";
 
 interface EventsPreviewProps {
@@ -29,11 +30,11 @@ export function EventsPreview({ events }: EventsPreviewProps) {
           No upcoming events. Check back soon.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+        <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
           {upcomingEvents.map((event) => (
             <EventCard event={event} key={event._id} />
           ))}
-        </div>
+        </StaggerReveal>
       )}
     </SectionWrapper>
   );

@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { ArrowRight, Baby, Spade, Ticket } from "lucide-react";
 import Link from "next/link";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 
 interface RecreationCategory {
   description: string;
@@ -66,11 +67,11 @@ function RecreationCategoryCard({
 export function RecreationCategoryGrid() {
   return (
     <SectionWrapper>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {RECREATION_CATEGORIES.map((category) => (
           <RecreationCategoryCard category={category} key={category.title} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

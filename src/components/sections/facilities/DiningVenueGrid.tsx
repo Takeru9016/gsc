@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/shared/Badge.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { getDiningVenueTypeMeta } from "@/lib/diningVenueType.ts";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { DiningVenueListItem } from "@/lib/sanity/queries.ts";
@@ -137,11 +138,11 @@ export function DiningVenueGrid({ venues }: DiningVenueGridProps) {
 
   return (
     <SectionWrapper>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {displayVenues.map((venue) => (
           <VenueCard key={venue.slug} venue={venue} />
         ))}
-      </div>
+      </StaggerReveal>
       <p className="mt-8 text-center text-(--color-text-secondary) text-sm">
         All restaurants except Bleu Restobar are 100% vegetarian.
       </p>

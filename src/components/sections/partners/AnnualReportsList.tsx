@@ -7,6 +7,7 @@ import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { PDFViewerLazy } from "@/components/shared/PDFViewerLazy.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { AnnualReport } from "@/lib/sanity/queries.ts";
 
@@ -141,11 +142,11 @@ export function AnnualReportsList({ reports }: AnnualReportsListProps) {
           Browse and download every published annual report.
         </p>
       </div>
-      <div className="flex flex-col gap-4 md:gap-6">
+      <StaggerReveal className="flex flex-col gap-4 md:gap-6">
         {displayReports.map((report) => (
           <ReportCard key={report._id} report={report} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

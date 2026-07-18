@@ -3,6 +3,7 @@ import { FileText, RotateCcw, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 
 interface PolicyLink {
   cta: string;
@@ -47,7 +48,7 @@ export function PolicyLinksSection() {
           Policies
         </AnimatedText>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
         {POLICY_LINKS.map((policy) => (
           <Link
             className="group flex flex-col gap-4 rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md md:p-8"
@@ -70,7 +71,7 @@ export function PolicyLinksSection() {
             </span>
           </Link>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

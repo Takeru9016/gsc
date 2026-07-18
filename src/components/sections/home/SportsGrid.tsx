@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 
 const SPORT_CATEGORIES = [
   { count: 7, label: "Outdoor" },
@@ -26,7 +27,7 @@ export function SportsGrid() {
           View All Sports
         </Button>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
         {SPORT_CATEGORIES.map((category) => (
           <Link
             className="group block overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md"
@@ -45,7 +46,7 @@ export function SportsGrid() {
             </p>
           </Link>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

@@ -1,4 +1,5 @@
 import { Button } from "@/components/shared/Button.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { MEMBERSHIP_TYPES_FALLBACK } from "@/lib/membershipTypes.ts";
 import type { MembershipTypeListItem } from "@/lib/sanity/queries.ts";
 import {
@@ -21,7 +22,7 @@ export function MembershipTypeGrid({
   );
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+    <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
       {MEMBERSHIP_TYPES_FALLBACK.map((fallback) => {
         const membershipType = byType.get(fallback.type);
         const title = membershipType?.title ?? fallback.title;
@@ -63,6 +64,6 @@ export function MembershipTypeGrid({
           </div>
         );
       })}
-    </div>
+    </StaggerReveal>
   );
 }

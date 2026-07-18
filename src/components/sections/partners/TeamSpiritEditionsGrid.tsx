@@ -4,6 +4,7 @@ import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Badge } from "@/components/shared/Badge.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { TeamSpiritEdition } from "@/lib/sanity/queries.ts";
 
@@ -130,11 +131,11 @@ export function TeamSpiritEditionsGrid({
           Browse and download every edition of Team Spirit.
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
         {displayEditions.map((edition) => (
           <EditionCard edition={edition} key={edition._id} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

@@ -1,5 +1,6 @@
 import { Badge } from "@/components/shared/Badge.tsx";
 import { Button } from "@/components/shared/Button.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { CoachingSport } from "@/lib/sanity/queries.ts";
 import { getSportCategoryLabel } from "@/lib/sportCategories.ts";
 
@@ -22,7 +23,7 @@ export function CoachingGrid({ sports, activeCategory }: CoachingGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {filtered.map((sport) => (
         <div
           className="flex flex-col gap-4 rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md md:p-8"
@@ -64,6 +65,6 @@ export function CoachingGrid({ sports, activeCategory }: CoachingGridProps) {
           )}
         </div>
       ))}
-    </div>
+    </StaggerReveal>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/shared/Badge.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { BanquetHallListItem } from "@/lib/sanity/queries.ts";
 
@@ -88,11 +89,11 @@ export function BanquetHallGrid({ halls }: BanquetHallGridProps) {
 
   return (
     <SectionWrapper>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {displayHalls.map((hall) => (
           <HallCard hall={hall} key={hall.slug} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

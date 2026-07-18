@@ -1,4 +1,5 @@
 import { Badge } from "@/components/shared/Badge.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { League } from "@/lib/sanity/queries.ts";
 
 interface LeaguesGridProps {
@@ -20,7 +21,7 @@ export function LeaguesGrid({ leagues, activeSport }: LeaguesGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+    <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
       {filtered.map((league) => (
         <div
           className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6 transition-all duration-200 hover:translate-y-[-2px] hover:shadow-md md:p-8"
@@ -47,6 +48,6 @@ export function LeaguesGrid({ leagues, activeSport }: LeaguesGridProps) {
           ) : null}
         </div>
       ))}
-    </div>
+    </StaggerReveal>
   );
 }

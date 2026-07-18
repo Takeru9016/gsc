@@ -2,6 +2,7 @@ import { Check } from "lucide-react";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { Button } from "@/components/shared/Button.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { PartnershipOpportunity } from "@/lib/sanity/queries.ts";
 import { cn, getPortableTextSnippet } from "@/lib/utils.ts";
 
@@ -68,7 +69,7 @@ export function PartnershipOpportunitiesGrid({
           Choose the tier that fits your brand's goals.
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
+      <StaggerReveal className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
         {displayOpportunities.map((opportunity) => (
           <div
             className={cn(
@@ -116,7 +117,7 @@ export function PartnershipOpportunitiesGrid({
             </Button>
           </div>
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

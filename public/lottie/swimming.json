@@ -1285,7 +1285,7 @@
       ],
       "w": 800,
       "h": 800,
-      "refId": "comp_0_58b25159-5896-4b0b-8a8d-484c553efe67",
+      "refId": "comp_0_58b25159-5896-4b0b-8a8d-484c553efe67_e54629e1-9cd0-41c4-8b3a-99d2c7ce8286",
       "ind": 4,
       "parent": 1
     }
@@ -1297,7 +1297,7 @@
   "assets": [
     {
       "nm": "Scene",
-      "id": "comp_0_58b25159-5896-4b0b-8a8d-484c553efe67",
+      "id": "comp_0_58b25159-5896-4b0b-8a8d-484c553efe67_e54629e1-9cd0-41c4-8b3a-99d2c7ce8286",
       "fr": 60,
       "layers": [
         {
@@ -1428,7 +1428,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -1575,7 +1575,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -1700,7 +1700,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -1847,7 +1847,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -1971,7 +1971,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -2118,7 +2118,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -2219,7 +2219,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },
@@ -2310,7 +2310,7 @@
                   "hd": false,
                   "mn": "ADBE Vector Graphic - Fill",
                   "nm": "Fill 1",
-                  "c": { "a": 0, "k": [0, 0, 0], "ix": 4 },
+                  "c": { "a": 0, "k": [1, 1, 1], "ix": 4 },
                   "r": 1,
                   "o": { "a": 0, "k": 100, "ix": 5 }
                 },

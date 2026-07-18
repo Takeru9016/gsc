@@ -43,8 +43,20 @@ export function StaggerReveal({ children, className }: StaggerRevealProps) {
         return;
       }
 
+      // Card components carry `transition-all` for their own hover state.
+      // That CSS transition fights GSAP's per-frame inline opacity/transform
+      // writes during the reveal (the browser keeps re-targeting a fresh
+      // 200ms transition every animation frame), so the element visually
+      // never leaves its `opacity: 0` starting point even though the GSAP
+      // tween itself completes normally. Suspend the CSS transition for the
+      // duration of the reveal, then hand it back for hover to use.
+      gsap.set(container.children, { transition: "none" });
+
       gsap.from(container.children, {
         duration: 0.5,
+        onComplete: () => {
+          gsap.set(container.children, { clearProps: "transition" });
+        },
         opacity: 0,
         scrollTrigger: {
           once: true,

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import { urlFor } from "@/lib/sanity/image.ts";
 import type { CorporatePartner } from "@/lib/sanity/queries.ts";
 
@@ -27,7 +28,7 @@ export function CurrentPartnersGrid({ partners }: CurrentPartnersGridProps) {
           Current Partners
         </AnimatedText>
       </div>
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-6">
+      <StaggerReveal className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-6">
         {hasPartners
           ? partners.map((partner) => (
               <div
@@ -60,7 +61,7 @@ export function CurrentPartnersGrid({ partners }: CurrentPartnersGridProps) {
                 </span>
               </div>
             ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }

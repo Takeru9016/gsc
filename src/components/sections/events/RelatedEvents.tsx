@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AnimatedText } from "@/components/shared/AnimatedText.tsx";
 import { EventCard } from "@/components/shared/EventCard.tsx";
 import { SectionWrapper } from "@/components/shared/SectionWrapper.tsx";
+import { StaggerReveal } from "@/components/shared/StaggerReveal.tsx";
 import type { EventListItem } from "@/lib/sanity/queries.ts";
 
 interface RelatedEventsProps {
@@ -25,11 +26,11 @@ export function RelatedEvents({ events }: RelatedEventsProps) {
           View All
         </Link>
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <StaggerReveal className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {events.map((event) => (
           <EventCard event={event} key={event._id} />
         ))}
-      </div>
+      </StaggerReveal>
     </SectionWrapper>
   );
 }
