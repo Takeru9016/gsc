@@ -101,6 +101,103 @@ function isNavItemActive(pathname: string, href: string): boolean {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+interface NavListItemProps {
+  item: NavItem;
+  pathname: string;
+}
+
+function NavListItem({ item, pathname }: NavListItemProps) {
+  const active = isNavItemActive(pathname, item.href);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Route changes (e.g. clicking a dropdown link) don't move the mouse, so close explicitly.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname retriggers the close on route change, it is not read in the effect body
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  const openDropdown = useCallback(() => setIsOpen(true), []);
+  const closeDropdown = useCallback(() => setIsOpen(false), []);
+  const handleBlur = useCallback((event: React.FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsOpen(false);
+    }
+  }, []);
+
+  const linkClassName = cn(
+    "group relative inline-flex items-center py-2 font-medium text-sm transition-colors duration-200",
+    active ? "text-primary" : "text-(--color-text-secondary) hover:text-primary"
+  );
+
+  const underline = active ? (
+    <NavActiveUnderline key={pathname} />
+  ) : (
+    <span className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary/60 transition-transform duration-200 group-hover:scale-x-100" />
+  );
+
+  if (!item.children) {
+    return (
+      <li className="relative">
+        <Link className={linkClassName} href={item.href}>
+          {item.label.toUpperCase()}
+          {underline}
+        </Link>
+      </li>
+    );
+  }
+
+  return (
+    <li className="relative">
+      {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: hover/focus wrapper for the dropdown; the actual interactive elements are the nested links */}
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: mouseenter/mouseleave open the dropdown for pointer users, keyboard users get the same result via focus/blur on the nested links */}
+      <div
+        onBlur={handleBlur}
+        onFocus={openDropdown}
+        onMouseEnter={openDropdown}
+        onMouseLeave={closeDropdown}
+      >
+        <Link
+          className={linkClassName}
+          href={item.href}
+          onClick={closeDropdown}
+        >
+          {item.label.toUpperCase()}
+          {underline}
+        </Link>
+
+        <div
+          className={cn(
+            "absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200",
+            isOpen ? "visible opacity-100" : "invisible opacity-0"
+          )}
+        >
+          <ul className="min-w-56 rounded-2xl border border-border-dark bg-elevated-dark p-2 shadow-md">
+            {item.children.map((child, index, children) => {
+              const isBeforeLast =
+                index === children.length - 1 - DROPDOWN_DIVIDER_INDEX_FROM_END;
+
+              return (
+                <li key={child.href}>
+                  <Link
+                    className="block whitespace-nowrap rounded-xl px-3 py-2 text-(--color-text-secondary) text-sm transition-colors duration-200 hover:bg-primary/10 hover:text-primary"
+                    href={child.href}
+                    onClick={closeDropdown}
+                  >
+                    {child.label}
+                  </Link>
+                  {isBeforeLast ? (
+                    <hr className="my-2 border-border-dark" />
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </li>
+  );
+}
+
 export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -141,56 +238,9 @@ export function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
-          {NAV_ITEMS.map((item) => {
-            const active = isNavItemActive(pathname, item.href);
-
-            return (
-              <li className="group relative" key={item.href}>
-                <Link
-                  className={cn(
-                    "relative inline-flex items-center py-2 font-medium text-sm transition-colors duration-200",
-                    active
-                      ? "text-primary"
-                      : "text-(--color-text-secondary) hover:text-primary"
-                  )}
-                  href={item.href}
-                >
-                  {item.label.toUpperCase()}
-                  {active ? (
-                    <NavActiveUnderline key={pathname} />
-                  ) : (
-                    <span className="pointer-events-none absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-primary/60 transition-transform duration-200 group-hover:scale-x-100" />
-                  )}
-                </Link>
-
-                {item.children ? (
-                  <div className="invisible absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                    <ul className="min-w-56 rounded-2xl border border-border-dark bg-elevated-dark p-2 shadow-md">
-                      {item.children.map((child, index, children) => {
-                        const isBeforeLast =
-                          index ===
-                          children.length - 1 - DROPDOWN_DIVIDER_INDEX_FROM_END;
-
-                        return (
-                          <li key={child.href}>
-                            <Link
-                              className="block whitespace-nowrap rounded-xl px-3 py-2 text-(--color-text-secondary) text-sm transition-colors duration-200 hover:bg-primary/10 hover:text-primary"
-                              href={child.href}
-                            >
-                              {child.label}
-                            </Link>
-                            {isBeforeLast ? (
-                              <hr className="my-2 border-border-dark" />
-                            ) : null}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ) : null}
-              </li>
-            );
-          })}
+          {NAV_ITEMS.map((item) => (
+            <NavListItem item={item} key={item.href} pathname={pathname} />
+          ))}
         </ul>
 
         <div className="flex items-center gap-2">
