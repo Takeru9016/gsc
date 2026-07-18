@@ -173,13 +173,27 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 3-05   Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
 ```
 
+### Phase ADMIN — Admin Dashboard (9 tasks)
+Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content management + Drizzle submissions inbox. Not part of the original `docs/PHASES.md` 68-task list.
+```
+[x] ADMIN-01  Better Auth Setup + DB Migration — Drizzle adapter, admin plugin, auth tables, first admin user
+[ ] ADMIN-02  Admin Route Structure + Middleware — /admin route group, session middleware, sidebar layout, login page
+[ ] ADMIN-03  Dashboard Overview Page — stat cards (Drizzle + Sanity counts), recent activity, quick actions
+[ ] ADMIN-04  Submissions Dashboard (Drizzle) — bookings, memberships, contacts, partners, achievements
+[ ] ADMIN-05  Content Management: Sports + Events
+[ ] ADMIN-06  Content Management: Achievements + Dining + Banquets
+[ ] ADMIN-07  Content Management: Membership + Downloads + Settings
+[ ] ADMIN-08  User Management — admin-only, create/edit role/revoke/delete
+[ ] ADMIN-09  Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
+```
+
 ---
 
 ## Active Task
 
-**Current Phase**: All phases complete — no Phase 4 is defined in `docs/PHASES.md`. Remaining work is the ops/content items in `docs/LAUNCH_CHECKLIST.md` (hero video asset, Sanity content seeding, Vercel/production verification), not a tracked build task.
-**Active Task**: None — awaiting next instruction (production launch checklist or a new phase definition)
-**Last Completed**: 3-05 — Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
+**Current Phase**: Phase ADMIN — Admin Dashboard (see `prompts/ADMIN_DASHBOARD.md`)
+**Active Task**: ADMIN-02 — Admin Route Structure + Middleware
+**Last Completed**: ADMIN-01 — Better Auth Setup + DB Migration
 
 > Update this section when running /done after each task.
 

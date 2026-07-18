@@ -9,6 +9,10 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
+// ─── Better Auth Tables ─────────────────────────────────────────────────────
+
+export * from "@/lib/auth/schema.ts";
+
 // ─── Enums ──────────────────────────────────────────────────────────────────
 
 export const bookingTypeEnum = pgEnum("booking_type", [

@@ -143,7 +143,7 @@ Create the protected /admin route group with middleware and layout.
 
 --- MIDDLEWARE ---
 
-Create middleware.ts at project root:
+Create proxy.ts at project root:
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth/session'
@@ -696,7 +696,7 @@ if (error) return error
 3. Add admin route to .claudeignore:
    app/(admin)/        should NOT be in .claudeignore — Claude Code should be able to read it
 
-4. Update middleware.ts:
+4. Update proxy.ts:
    Add rate limiting on /admin/login route:
    Track failed attempts — after 5 failed logins from same IP, return 429 for 15 minutes.
    Use a simple in-memory Map (sufficient for single-instance Vercel deployment).
