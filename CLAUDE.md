@@ -170,16 +170,16 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 [x] 3-02   Lottie setup + sport animations (6 JSON files, LottiePlayer component)
 [x] 3-03   Sports scroll — GSAP horizontal scroll experience (6 panels, Lottie per panel)
 [x] 3-04   GSAP polish pass — page transitions, scroll reveals, card stagger, micro-interactions
-[ ] 3-05   Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
+[x] 3-05   Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
 ```
 
 ---
 
 ## Active Task
 
-**Current Phase**: 3 — Motion & Polish (redefined scope — replaces the old R3F/WebGL-based Phase 3; old 3D scenes/pages are being torn out and replaced with Lenis+GSAP scroll and Lottie)
-**Active Task**: 3-05 — Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
-**Last Completed**: 3-04 — GSAP polish pass — page transitions, scroll reveals, card stagger, micro-interactions
+**Current Phase**: All phases complete — no Phase 4 is defined in `docs/PHASES.md`. Remaining work is the ops/content items in `docs/LAUNCH_CHECKLIST.md` (hero video asset, Sanity content seeding, Vercel/production verification), not a tracked build task.
+**Active Task**: None — awaiting next instruction (production launch checklist or a new phase definition)
+**Last Completed**: 3-05 — Performance audit — Lighthouse, video/Lottie validation, ISR, launch checklist
 
 > Update this section when running /done after each task.
 
