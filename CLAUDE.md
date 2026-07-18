@@ -183,6 +183,13 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 
 > Update this section when running /done after each task.
 
+### Maintenance Log
+
+- **2026-07-18** — Post-launch bug fixes (not a phase task):
+  - `lib/sanity/queries.ts`: GROQ returns `null` (not `[]`) for unset array fields; added `coalesce(field, [])` to `sport.schedule`/`gallery`, `diningVenue.gallery`/`openingHours`, `bookingConfig.rooms`, `membershipConfig.affiliatedClubs`, `partnershipOpportunity.benefits`, `leaguesConfig.leagues` — was crashing `SportSchedule`/`PartnersStrip` and others with `Cannot read properties of null (reading 'length')`.
+  - `components/sections/sports/SportsScroll.tsx`: `SportsScrollDesktop`'s pinned ScrollTrigger now uses `useGSAP({ scope: containerRef })` instead of plain `useEffect` + manual `gsap.context` — fixes `Node.removeChild: not a child of this node` caused by GSAP's pin-spacer wrapper being torn down after React's own unmount DOM removal instead of before it.
+  - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm dlx ultracite check` (223 files, 0 issues).
+
 ---
 
 ## Absolute Rules

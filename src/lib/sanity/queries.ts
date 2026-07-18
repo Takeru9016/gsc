@@ -78,13 +78,32 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     { next: { tags: ["site-config"] } }
   );
 
+  // GROQ returns null (not undefined) for fields present in the projection but
+  // unset in the document, so a naive `{ ...DEFAULT, ...data }` spread would let
+  // those nulls clobber the defaults instead of falling back to them.
   return {
-    ...DEFAULT_SITE_CONFIG,
-    ...data,
+    address: data?.address ?? DEFAULT_SITE_CONFIG.address,
+    corporatePartners:
+      data?.corporatePartners ?? DEFAULT_SITE_CONFIG.corporatePartners,
+    email: data?.email ?? DEFAULT_SITE_CONFIG.email,
+    emergencyPhone: data?.emergencyPhone ?? DEFAULT_SITE_CONFIG.emergencyPhone,
+    emergencyPhone2:
+      data?.emergencyPhone2 ?? DEFAULT_SITE_CONFIG.emergencyPhone2,
+    heroVideoUrl: data?.heroVideoUrl ?? DEFAULT_SITE_CONFIG.heroVideoUrl,
+    phone: data?.phone ?? DEFAULT_SITE_CONFIG.phone,
+    siteName: data?.siteName ?? DEFAULT_SITE_CONFIG.siteName,
     socialLinks: {
-      ...DEFAULT_SITE_CONFIG.socialLinks,
-      ...data?.socialLinks,
+      facebook:
+        data?.socialLinks?.facebook ?? DEFAULT_SITE_CONFIG.socialLinks.facebook,
+      instagram:
+        data?.socialLinks?.instagram ??
+        DEFAULT_SITE_CONFIG.socialLinks.instagram,
+      twitter:
+        data?.socialLinks?.twitter ?? DEFAULT_SITE_CONFIG.socialLinks.twitter,
+      youtube:
+        data?.socialLinks?.youtube ?? DEFAULT_SITE_CONFIG.socialLinks.youtube,
     },
+    tagline: data?.tagline ?? DEFAULT_SITE_CONFIG.tagline,
   };
 }
 
@@ -124,7 +143,7 @@ const SPORT_LIST_FIELDS = `
   heroImage,
   hasCoaching,
   threeObjectType,
-  schedule
+  "schedule": coalesce(schedule, [])
 `;
 
 export async function getSports(): Promise<SportListItem[]> {
@@ -142,7 +161,7 @@ export async function getSportBySlug(
     `*[_type == "sport" && slug.current == $slug][0] {
       ${SPORT_LIST_FIELDS},
       fullDescription,
-      gallery,
+      "gallery": coalesce(gallery, []),
       coachingInfo,
       coachName,
       coachingSchedule,
@@ -473,8 +492,8 @@ export async function getDiningVenueBySlug(
       description,
       "menuPdf": menuPdf.asset->url,
       "barMenuPdf": barMenuPdf.asset->url,
-      gallery,
-      openingHours,
+      "gallery": coalesce(gallery, []),
+      "openingHours": coalesce(openingHours, []),
       seatingCapacity,
       reservationInfo,
       metaTitle,
@@ -504,7 +523,7 @@ export async function getBookingConfig(): Promise<BookingConfig | null> {
     `*[_type == "bookingConfig"][0] {
       bookingEmail,
       responseTime,
-      rooms
+      "rooms": coalesce(rooms, [])
     }`,
     {},
     { next: { tags: ["booking-config"] } }
@@ -580,7 +599,7 @@ export async function getMembershipConfig(): Promise<MembershipConfig | null> {
     `*[_type == "membershipConfig"][0] {
       enrollmentOpen,
       enrollmentNotice,
-      affiliatedClubs
+      "affiliatedClubs": coalesce(affiliatedClubs, [])
     }`,
     {},
     { next: { tags: ["membership-config"] } }
@@ -607,7 +626,7 @@ export async function getPartnershipOpportunities(): Promise<
       title,
       description,
       reachStats,
-      benefits,
+      "benefits": coalesce(benefits, []),
       isHighlighted
     }`,
     {},
@@ -750,7 +769,7 @@ export interface LeaguesConfig {
 export async function getLeaguesConfig(): Promise<LeaguesConfig | null> {
   return await client.fetch<LeaguesConfig | null>(
     `*[_type == "leaguesConfig"][0] {
-      leagues
+      "leagues": coalesce(leagues, [])
     }`,
     {},
     { next: { tags: ["leagues"] } }

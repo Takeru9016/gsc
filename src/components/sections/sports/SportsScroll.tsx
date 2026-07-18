@@ -1,5 +1,6 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -14,7 +15,7 @@ import type { SportListItem } from "@/lib/sanity/queries.ts";
 import { cn } from "@/lib/utils.ts";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
 interface SportScene {
@@ -186,18 +187,18 @@ function SportsScrollDesktop({ sports }: SportsScrollProps) {
   );
   const dotRefCallbacks = useIndexedRefCallbacks(dotRefs, SPORT_SCENES.length);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const track = trackRef.current;
-    const panels = panelRefs.current.filter(
-      (panel): panel is HTMLDivElement => panel !== null
-    );
+  useGSAP(
+    () => {
+      const container = containerRef.current;
+      const track = trackRef.current;
+      const panels = panelRefs.current.filter(
+        (panel): panel is HTMLDivElement => panel !== null
+      );
 
-    if (!(container && track) || panels.length === 0) {
-      return;
-    }
+      if (!(container && track) || panels.length === 0) {
+        return;
+      }
 
-    const ctx = gsap.context(() => {
       const panelCount = panels.length;
 
       const master = gsap.to(track, {
@@ -258,10 +259,9 @@ function SportsScrollDesktop({ sports }: SportsScrollProps) {
           });
         }
       }
-    }, container);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: containerRef }
+  );
 
   return (
     <div className="relative" ref={containerRef}>
