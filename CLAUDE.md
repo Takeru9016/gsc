@@ -181,7 +181,7 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 [x] ADMIN-03  Dashboard Overview Page — stat cards (Drizzle + Sanity counts), recent activity, quick actions
 [x] ADMIN-04  Submissions Dashboard (Drizzle) — bookings, memberships, contacts, partners, achievements
 [x] ADMIN-05  Content Management: Sports + Events
-[ ] ADMIN-06  Content Management: Achievements + Dining + Banquets
+[x] ADMIN-06  Content Management: Achievements + Dining + Banquets
 [ ] ADMIN-07  Content Management: Membership + Downloads + Settings
 [ ] ADMIN-08  User Management — admin-only, create/edit role/revoke/delete
 [ ] ADMIN-09  Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
@@ -192,8 +192,8 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 ## Active Task
 
 **Current Phase**: Phase ADMIN — Admin Dashboard (see `prompts/ADMIN_DASHBOARD.md`)
-**Active Task**: ADMIN-06 — Content Management: Achievements + Dining + Banquets
-**Last Completed**: ADMIN-05 — Content Management: Sports + Events
+**Active Task**: ADMIN-07 — Content Management: Membership + Downloads + Settings
+**Last Completed**: ADMIN-06 — Content Management: Achievements + Dining + Banquets
 
 > Update this section when running /done after each task.
 

@@ -207,3 +207,56 @@ export const adminEventSchema = z.object({
 });
 
 export type AdminEventFormValues = z.infer<typeof adminEventSchema>;
+
+const optionalPositiveInt = z.number().int().positive().optional();
+
+export const adminOpeningHoursEntrySchema = z.object({
+  day: z.string().min(1, "Day is required"),
+  hours: z.string().optional(),
+});
+
+export const adminDiningVenueEditSchema = z.object({
+  cuisineType: z.string().optional(),
+  description: z.string().optional(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  openingHours: z.array(adminOpeningHoursEntrySchema),
+  reservationInfo: z.string().optional(),
+  seatingCapacity: optionalPositiveInt,
+  tagline: z.string().optional(),
+  type: z.enum(["Veg", "NonVeg", "Mixed"]),
+});
+
+export type AdminDiningVenueEditFormValues = z.infer<
+  typeof adminDiningVenueEditSchema
+>;
+
+export const adminSetupOptionEntrySchema = z.object({
+  value: z.string().min(1, "Cannot be empty"),
+});
+
+export const adminBanquetHallEditSchema = z.object({
+  amenities: z.string().optional(),
+  capacity: optionalPositiveInt,
+  description: z.string().optional(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  setupOptions: z.array(adminSetupOptionEntrySchema),
+  tagline: z.string().optional(),
+});
+
+export type AdminBanquetHallEditFormValues = z.infer<
+  typeof adminBanquetHallEditSchema
+>;
+
+export const adminAchievementCreateSchema = z.object({
+  level: z.enum(["District", "State", "National", "International"], {
+    error: "Please select achievement level",
+  }),
+  memberName: z.string().min(2, "Member name is required"),
+  sport: z.string().min(2, "Sport is required"),
+  title: z.string().min(2, "Achievement title is required"),
+  year: z.number().int().min(1990).max(new Date().getFullYear()),
+});
+
+export type AdminAchievementCreateFormValues = z.infer<
+  typeof adminAchievementCreateSchema
+>;
