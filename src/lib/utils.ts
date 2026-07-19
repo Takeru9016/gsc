@@ -70,6 +70,50 @@ export function getPortableTextSnippet(
     : text;
 }
 
+export function portableTextToPlainText(
+  blocks: PortableTextBlock[] | null | undefined
+): string {
+  if (!blocks || blocks.length === 0) {
+    return "";
+  }
+
+  return blocks
+    .map((block) => {
+      const typedBlock = block as unknown as PortableTextBlockShape;
+      if (typedBlock._type !== "block" || !typedBlock.children) {
+        return "";
+      }
+      return typedBlock.children.map((child) => child.text ?? "").join("");
+    })
+    .join("\n\n");
+}
+
+function generateKey() {
+  return Math.random().toString(36).slice(2);
+}
+
+const MULTIPLE_NEWLINES_PATTERN = /\n{2,}/;
+
+export function plainTextToPortableText(text: string): PortableTextBlock[] {
+  const paragraphs = text
+    .split(MULTIPLE_NEWLINES_PATTERN)
+    .map((paragraph) => paragraph.trim())
+    .filter((paragraph) => paragraph.length > 0);
+
+  return paragraphs.map(
+    (paragraph) =>
+      ({
+        _key: generateKey(),
+        _type: "block",
+        children: [
+          { _key: generateKey(), _type: "span", marks: [], text: paragraph },
+        ],
+        markDefs: [],
+        style: "normal",
+      }) as unknown as PortableTextBlock
+  );
+}
+
 export function getPortableTextListItems(
   blocks: PortableTextBlock[] | null | undefined,
   limit: number

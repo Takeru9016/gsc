@@ -154,3 +154,56 @@ export const adminLoginSchema = z.object({
 });
 
 export type AdminLoginFormValues = z.infer<typeof adminLoginSchema>;
+
+export const adminSportScheduleEntrySchema = z.object({
+  closeTime: z.string().optional(),
+  day: z.string().min(1, "Day is required"),
+  openTime: z.string().optional(),
+});
+
+export const adminSportEditSchema = z.object({
+  category: z.enum(["outdoor", "indoor", "aquatic", "health", "track"]),
+  coachingInfo: z.string().optional(),
+  coachingLevel: z
+    .enum(["Beginner", "Intermediate", "Advanced", "All"])
+    .optional(),
+  coachingSchedule: z.string().optional(),
+  coachName: z.string().optional(),
+  externalRegistrationUrl: z.string().optional(),
+  facilityDetails: z.string().optional(),
+  fullDescription: z.string().optional(),
+  hasCoaching: z.boolean(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  schedule: z.array(adminSportScheduleEntrySchema),
+  shortDescription: z.string().optional(),
+  threeObjectType: z.enum([
+    "cricket-ball",
+    "shuttlecock",
+    "tennis-ball",
+    "water-sphere",
+    "none",
+  ]),
+});
+
+export type AdminSportEditFormValues = z.infer<typeof adminSportEditSchema>;
+
+export const adminEventSchema = z.object({
+  description: z.string().optional(),
+  endDate: z.string().optional(),
+  isFeatured: z.boolean(),
+  registrationUrl: z.string().optional(),
+  slug: z
+    .string()
+    .min(1, "Slug is required")
+    .regex(
+      /^[a-z0-9-]+$/,
+      "Slug may only contain lowercase letters, numbers, and hyphens"
+    ),
+  startDate: z.string().min(1, "Start date is required"),
+  status: z.enum(["upcoming", "ongoing", "past"]),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+  type: z.enum(["Tournament", "Cultural", "League", "Special"]),
+  venue: z.string().optional(),
+});
+
+export type AdminEventFormValues = z.infer<typeof adminEventSchema>;

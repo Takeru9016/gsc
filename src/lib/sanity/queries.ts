@@ -115,6 +115,7 @@ export interface SportListItem {
   hasCoaching: boolean;
   heroImage: SanityImageSource | null;
   name: string;
+  order: number;
   schedule: ScheduleEntry[];
   shortDescription: string;
   slug: string;
@@ -143,6 +144,7 @@ const SPORT_LIST_FIELDS = `
   heroImage,
   hasCoaching,
   threeObjectType,
+  order,
   "schedule": coalesce(schedule, [])
 `;
 
@@ -305,6 +307,7 @@ export interface EventListItem {
   _id: string;
   description: PortableTextBlock[] | null;
   heroImage: SanityImageSource | null;
+  isFeatured: boolean;
   slug: string;
   startDate: string;
   status: string;
@@ -330,7 +333,8 @@ const EVENT_LIST_FIELDS = `
   status,
   startDate,
   heroImage,
-  description
+  description,
+  isFeatured
 `;
 
 export async function getEvents(status?: string): Promise<EventListItem[]> {
