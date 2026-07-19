@@ -6,6 +6,40 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+type BadgeVariant = "gold" | "green" | "outline" | "primary" | "red";
+
+const GREEN_STATUSES = new Set([
+  "confirmed",
+  "responded",
+  "approved",
+  "active",
+  "upcoming",
+]);
+const RED_STATUSES = new Set(["rejected", "cancelled", "declined"]);
+const PRIMARY_STATUSES = new Set([
+  "reviewed",
+  "reviewing",
+  "contacted",
+  "negotiating",
+  "ongoing",
+]);
+
+export function getStatusBadgeVariant(status: string): BadgeVariant {
+  if (status === "pending") {
+    return "gold";
+  }
+  if (GREEN_STATUSES.has(status)) {
+    return "green";
+  }
+  if (RED_STATUSES.has(status)) {
+    return "red";
+  }
+  if (PRIMARY_STATUSES.has(status)) {
+    return "primary";
+  }
+  return "outline";
+}
+
 interface PortableTextBlockShape {
   _type: string;
   children?: { text?: string }[];

@@ -375,6 +375,34 @@ export async function getRelatedEvents(
   );
 }
 
+export async function getLatestEvents(): Promise<EventListItem[]> {
+  return await client.fetch<EventListItem[]>(
+    `*[_type == "event"] | order(startDate desc) [0...3] { ${EVENT_LIST_FIELDS} }`,
+    {},
+    { next: { tags: ["events"] } }
+  );
+}
+
+// ─── Admin dashboard aggregates ─────────────────────────────────────────────
+
+export interface DashboardContentCounts {
+  activeEvents: number;
+  approvedAchievements: number;
+  totalSports: number;
+}
+
+export async function getDashboardContentCounts(): Promise<DashboardContentCounts> {
+  return await client.fetch<DashboardContentCounts>(
+    `{
+      "totalSports": count(*[_type == "sport"]),
+      "activeEvents": count(*[_type == "event" && status == "upcoming"]),
+      "approvedAchievements": count(*[_type == "achievement" && isApproved == true])
+    }`,
+    {},
+    { next: { tags: ["sports", "events", "achievements"] } }
+  );
+}
+
 // ─── banquetHall ─────────────────────────────────────────────────────────────
 
 export interface BanquetHallListItem {

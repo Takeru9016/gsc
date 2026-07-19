@@ -1,8 +1,10 @@
-import { count, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db/index.ts";
 import {
   achievementSubmissions,
+  type BookingInquiry,
   bookingInquiries,
+  type ContactInquiry,
   contactInquiries,
   membershipInquiries,
   partnerInquiries,
@@ -67,4 +69,20 @@ export async function getSubmissionPendingCounts(): Promise<SubmissionPendingCou
     ]);
 
   return { achievements, bookings, contacts, memberships, partners };
+}
+
+export async function getLatestBookings(limit = 5): Promise<BookingInquiry[]> {
+  return await db
+    .select()
+    .from(bookingInquiries)
+    .orderBy(desc(bookingInquiries.createdAt))
+    .limit(limit);
+}
+
+export async function getLatestContacts(limit = 5): Promise<ContactInquiry[]> {
+  return await db
+    .select()
+    .from(contactInquiries)
+    .orderBy(desc(contactInquiries.createdAt))
+    .limit(limit);
 }
