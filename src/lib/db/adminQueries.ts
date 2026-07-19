@@ -1,12 +1,15 @@
 import { count, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db/index.ts";
 import {
+  type AchievementSubmission,
   achievementSubmissions,
   type BookingInquiry,
   bookingInquiries,
   type ContactInquiry,
   contactInquiries,
+  type MembershipInquiry,
   membershipInquiries,
+  type PartnerInquiry,
   partnerInquiries,
 } from "@/lib/db/schema.ts";
 
@@ -85,4 +88,41 @@ export async function getLatestContacts(limit = 5): Promise<ContactInquiry[]> {
     .from(contactInquiries)
     .orderBy(desc(contactInquiries.createdAt))
     .limit(limit);
+}
+
+export async function getAllBookings(): Promise<BookingInquiry[]> {
+  return await db
+    .select()
+    .from(bookingInquiries)
+    .orderBy(desc(bookingInquiries.createdAt));
+}
+
+export async function getAllMemberships(): Promise<MembershipInquiry[]> {
+  return await db
+    .select()
+    .from(membershipInquiries)
+    .orderBy(desc(membershipInquiries.createdAt));
+}
+
+export async function getAllContacts(): Promise<ContactInquiry[]> {
+  return await db
+    .select()
+    .from(contactInquiries)
+    .orderBy(desc(contactInquiries.createdAt));
+}
+
+export async function getAllPartners(): Promise<PartnerInquiry[]> {
+  return await db
+    .select()
+    .from(partnerInquiries)
+    .orderBy(desc(partnerInquiries.createdAt));
+}
+
+export async function getAllAchievementSubmissions(): Promise<
+  AchievementSubmission[]
+> {
+  return await db
+    .select()
+    .from(achievementSubmissions)
+    .orderBy(desc(achievementSubmissions.createdAt));
 }

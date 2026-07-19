@@ -179,7 +179,7 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 [x] ADMIN-01  Better Auth Setup + DB Migration — Drizzle adapter, admin plugin, auth tables, first admin user
 [x] ADMIN-02  Admin Route Structure + Middleware — /admin route group, session middleware, sidebar layout, login page
 [x] ADMIN-03  Dashboard Overview Page — stat cards (Drizzle + Sanity counts), recent activity, quick actions
-[ ] ADMIN-04  Submissions Dashboard (Drizzle) — bookings, memberships, contacts, partners, achievements
+[x] ADMIN-04  Submissions Dashboard (Drizzle) — bookings, memberships, contacts, partners, achievements
 [ ] ADMIN-05  Content Management: Sports + Events
 [ ] ADMIN-06  Content Management: Achievements + Dining + Banquets
 [ ] ADMIN-07  Content Management: Membership + Downloads + Settings
@@ -192,8 +192,8 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 ## Active Task
 
 **Current Phase**: Phase ADMIN — Admin Dashboard (see `prompts/ADMIN_DASHBOARD.md`)
-**Active Task**: ADMIN-04 — Submissions Dashboard (Drizzle)
-**Last Completed**: ADMIN-03 — Dashboard Overview Page
+**Active Task**: ADMIN-05 — Content Management: Sports + Events
+**Last Completed**: ADMIN-04 — Submissions Dashboard (Drizzle)
 
 > Update this section when running /done after each task.
 
