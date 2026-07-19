@@ -147,3 +147,10 @@ export const achievementSchema = z.object({
 });
 
 export type AchievementFormValues = z.infer<typeof achievementSchema>;
+
+export const adminLoginSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+export type AdminLoginFormValues = z.infer<typeof adminLoginSchema>;

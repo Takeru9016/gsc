@@ -177,7 +177,7 @@ Update the `[ ]` to `[x]` as tasks complete. This is the single source of truth 
 Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content management + Drizzle submissions inbox. Not part of the original `docs/PHASES.md` 68-task list.
 ```
 [x] ADMIN-01  Better Auth Setup + DB Migration — Drizzle adapter, admin plugin, auth tables, first admin user
-[ ] ADMIN-02  Admin Route Structure + Middleware — /admin route group, session middleware, sidebar layout, login page
+[x] ADMIN-02  Admin Route Structure + Middleware — /admin route group, session middleware, sidebar layout, login page
 [ ] ADMIN-03  Dashboard Overview Page — stat cards (Drizzle + Sanity counts), recent activity, quick actions
 [ ] ADMIN-04  Submissions Dashboard (Drizzle) — bookings, memberships, contacts, partners, achievements
 [ ] ADMIN-05  Content Management: Sports + Events
@@ -192,8 +192,8 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 ## Active Task
 
 **Current Phase**: Phase ADMIN — Admin Dashboard (see `prompts/ADMIN_DASHBOARD.md`)
-**Active Task**: ADMIN-02 — Admin Route Structure + Middleware
-**Last Completed**: ADMIN-01 — Better Auth Setup + DB Migration
+**Active Task**: ADMIN-03 — Dashboard Overview Page
+**Last Completed**: ADMIN-02 — Admin Route Structure + Middleware
 
 > Update this section when running /done after each task.
 
