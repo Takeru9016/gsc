@@ -544,6 +544,7 @@ export async function getDiningVenueBySlug(
 // ─── bookingConfig ───────────────────────────────────────────────────────────
 
 export interface BookingConfigRoom {
+  _key: string;
   capacity: number | null;
   name: string;
   type: string | null;
@@ -817,6 +818,7 @@ export async function getLegalPage(slug: string): Promise<LegalPage | null> {
 // ─── leaguesConfig ───────────────────────────────────────────────────────────
 
 export interface League {
+  _key: string;
   approximateDates: string | null;
   description: string | null;
   format: string;

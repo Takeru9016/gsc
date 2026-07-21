@@ -193,7 +193,7 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 
 **Current Phase**: None — all defined phases complete (Phase 1A, 1B, 2, 3, and Phase ADMIN)
 **Active Task**: None — no further tasks defined in `docs/PHASES.md` or `prompts/ADMIN_DASHBOARD.md`
-**Last Completed**: ADMIN-09 — Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
+**Last Completed**: ADMIN-P1 — Booking Config + Leagues Config admin pages (ad-hoc, not in the original ADMIN tracker)
 
 > Update this section when running /done after each task.
 
@@ -203,6 +203,13 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
   - `lib/sanity/queries.ts`: GROQ returns `null` (not `[]`) for unset array fields; added `coalesce(field, [])` to `sport.schedule`/`gallery`, `diningVenue.gallery`/`openingHours`, `bookingConfig.rooms`, `membershipConfig.affiliatedClubs`, `partnershipOpportunity.benefits`, `leaguesConfig.leagues` — was crashing `SportSchedule`/`PartnersStrip` and others with `Cannot read properties of null (reading 'length')`.
   - `components/sections/sports/SportsScroll.tsx`: `SportsScrollDesktop`'s pinned ScrollTrigger now uses `useGSAP({ scope: containerRef })` instead of plain `useEffect` + manual `gsap.context` — fixes `Node.removeChild: not a child of this node` caused by GSAP's pin-spacer wrapper being torn down after React's own unmount DOM removal instead of before it.
   - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm dlx ultracite check` (223 files, 0 issues).
+
+- **2026-07-21** — ADMIN-P1: Booking Config + Leagues Config admin pages (ad-hoc task, not part of the original `prompts/ADMIN_DASHBOARD.md` 9-task list):
+  - New pages: `/admin/content/booking-config` (booking contact form + rooms manager) and `/admin/content/leagues-config` (18-league table with per-row edit dialog + active toggle).
+  - New API routes: `api/admin/content/booking-config` (PATCH), `api/admin/content/leagues-config` (PATCH by league `_key`).
+  - `lib/sanity/queries.ts`: added `_key` to `BookingConfigRoom`/`League` types (data was already returned by the existing `coalesce()` queries, just untyped).
+  - Added `_key` to the `bookingConfig`/`leaguesConfig` fallback arrays in `components/sections/facilities/RoomGrid.tsx` and `app/(site)/events/leagues/page.tsx` to satisfy the now-required field — display behavior unchanged.
+  - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm biome check .` (0 errors).
 
 ---
 

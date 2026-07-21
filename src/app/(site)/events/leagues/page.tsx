@@ -18,6 +18,7 @@ export function generateMetadata(): Metadata {
 // leaguesConfig singleton is populated in Sanity.
 const PLACEHOLDER_LEAGUES: League[] = [
   {
+    _key: "cricket-t20-league",
     approximateDates: "March – April",
     description:
       "Mumbai's most competitive T20 cricket league, played across the GSC ground with 16 participating teams.",
@@ -28,6 +29,7 @@ const PLACEHOLDER_LEAGUES: League[] = [
     sport: "Cricket",
   },
   {
+    _key: "badminton-singles-championship",
     approximateDates: "June – July",
     description:
       "Singles badminton championship open to all skill levels, run across the indoor courts.",
@@ -38,6 +40,7 @@ const PLACEHOLDER_LEAGUES: League[] = [
     sport: "Badminton",
   },
   {
+    _key: "swimming-meet",
     approximateDates: "October",
     description:
       "Individual and relay swimming meet across all age categories in the GSC pool.",
@@ -48,6 +51,7 @@ const PLACEHOLDER_LEAGUES: League[] = [
     sport: "Swimming",
   },
   {
+    _key: "lawn-tennis-singles-league",
     approximateDates: "January & August",
     description:
       "Singles lawn tennis league held twice a year on the club's clay courts.",
@@ -58,6 +62,7 @@ const PLACEHOLDER_LEAGUES: League[] = [
     sport: "Lawn Tennis",
   },
   {
+    _key: "table-tennis-championship",
     approximateDates: "September",
     description:
       "Singles and doubles table tennis championship for members of all ages.",
@@ -68,6 +73,7 @@ const PLACEHOLDER_LEAGUES: League[] = [
     sport: "Table Tennis",
   },
   {
+    _key: "chess-championship",
     approximateDates: "December",
     description:
       "Individual chess championship crowning GSC's club champion each year.",

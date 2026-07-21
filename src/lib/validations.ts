@@ -323,6 +323,37 @@ export type AdminCorporatePartnerFormValues = z.infer<
   typeof adminCorporatePartnerSchema
 >;
 
+export const adminBookingContactSchema = z.object({
+  bookingEmail: z.string().optional(),
+  responseTime: z.string().optional(),
+});
+
+export type AdminBookingContactFormValues = z.infer<
+  typeof adminBookingContactSchema
+>;
+
+export const adminRoomSchema = z.object({
+  _key: z.string().min(1),
+  capacity: z.number().int().min(0).nullable().optional(),
+  name: z.string().optional(),
+  type: z.string().optional(),
+});
+
+export type AdminRoomFormValues = z.infer<typeof adminRoomSchema>;
+
+export const adminLeaguePatchSchema = z.object({
+  approximateDates: z.string().optional(),
+  description: z.string().optional(),
+  format: z.string().optional(),
+  frequency: z.string().optional(),
+  isActive: z.boolean().optional(),
+  key: z.string().min(1),
+  name: z.string().optional(),
+  sport: z.string().optional(),
+});
+
+export type AdminLeaguePatchFormValues = z.infer<typeof adminLeaguePatchSchema>;
+
 export const adminCreateUserSchema = z.object({
   email: z.email("Please enter a valid email address"),
   name: z.string().min(2, "Name must be at least 2 characters"),

@@ -10,9 +10,9 @@ interface RoomGridProps {
 
 // [PENDING_CONTENT] — Room types, counts, and amenities from manager
 const ROOMS_FALLBACK: BookingConfigRoom[] = [
-  { capacity: null, name: "Standard Room", type: "Standard" },
-  { capacity: null, name: "Deluxe Room", type: "Deluxe" },
-  { capacity: null, name: "Suite", type: "Suite" },
+  { _key: "standard", capacity: null, name: "Standard Room", type: "Standard" },
+  { _key: "deluxe", capacity: null, name: "Deluxe Room", type: "Deluxe" },
+  { _key: "suite", capacity: null, name: "Suite", type: "Suite" },
 ];
 
 const AMENITIES_PLACEHOLDER = ["[PENDING_CONTENT] — Amenities list"];
