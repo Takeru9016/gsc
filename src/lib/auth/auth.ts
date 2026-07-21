@@ -14,6 +14,12 @@ export const auth = betterAuth({
     requireEmailVerification: false,
   },
   plugins: [admin()],
+  rateLimit: {
+    customRules: {
+      "/sign-in/email": { max: 5, window: 60 * 15 },
+    },
+    enabled: true,
+  },
   session: {
     cookieCache: {
       enabled: true,

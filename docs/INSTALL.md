@@ -77,6 +77,19 @@ pnpm add react-pdf @react-pdf/renderer
 pnpm add react-hook-form @hookform/resolvers zod
 ```
 
+### Auth — Better Auth (Admin Dashboard)
+```bash
+pnpm add better-auth
+```
+
+After `lib/auth/auth.ts` is configured with the Drizzle adapter, generate the auth
+tables (user, session, account, verification) into the Drizzle schema:
+```bash
+pnpm dlx @better-auth/cli generate --output lib/auth/schema.ts
+```
+Then run `pnpm db:push` (dev) or `pnpm db:generate && pnpm db:migrate` (production)
+to apply the generated tables to Neon.
+
 ---
 
 ## Step 3 — Dev Dependencies
@@ -234,6 +247,7 @@ react-pdf
 react-hook-form
 @hookform/resolvers
 zod
+better-auth
 ```
 
 ### devDependencies

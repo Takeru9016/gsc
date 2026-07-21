@@ -184,16 +184,16 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 [x] ADMIN-06  Content Management: Achievements + Dining + Banquets
 [x] ADMIN-07  Content Management: Membership + Downloads + Settings
 [x] ADMIN-08  User Management — admin-only, create/edit role/revoke/delete
-[ ] ADMIN-09  Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
+[x] ADMIN-09  Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
 ```
 
 ---
 
 ## Active Task
 
-**Current Phase**: Phase ADMIN — Admin Dashboard (see `prompts/ADMIN_DASHBOARD.md`)
-**Active Task**: ADMIN-09 — Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
-**Last Completed**: ADMIN-08 — User Management — admin-only, create/edit role/revoke/delete
+**Current Phase**: None — all defined phases complete (Phase 1A, 1B, 2, 3, and Phase ADMIN)
+**Active Task**: None — no further tasks defined in `docs/PHASES.md` or `prompts/ADMIN_DASHBOARD.md`
+**Last Completed**: ADMIN-09 — Protect All Admin API Routes + Final Wiring — session guard audit, rate limiting, security headers
 
 > Update this section when running /done after each task.
 
@@ -244,6 +244,12 @@ CLOUDINARY_UPLOAD_PRESET=       # unsigned preset for achievement uploads
 
 # App
 NEXT_PUBLIC_SITE_URL=https://gsc.in
+
+# Better Auth (Admin Dashboard)
+BETTER_AUTH_SECRET=             # generate: openssl rand -base64 32
+BETTER_AUTH_URL=                # production admin panel URL, e.g. https://gsc.in
+ADMIN_EMAIL=                    # seed script — first admin user
+ADMIN_PASSWORD=                 # seed script — first admin user
 ```
 
 ---
