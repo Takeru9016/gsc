@@ -11,18 +11,21 @@ interface AffiliatedClubsListProps {
 // [PENDING_CONTENT] — real affiliated clubs from Sanity membershipConfig
 const DUMMY_CLUBS: AffiliatedClub[] = [
   {
+    _key: "dummy-1",
     location: "[PENDING_CONTENT]",
     logo: null,
     name: "[PENDING_CONTENT] — Affiliated Club 1",
     reciprocalBenefits: "[PENDING_CONTENT] — Reciprocal benefits.",
   },
   {
+    _key: "dummy-2",
     location: "[PENDING_CONTENT]",
     logo: null,
     name: "[PENDING_CONTENT] — Affiliated Club 2",
     reciprocalBenefits: "[PENDING_CONTENT] — Reciprocal benefits.",
   },
   {
+    _key: "dummy-3",
     location: "[PENDING_CONTENT]",
     logo: null,
     name: "[PENDING_CONTENT] — Affiliated Club 3",

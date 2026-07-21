@@ -20,6 +20,7 @@ export interface SiteConfigSocialLinks {
 }
 
 export interface CorporatePartner {
+  _key: string;
   logo: SanityImageSource | null;
   name: string;
   url: string | null;
@@ -33,6 +34,7 @@ export interface SiteConfig {
   emergencyPhone2: string;
   heroVideoUrl: string | null;
   phone: string;
+  phone2: string;
   siteName: string;
   socialLinks: SiteConfigSocialLinks;
   tagline: string;
@@ -48,6 +50,7 @@ const DEFAULT_SITE_CONFIG: SiteConfig = {
   emergencyPhone2: "[PENDING_CONTENT]",
   heroVideoUrl: null,
   phone: "[PENDING_CONTENT]",
+  phone2: "",
   siteName: "Goregaon Sports Club",
   socialLinks: {
     facebook: "#",
@@ -62,6 +65,7 @@ const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0]{
   siteName,
   tagline,
   phone,
+  phone2,
   email,
   address,
   emergencyPhone,
@@ -91,6 +95,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
       data?.emergencyPhone2 ?? DEFAULT_SITE_CONFIG.emergencyPhone2,
     heroVideoUrl: data?.heroVideoUrl ?? DEFAULT_SITE_CONFIG.heroVideoUrl,
     phone: data?.phone ?? DEFAULT_SITE_CONFIG.phone,
+    phone2: data?.phone2 ?? DEFAULT_SITE_CONFIG.phone2,
     siteName: data?.siteName ?? DEFAULT_SITE_CONFIG.siteName,
     socialLinks: {
       facebook:
@@ -614,6 +619,7 @@ export async function getMembershipTypeBySlug(
 // ─── membershipConfig ────────────────────────────────────────────────────────
 
 export interface AffiliatedClub {
+  _key: string;
   location: string;
   logo: SanityImageSource | null;
   name: string;
@@ -733,6 +739,32 @@ export interface Download {
   fileSize: string | null;
   publishedDate: string;
   title: string;
+}
+
+export interface AdminDownload {
+  _id: string;
+  category: string;
+  file: string;
+  fileSize: string | null;
+  isActive: boolean;
+  publishedDate: string;
+  title: string;
+}
+
+export async function getAllDownloadsAdmin(): Promise<AdminDownload[]> {
+  return await client.fetch<AdminDownload[]>(
+    `*[_type == "download"] | order(publishedDate desc) {
+      _id,
+      title,
+      category,
+      "file": file.asset->url,
+      fileSize,
+      publishedDate,
+      isActive
+    }`,
+    {},
+    { next: { tags: ["downloads"] } }
+  );
 }
 
 export async function getDownloads(category?: string): Promise<Download[]> {

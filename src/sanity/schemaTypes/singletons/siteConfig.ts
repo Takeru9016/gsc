@@ -28,6 +28,11 @@ export const siteConfig = defineType({
       type: "string",
     }),
     defineField({
+      name: "phone2",
+      title: "Phone (Secondary)",
+      type: "string",
+    }),
+    defineField({
       name: "email",
       title: "Email",
       type: "string",

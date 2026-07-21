@@ -97,6 +97,16 @@ export async function getAllBookings(): Promise<BookingInquiry[]> {
     .orderBy(desc(bookingInquiries.createdAt));
 }
 
+export async function getLatestMemberships(
+  limit = 10
+): Promise<MembershipInquiry[]> {
+  return await db
+    .select()
+    .from(membershipInquiries)
+    .orderBy(desc(membershipInquiries.createdAt))
+    .limit(limit);
+}
+
 export async function getAllMemberships(): Promise<MembershipInquiry[]> {
   return await db
     .select()

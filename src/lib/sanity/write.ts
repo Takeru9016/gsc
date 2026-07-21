@@ -31,3 +31,19 @@ export async function sanityDelete(id: string, tag: string) {
   await serverClient.delete(id);
   revalidateTag(tag, "max");
 }
+
+export async function getOrCreateSingletonId(
+  documentType: string,
+  tag: string
+): Promise<string> {
+  const existingId = await serverClient.fetch<string | null>(
+    "*[_type == $documentType][0]._id",
+    { documentType }
+  );
+  if (existingId) {
+    return existingId;
+  }
+  const created = await serverClient.create({ _type: documentType });
+  revalidateTag(tag, "max");
+  return created._id;
+}

@@ -260,3 +260,65 @@ export const adminAchievementCreateSchema = z.object({
 export type AdminAchievementCreateFormValues = z.infer<
   typeof adminAchievementCreateSchema
 >;
+
+export const adminMembershipConfigSchema = z.object({
+  enrollmentNotice: z.string().optional(),
+  enrollmentOpen: z.boolean(),
+});
+
+export type AdminMembershipConfigFormValues = z.infer<
+  typeof adminMembershipConfigSchema
+>;
+
+export const adminAffiliatedClubSchema = z.object({
+  location: z.string().min(1, "Location is required"),
+  name: z.string().min(2, "Name is required"),
+  reciprocalBenefits: z.string().optional(),
+});
+
+export type AdminAffiliatedClubFormValues = z.infer<
+  typeof adminAffiliatedClubSchema
+>;
+
+export const adminDownloadSchema = z.object({
+  category: z.enum(["Notice", "Circular", "Form", "Report"], {
+    error: "Please select a category",
+  }),
+  isActive: z.boolean(),
+  publishedDate: z.string().min(1, "Published date is required"),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+});
+
+export type AdminDownloadFormValues = z.infer<typeof adminDownloadSchema>;
+
+export const adminSiteConfigSchema = z.object({
+  address: z.string().optional(),
+  bookingEmail: z.string().optional(),
+  email: z.string().optional(),
+  emergencyPhone: z.string().optional(),
+  emergencyPhone2: z.string().optional(),
+  heroVideoUrl: z.string().optional(),
+  phone: z.string().optional(),
+  phone2: z.string().optional(),
+  siteName: z.string().min(2, "Site name is required"),
+  socialLinks: z
+    .object({
+      facebook: z.string().optional(),
+      instagram: z.string().optional(),
+      twitter: z.string().optional(),
+      youtube: z.string().optional(),
+    })
+    .optional(),
+  tagline: z.string().optional(),
+});
+
+export type AdminSiteConfigFormValues = z.infer<typeof adminSiteConfigSchema>;
+
+export const adminCorporatePartnerSchema = z.object({
+  name: z.string().min(2, "Partner name is required"),
+  url: z.string().optional(),
+});
+
+export type AdminCorporatePartnerFormValues = z.infer<
+  typeof adminCorporatePartnerSchema
+>;
