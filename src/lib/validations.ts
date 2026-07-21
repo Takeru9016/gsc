@@ -322,3 +322,14 @@ export const adminCorporatePartnerSchema = z.object({
 export type AdminCorporatePartnerFormValues = z.infer<
   typeof adminCorporatePartnerSchema
 >;
+
+export const adminCreateUserSchema = z.object({
+  email: z.email("Please enter a valid email address"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  role: z.enum(["admin", "staff"], {
+    error: "Please select a role",
+  }),
+});
+
+export type AdminCreateUserFormValues = z.infer<typeof adminCreateUserSchema>;

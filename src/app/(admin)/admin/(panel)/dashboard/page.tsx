@@ -23,19 +23,27 @@ import {
   getLatestEvents,
 } from "@/lib/sanity/queries.ts";
 
-export default async function AdminDashboardPage() {
+interface AdminDashboardPageProps {
+  searchParams: Promise<{ notice?: string }>;
+}
+
+export default async function AdminDashboardPage({
+  searchParams,
+}: AdminDashboardPageProps) {
   const [
     pendingCounts,
     contentCounts,
     latestBookings,
     latestContacts,
     latestEvents,
+    { notice },
   ] = await Promise.all([
     getSubmissionPendingCounts(),
     getDashboardContentCounts(),
     getLatestBookings(5),
     getLatestContacts(5),
     getLatestEvents(),
+    searchParams,
   ]);
 
   const submissionCards = [
@@ -98,6 +106,13 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-10">
+      {notice === "unauthorized" ? (
+        <div className="rounded-xl border border-accent-red/20 bg-accent-red/10 px-4 py-3 text-accent-red text-sm">
+          You don't have permission to view that page. Only admins can manage
+          users.
+        </div>
+      ) : null}
+
       <div>
         <h1 className="font-display font-semibold text-3xl">Dashboard</h1>
         <p className="mt-1 text-(--color-text-secondary) text-sm">

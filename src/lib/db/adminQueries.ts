@@ -1,4 +1,5 @@
-import { count, desc, eq } from "drizzle-orm";
+import { count, desc, eq, max } from "drizzle-orm";
+import { session as sessionTable } from "@/lib/auth/schema.ts";
 import { db } from "@/lib/db/index.ts";
 import {
   type AchievementSubmission,
@@ -135,4 +136,22 @@ export async function getAllAchievementSubmissions(): Promise<
     .select()
     .from(achievementSubmissions)
     .orderBy(desc(achievementSubmissions.createdAt));
+}
+
+export async function getLastSignInMap(): Promise<Record<string, Date>> {
+  const rows = await db
+    .select({
+      lastSignIn: max(sessionTable.createdAt),
+      userId: sessionTable.userId,
+    })
+    .from(sessionTable)
+    .groupBy(sessionTable.userId);
+
+  const map: Record<string, Date> = {};
+  for (const row of rows) {
+    if (row.lastSignIn) {
+      map[row.userId] = row.lastSignIn;
+    }
+  }
+  return map;
 }
