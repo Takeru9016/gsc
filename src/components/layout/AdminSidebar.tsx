@@ -1,18 +1,22 @@
 "use client";
 
 import {
+  BadgeCheck,
   Calendar,
   ChevronDown,
   Contact,
   DoorOpen,
   Download,
+  History,
   IdCard,
   Images,
   LayoutDashboard,
   Settings,
   ShieldCheck,
+  Soup,
   Swords,
   Trophy,
+  Users,
   UsersRound,
   UtensilsCrossed,
 } from "lucide-react";
@@ -41,8 +45,16 @@ const CONTENT_ITEMS: NavLeaf[] = [
   { href: "/admin/content/events", icon: Calendar, label: "Events" },
   { href: "/admin/content/achievements", icon: Images, label: "Achievements" },
   { href: "/admin/content/dining", icon: UtensilsCrossed, label: "Dining" },
+  { href: "/admin/content/food-stalls", icon: Soup, label: "Food Stalls" },
   { href: "/admin/content/banquets", icon: IdCard, label: "Banquets" },
+  { href: "/admin/content/committee", icon: Users, label: "Committee" },
+  { href: "/admin/content/milestones", icon: History, label: "Milestones" },
   { href: "/admin/content/membership", icon: IdCard, label: "Membership" },
+  {
+    href: "/admin/content/membership-types",
+    icon: BadgeCheck,
+    label: "Membership Types",
+  },
   {
     href: "/admin/content/booking-config",
     icon: DoorOpen,

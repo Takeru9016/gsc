@@ -354,6 +354,54 @@ export const adminLeaguePatchSchema = z.object({
 
 export type AdminLeaguePatchFormValues = z.infer<typeof adminLeaguePatchSchema>;
 
+export const adminCommitteeMemberSchema = z.object({
+  bio: z.string().optional(),
+  designation: z.string().min(1, "Designation is required"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  order: z.number().int().optional(),
+  role: z.enum(
+    ["founderMember", "promoterMember", "officeBearer", "governingCouncil"],
+    { error: "Please select a role" }
+  ),
+});
+
+export type AdminCommitteeMemberFormValues = z.infer<
+  typeof adminCommitteeMemberSchema
+>;
+
+export const adminMilestoneSchema = z.object({
+  description: z.string().min(1, "Description is required"),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+  year: z.number().int().min(1900).max(2100),
+});
+
+export type AdminMilestoneFormValues = z.infer<typeof adminMilestoneSchema>;
+
+export const adminFoodStallSchema = z.object({
+  cuisineType: z.string().optional(),
+  description: z.string().optional(),
+  isVeg: z.boolean(),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  order: z.number().int().optional(),
+});
+
+export type AdminFoodStallFormValues = z.infer<typeof adminFoodStallSchema>;
+
+export const adminMembershipTypeEditSchema = z.object({
+  benefits: z.string().min(1, "Benefits are required"),
+  eligibility: z.string().min(1, "Eligibility is required"),
+  eligibilityNote: z.string().optional(),
+  feeStructure: z.string().optional(),
+  isActive: z.boolean(),
+  order: z.number().int().optional(),
+  tagline: z.string().optional(),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+});
+
+export type AdminMembershipTypeEditFormValues = z.infer<
+  typeof adminMembershipTypeEditSchema
+>;
+
 export const adminCreateUserSchema = z.object({
   email: z.email("Please enter a valid email address"),
   name: z.string().min(2, "Name must be at least 2 characters"),

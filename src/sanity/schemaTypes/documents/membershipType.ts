@@ -55,6 +55,14 @@ export const membershipType = defineType({
       type: "boolean",
     }),
     defineField({
+      description:
+        'Yearly membership only — e.g. "Available to children and parents of Life Members, and senior citizens 65 years and above."',
+      hidden: ({ document }) => document?.type !== "yearly",
+      name: "eligibilityNote",
+      title: "Eligibility Note (Yearly only)",
+      type: "string",
+    }),
+    defineField({
       initialValue: 0,
       name: "order",
       title: "Order",

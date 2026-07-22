@@ -193,7 +193,7 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 
 **Current Phase**: None — all defined phases complete (Phase 1A, 1B, 2, 3, and Phase ADMIN)
 **Active Task**: None — no further tasks defined in `docs/PHASES.md` or `prompts/ADMIN_DASHBOARD.md`
-**Last Completed**: ADMIN-P1 — Booking Config + Leagues Config admin pages (ad-hoc, not in the original ADMIN tracker)
+**Last Completed**: ADMIN-P2 — Committee, Milestones, Food Stalls, and Membership Types admin pages (ad-hoc, not in the original ADMIN tracker)
 
 > Update this section when running /done after each task.
 
@@ -209,6 +209,15 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
   - New API routes: `api/admin/content/booking-config` (PATCH), `api/admin/content/leagues-config` (PATCH by league `_key`).
   - `lib/sanity/queries.ts`: added `_key` to `BookingConfigRoom`/`League` types (data was already returned by the existing `coalesce()` queries, just untyped).
   - Added `_key` to the `bookingConfig`/`leaguesConfig` fallback arrays in `components/sections/facilities/RoomGrid.tsx` and `app/(site)/events/leagues/page.tsx` to satisfy the now-required field — display behavior unchanged.
+  - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm biome check .` (0 errors).
+
+- **2026-07-22** — ADMIN-P2: Committee, Milestones, Food Stalls, and Membership Types admin pages (ad-hoc task, not part of the original `prompts/ADMIN_DASHBOARD.md` 9-task list):
+  - New pages: `/admin/content/committee` (+ `/new`, `/[id]`), `/admin/content/milestones` (+ `/new`, `/[id]`), `/admin/content/food-stalls` (+ `/new`, `/[id]`), `/admin/content/membership-types` (+ `/[type]`).
+  - New API routes: `api/admin/content/committee` (POST) + `[id]` (PATCH/DELETE/POST-upload), same shape for `milestones` and `food-stalls`; `api/admin/content/membership-types/[type]` (PATCH only — 5 fixed types, no create/delete).
+  - `sanity/schemaTypes/documents/membershipType.ts`: added `eligibilityNote` field (yearly-only, hidden in Studio otherwise).
+  - `lib/sanity/queries.ts`: added `order` to committee/membership-type queries, new `FoodStall` type + `getFoodStalls`/`getFoodStallById`, `getCommitteeMemberById`, `getMilestoneById`, `getMembershipTypeByType`.
+  - Image uploads (photo/image fields) go through Sanity `assets.upload` + `urlFor()`, not Cloudinary — the task brief's "Cloudinary" reference doesn't apply to Sanity `image`-typed fields; this matches every other image field already in the admin (sports, dining, achievements).
+  - Sidebar: added Committee, Milestones, Food Stalls, Membership Types nav items under Content.
   - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm biome check .` (0 errors).
 
 ---

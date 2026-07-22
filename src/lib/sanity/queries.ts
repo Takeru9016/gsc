@@ -211,21 +211,35 @@ export interface CommitteeMember {
   bio: string | null;
   designation: string;
   name: string;
+  order: number;
   photo: SanityImageSource | null;
   role: string;
 }
 
+const COMMITTEE_MEMBER_FIELDS = `
+  _id,
+  name,
+  designation,
+  role,
+  photo,
+  bio,
+  order
+`;
+
 export async function getCommitteeMembers(): Promise<CommitteeMember[]> {
   return await client.fetch<CommitteeMember[]>(
-    `*[_type == "committeeMember"] | order(order asc) {
-      _id,
-      name,
-      designation,
-      role,
-      photo,
-      bio
-    }`,
+    `*[_type == "committeeMember"] | order(order asc) { ${COMMITTEE_MEMBER_FIELDS} }`,
     {},
+    { next: { tags: ["committee"] } }
+  );
+}
+
+export async function getCommitteeMemberById(
+  id: string
+): Promise<CommitteeMember | null> {
+  return await client.fetch<CommitteeMember | null>(
+    `*[_type == "committeeMember" && _id == $id][0] { ${COMMITTEE_MEMBER_FIELDS} }`,
+    { id },
     { next: { tags: ["committee"] } }
   );
 }
@@ -240,17 +254,65 @@ export interface Milestone {
   year: number;
 }
 
+const MILESTONE_FIELDS = `
+  _id,
+  year,
+  title,
+  description,
+  image
+`;
+
 export async function getMilestones(): Promise<Milestone[]> {
   return await client.fetch<Milestone[]>(
-    `*[_type == "milestone"] | order(year desc) {
-      _id,
-      year,
-      title,
-      description,
-      image
-    }`,
+    `*[_type == "milestone"] | order(year desc) { ${MILESTONE_FIELDS} }`,
     {},
     { next: { tags: ["milestones"] } }
+  );
+}
+
+export async function getMilestoneById(id: string): Promise<Milestone | null> {
+  return await client.fetch<Milestone | null>(
+    `*[_type == "milestone" && _id == $id][0] { ${MILESTONE_FIELDS} }`,
+    { id },
+    { next: { tags: ["milestones"] } }
+  );
+}
+
+// ─── foodStall ───────────────────────────────────────────────────────────────
+
+export interface FoodStall {
+  _id: string;
+  cuisineType: string | null;
+  description: string | null;
+  image: SanityImageSource | null;
+  isVeg: boolean;
+  name: string;
+  order: number;
+}
+
+const FOOD_STALL_FIELDS = `
+  _id,
+  name,
+  description,
+  image,
+  cuisineType,
+  isVeg,
+  order
+`;
+
+export async function getFoodStalls(): Promise<FoodStall[]> {
+  return await client.fetch<FoodStall[]>(
+    `*[_type == "foodStall"] | order(order asc) { ${FOOD_STALL_FIELDS} }`,
+    {},
+    { next: { tags: ["dining"] } }
+  );
+}
+
+export async function getFoodStallById(id: string): Promise<FoodStall | null> {
+  return await client.fetch<FoodStall | null>(
+    `*[_type == "foodStall" && _id == $id][0] { ${FOOD_STALL_FIELDS} }`,
+    { id },
+    { next: { tags: ["dining"] } }
   );
 }
 
@@ -575,6 +637,7 @@ export interface MembershipTypeListItem {
   benefits: PortableTextBlock[] | null;
   eligibility: PortableTextBlock[] | null;
   isActive: boolean;
+  order: number;
   slug: string;
   tagline: string | null;
   title: string;
@@ -585,6 +648,10 @@ export interface MembershipTypeDetail extends MembershipTypeListItem {
   feeStructure: PortableTextBlock[] | null;
 }
 
+export interface MembershipTypeAdminDetail extends MembershipTypeDetail {
+  eligibilityNote: string | null;
+}
+
 const MEMBERSHIP_TYPE_LIST_FIELDS = `
   _id,
   type,
@@ -593,7 +660,8 @@ const MEMBERSHIP_TYPE_LIST_FIELDS = `
   tagline,
   isActive,
   eligibility,
-  benefits
+  benefits,
+  order
 `;
 
 export async function getMembershipTypes(): Promise<MembershipTypeListItem[]> {
@@ -613,6 +681,20 @@ export async function getMembershipTypeBySlug(
       feeStructure
     }`,
     { slug },
+    { next: { tags: ["membership"] } }
+  );
+}
+
+export async function getMembershipTypeByType(
+  type: string
+): Promise<MembershipTypeAdminDetail | null> {
+  return await client.fetch<MembershipTypeAdminDetail | null>(
+    `*[_type == "membershipType" && type == $type][0] {
+      ${MEMBERSHIP_TYPE_LIST_FIELDS},
+      feeStructure,
+      eligibilityNote
+    }`,
+    { type },
     { next: { tags: ["membership"] } }
   );
 }
