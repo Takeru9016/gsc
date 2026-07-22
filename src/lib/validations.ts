@@ -412,3 +412,54 @@ export const adminCreateUserSchema = z.object({
 });
 
 export type AdminCreateUserFormValues = z.infer<typeof adminCreateUserSchema>;
+
+export const adminBenefitEntrySchema = z.object({
+  value: z.string().min(1, "Cannot be empty"),
+});
+
+export const adminPartnershipOpportunitySchema = z.object({
+  benefits: z.array(adminBenefitEntrySchema),
+  description: z.string().optional(),
+  isHighlighted: z.boolean(),
+  order: z.number().int().optional(),
+  reachStats: z.string().optional(),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+});
+
+export type AdminPartnershipOpportunityFormValues = z.infer<
+  typeof adminPartnershipOpportunitySchema
+>;
+
+export const adminTeamSpiritEditionSchema = z.object({
+  adSpecs: z.string().optional(),
+  description: z.string().optional(),
+  edition: z.enum(["Summer", "Diwali", "NewYear"], {
+    error: "Please select an edition",
+  }),
+  editionName: z.string().min(2, "Edition name is required"),
+  publicationDate: z.string().optional(),
+  year: z.number().int().min(1990).max(2100),
+});
+
+export type AdminTeamSpiritEditionFormValues = z.infer<
+  typeof adminTeamSpiritEditionSchema
+>;
+
+export const adminAnnualReportSchema = z.object({
+  publishedDate: z.string().min(1, "Published date is required"),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+  year: z.string().min(1, "Year is required"),
+});
+
+export type AdminAnnualReportFormValues = z.infer<
+  typeof adminAnnualReportSchema
+>;
+
+export const adminLegalPageSchema = z.object({
+  content: z.string().min(1, "Content is required"),
+  metaDescription: z.string().optional(),
+  metaTitle: z.string().optional(),
+  title: z.string().min(2, "Title must be at least 2 characters"),
+});
+
+export type AdminLegalPageFormValues = z.infer<typeof adminLegalPageSchema>;

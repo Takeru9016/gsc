@@ -734,23 +734,41 @@ export interface PartnershipOpportunity {
   benefits: string[];
   description: PortableTextBlock[] | null;
   isHighlighted: boolean;
+  order: number;
   reachStats: string | null;
   title: string;
 }
+
+const PARTNERSHIP_OPPORTUNITY_FIELDS = `
+  _id,
+  title,
+  description,
+  reachStats,
+  "benefits": coalesce(benefits, []),
+  isHighlighted,
+  order
+`;
 
 export async function getPartnershipOpportunities(): Promise<
   PartnershipOpportunity[]
 > {
   return await client.fetch<PartnershipOpportunity[]>(
     `*[_type == "partnershipOpportunity"] | order(order asc) {
-      _id,
-      title,
-      description,
-      reachStats,
-      "benefits": coalesce(benefits, []),
-      isHighlighted
+      ${PARTNERSHIP_OPPORTUNITY_FIELDS}
     }`,
     {},
+    { next: { tags: ["partners"] } }
+  );
+}
+
+export async function getPartnershipOpportunityById(
+  id: string
+): Promise<PartnershipOpportunity | null> {
+  return await client.fetch<PartnershipOpportunity | null>(
+    `*[_type == "partnershipOpportunity" && _id == $id][0] {
+      ${PARTNERSHIP_OPPORTUNITY_FIELDS}
+    }`,
+    { id },
     { next: { tags: ["partners"] } }
   );
 }
@@ -769,20 +787,48 @@ export interface TeamSpiritEdition {
   year: number;
 }
 
+const TEAM_SPIRIT_EDITION_FIELDS = `
+  _id,
+  editionName,
+  edition,
+  year,
+  coverImage,
+  description,
+  publicationDate,
+  "pdfFile": pdfFile.asset->url,
+  adSpecs
+`;
+
 export async function getTeamSpiritEditions(): Promise<TeamSpiritEdition[]> {
   return await client.fetch<TeamSpiritEdition[]>(
     `*[_type == "teamSpiritEdition"] | order(publicationDate desc) {
-      _id,
-      editionName,
-      edition,
-      year,
-      coverImage,
-      description,
-      publicationDate,
-      "pdfFile": pdfFile.asset->url,
-      adSpecs
+      ${TEAM_SPIRIT_EDITION_FIELDS}
     }`,
     {},
+    { next: { tags: ["team-spirit"] } }
+  );
+}
+
+export async function getTeamSpiritEditionsAdmin(): Promise<
+  TeamSpiritEdition[]
+> {
+  return await client.fetch<TeamSpiritEdition[]>(
+    `*[_type == "teamSpiritEdition"] | order(year desc) {
+      ${TEAM_SPIRIT_EDITION_FIELDS}
+    }`,
+    {},
+    { next: { tags: ["team-spirit"] } }
+  );
+}
+
+export async function getTeamSpiritEditionById(
+  id: string
+): Promise<TeamSpiritEdition | null> {
+  return await client.fetch<TeamSpiritEdition | null>(
+    `*[_type == "teamSpiritEdition" && _id == $id][0] {
+      ${TEAM_SPIRIT_EDITION_FIELDS}
+    }`,
+    { id },
     { next: { tags: ["team-spirit"] } }
   );
 }
@@ -798,17 +844,33 @@ export interface AnnualReport {
   year: string;
 }
 
+const ANNUAL_REPORT_FIELDS = `
+  _id,
+  title,
+  year,
+  coverImage,
+  "pdfFile": pdfFile.asset->url,
+  publishedDate
+`;
+
 export async function getAnnualReports(): Promise<AnnualReport[]> {
   return await client.fetch<AnnualReport[]>(
     `*[_type == "annualReport"] | order(publishedDate desc) {
-      _id,
-      title,
-      year,
-      coverImage,
-      "pdfFile": pdfFile.asset->url,
-      publishedDate
+      ${ANNUAL_REPORT_FIELDS}
     }`,
     {},
+    { next: { tags: ["annual-reports"] } }
+  );
+}
+
+export async function getAnnualReportById(
+  id: string
+): Promise<AnnualReport | null> {
+  return await client.fetch<AnnualReport | null>(
+    `*[_type == "annualReport" && _id == $id][0] {
+      ${ANNUAL_REPORT_FIELDS}
+    }`,
+    { id },
     { next: { tags: ["annual-reports"] } }
   );
 }
@@ -881,18 +943,32 @@ export interface LegalPage {
   title: string;
 }
 
+const LEGAL_PAGE_FIELDS = `
+  _id,
+  title,
+  "slug": slug.current,
+  content,
+  lastUpdated,
+  metaTitle,
+  metaDescription
+`;
+
 export async function getLegalPage(slug: string): Promise<LegalPage | null> {
   return await client.fetch<LegalPage | null>(
     `*[_type == "legalPage" && slug.current == $slug][0] {
-      _id,
-      title,
-      "slug": slug.current,
-      content,
-      lastUpdated,
-      metaTitle,
-      metaDescription
+      ${LEGAL_PAGE_FIELDS}
     }`,
     { slug },
+    { next: { tags: ["legal"] } }
+  );
+}
+
+export async function getAllLegalPages(): Promise<LegalPage[]> {
+  return await client.fetch<LegalPage[]>(
+    `*[_type == "legalPage"] | order(title asc) {
+      ${LEGAL_PAGE_FIELDS}
+    }`,
+    {},
     { next: { tags: ["legal"] } }
   );
 }

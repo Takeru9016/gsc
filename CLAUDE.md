@@ -193,7 +193,7 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
 
 **Current Phase**: None — all defined phases complete (Phase 1A, 1B, 2, 3, and Phase ADMIN)
 **Active Task**: None — no further tasks defined in `docs/PHASES.md` or `prompts/ADMIN_DASHBOARD.md`
-**Last Completed**: ADMIN-P2 — Committee, Milestones, Food Stalls, and Membership Types admin pages (ad-hoc, not in the original ADMIN tracker)
+**Last Completed**: ADMIN-P3 — Partnership Opportunities, Team Spirit, Annual Reports, and Legal Pages admin pages (ad-hoc, not in the original ADMIN tracker)
 
 > Update this section when running /done after each task.
 
@@ -219,6 +219,16 @@ Defined in `prompts/ADMIN_DASHBOARD.md` — Better Auth + Sanity content managem
   - Image uploads (photo/image fields) go through Sanity `assets.upload` + `urlFor()`, not Cloudinary — the task brief's "Cloudinary" reference doesn't apply to Sanity `image`-typed fields; this matches every other image field already in the admin (sports, dining, achievements).
   - Sidebar: added Committee, Milestones, Food Stalls, Membership Types nav items under Content.
   - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm biome check .` (0 errors).
+
+- **2026-07-22** — ADMIN-P3: Partnership Opportunities, Team Spirit, Annual Reports, and Legal Pages admin pages (ad-hoc task, not part of the original `prompts/ADMIN_DASHBOARD.md` 9-task list):
+  - New pages: `/admin/content/partnerships` (+ `/new`, `/[id]`), `/admin/content/team-spirit` (+ `/new`, `/[id]`), `/admin/content/annual-reports` (+ `/new`, `/[id]`), `/admin/content/legal` (+ `/[slug]`, 3 fixed documents — no create/delete).
+  - New API routes: `api/admin/content/partnerships` (POST) + `[id]` (PATCH/DELETE); `api/admin/content/team-spirit` (POST) + `[id]` (PATCH/DELETE/POST-upload, field-discriminated `coverImage`/`pdfFile`); `api/admin/content/annual-reports` (POST) + `[id]` (PATCH/DELETE/POST-upload, same field-discriminated pattern); `api/admin/content/legal/[slug]` (PATCH only — resolves slug→`_id`, sets `lastUpdated` server-side).
+  - `lib/sanity/queries.ts`: added `order` to `PartnershipOpportunity` (was returned by the schema but not selected) + `getPartnershipOpportunityById`; `getTeamSpiritEditionsAdmin` (year desc, vs. the public query's publicationDate desc) + `getTeamSpiritEditionById`; `getAnnualReportById`; `getAllLegalPages`.
+  - `lib/validations.ts`: added `adminPartnershipOpportunitySchema` (benefits as `{value}[]` field-array, flattened to `string[]` server-side — same idiom as `adminBanquetHallEditSchema.setupOptions`), `adminTeamSpiritEditionSchema`, `adminAnnualReportSchema`, `adminLegalPageSchema`.
+  - PDF "Remove" (Team Spirit only — Annual Report's `pdfFile` is required in the schema so no remove action) is a special-cased PATCH body (`{ removePdfFile: true }`) handled before the normal Zod-validated patch, using `sanityPatch`'s existing `unset` param.
+  - `components/sections/partners/PartnershipOpportunitiesGrid.tsx`: added `order` to the 3 `[PENDING_CONTENT]` placeholder opportunities to satisfy the now-required field — display behavior unchanged.
+  - Sidebar restructured into two groups: Content (added Partnership Opportunities, Team Spirit, Annual Reports, Legal Pages) and a new Config group (Booking Config, Leagues, Membership Config, Site Settings) with a divider, per the task's full sidebar spec.
+  - Verified clean: `pnpm tsc --noEmit` (0 errors), `pnpm dlx ultracite check` (371 files, 0 issues).
 
 ---
 

@@ -2,15 +2,19 @@
 
 import {
   BadgeCheck,
+  BookOpen,
   Calendar,
   ChevronDown,
   Contact,
   DoorOpen,
   Download,
+  FileText,
+  Handshake,
   History,
   IdCard,
   Images,
   LayoutDashboard,
+  Scale,
   Settings,
   ShieldCheck,
   Soup,
@@ -44,25 +48,52 @@ const CONTENT_ITEMS: NavLeaf[] = [
   { href: "/admin/content/sports", icon: Trophy, label: "Sports" },
   { href: "/admin/content/events", icon: Calendar, label: "Events" },
   { href: "/admin/content/achievements", icon: Images, label: "Achievements" },
-  { href: "/admin/content/dining", icon: UtensilsCrossed, label: "Dining" },
-  { href: "/admin/content/food-stalls", icon: Soup, label: "Food Stalls" },
-  { href: "/admin/content/banquets", icon: IdCard, label: "Banquets" },
   { href: "/admin/content/committee", icon: Users, label: "Committee" },
   { href: "/admin/content/milestones", icon: History, label: "Milestones" },
-  { href: "/admin/content/membership", icon: IdCard, label: "Membership" },
+  {
+    href: "/admin/content/dining",
+    icon: UtensilsCrossed,
+    label: "Dining Venues",
+  },
+  { href: "/admin/content/food-stalls", icon: Soup, label: "Food Stalls" },
+  { href: "/admin/content/banquets", icon: IdCard, label: "Banquet Halls" },
   {
     href: "/admin/content/membership-types",
     icon: BadgeCheck,
     label: "Membership Types",
   },
   {
+    href: "/admin/content/partnerships",
+    icon: Handshake,
+    label: "Partnership Opportunities",
+  },
+  {
+    href: "/admin/content/team-spirit",
+    icon: BookOpen,
+    label: "Team Spirit",
+  },
+  {
+    href: "/admin/content/annual-reports",
+    icon: FileText,
+    label: "Annual Reports",
+  },
+  { href: "/admin/content/downloads", icon: Download, label: "Downloads" },
+  { href: "/admin/content/legal", icon: Scale, label: "Legal Pages" },
+];
+
+const CONFIG_ITEMS: NavLeaf[] = [
+  {
     href: "/admin/content/booking-config",
     icon: DoorOpen,
     label: "Booking Config",
   },
   { href: "/admin/content/leagues-config", icon: Swords, label: "Leagues" },
-  { href: "/admin/content/downloads", icon: Download, label: "Downloads" },
-  { href: "/admin/content/settings", icon: Settings, label: "Settings" },
+  {
+    href: "/admin/content/membership",
+    icon: IdCard,
+    label: "Membership Config",
+  },
+  { href: "/admin/content/settings", icon: Settings, label: "Site Settings" },
 ];
 
 const SUBMISSION_ITEMS: NavLeaf[] = [
@@ -215,6 +246,13 @@ export function AdminSidebar({ isAdmin, pendingCounts }: AdminSidebarProps) {
           defaultOpen
           items={CONTENT_ITEMS}
           label="Content"
+          pendingCounts={pendingCounts}
+        />
+
+        <NavGroup
+          defaultOpen
+          items={CONFIG_ITEMS}
+          label="Config"
           pendingCounts={pendingCounts}
         />
 
