@@ -275,13 +275,19 @@ Build the complete Sanity CMS setup. Read docs/SANITY_CMS.md and docs/spec/SCHEM
 8. sanity/schemaTypes/index.ts — export all types array
 
 9. lib/sanity/queries.ts — write ALL GROQ query functions:
-   getSiteConfig, getSports, getSportBySlug, getCommitteeMembers,
+   getAboutPage, getSiteConfig, getBookingConfig,
+   getSports, getSportBySlug, getCommitteeMembers,
    getMilestones, getAchievements, getEvents, getEventBySlug,
    getBanquetHalls, getBanquetHallBySlug, getDiningVenues, getDiningVenueBySlug,
-   getMembershipTypes, getMembershipTypeBySlug, getMembershipConfig,
+   getFoodStalls, getMembershipTypes, getMembershipTypeBySlug, getMembershipConfig,
    getPartnershipOpportunities, getTeamSpiritEditions, getAnnualReports,
    getDownloads, getLegalPage, getLeaguesConfig
    Each function: typed return, ISR tag (see SANITY_CMS.md cache tag table)
+
+   Key query implementations:
+   getAboutPage(): fetch *[_type=="aboutPage"][0] { historyText, historyImage, byeLawsPdfUrl, byeLawsUpdatedAt } with tag 'about-page'
+   getBookingConfig(): fetch *[_type=="bookingConfig"][0] { bookingEmail, responseTime, rooms } with tag 'booking-config'
+   getFoodStalls(): fetch *[_type=="foodStall"] | order(order asc) { _id, name, description, cuisineType, isVeg, image, order } with tag 'food-stalls'
 
 Done when: pnpm dev → /studio loads without errors. All document types visible in desk.
 ```

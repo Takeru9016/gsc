@@ -81,13 +81,16 @@ Task 1B-02 — About Page.
 
 Build app/(site)/about/page.tsx. Read docs/spec/PAGES.md § About.
 
-Data: fetch getMilestones() with ISR tag 'milestones'. Fetch getSiteConfig() from layout (prop-drilled or context).
+Data: fetch getAboutPage() with ISR tag 'about-page'. Fetch getMilestones() with ISR tag 'milestones'.
 
 Sections:
 
 1. PageHero — "About GSC" | subline: "30+ Years of Sporting Excellence in Mumbai"
 
-2. History & Legacy — 2-column (md): left = rich text placeholder (portableText from aboutPage singleton — use placeholder text for now, note [PENDING_CONTENT]), right = historic image placeholder. AnimatedText on text blocks.
+2. History & Legacy — 2-column (md): left = PortableTextRenderer(aboutPage.historyText), right = aboutPage.historyImage (urlFor).
+   If aboutPage.historyText is null: show [PENDING_CONTENT] placeholder paragraph.
+   If aboutPage.historyImage is null: show grey placeholder div with same aspect ratio.
+   AnimatedText on text blocks.
 
 3. Stats Bar — reuse StatsBar component from homepage. Same 4 stats.
 
@@ -149,12 +152,17 @@ Build TWO pages:
 
 PAGE 1: app/(site)/about/bye-laws/page.tsx
 
-Data: No Sanity fetch needed for content — PDF URL from siteConfig or hardcoded Cloudinary URL for now.
+Data: fetch getAboutPage() with ISR tag 'about-page'.
 
 Sections:
 1. PageHero — "Club Bye-Laws" | "Official rules and governance of Goregaon Sports Club."
-2. PDFViewer component — URL: [PENDING_CONTENT] placeholder div. Show "PDF will be available here." until URL provided.
-   Build the PDFViewer component now at components/shared/PDFViewer.tsx per COMPONENT_SPECS.md.
+2. PDFViewer component — built at components/shared/PDFViewer.tsx per COMPONENT_SPECS.md.
+   URL source: aboutPage.byeLawsPdfUrl from Sanity.
+   If byeLawsPdfUrl is null: show placeholder card —
+     "Bye-laws document is being prepared. Contact us for a copy."
+     CTA → /contact | "Download Current Version" button (disabled state)
+   If byeLawsPdfUrl is set: render PDFViewer with the URL + Download button.
+   Show byeLawsUpdatedAt below viewer: "Last updated: [date]" in Body S muted text.
 3. Contact Block — "Questions about club rules?" | CTA → /contact
 
 ---

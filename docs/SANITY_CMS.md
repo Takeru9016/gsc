@@ -232,7 +232,9 @@ import { revalidateTag } from 'next/cache'
 
 // Map Sanity document types to ISR cache tags
 const TAG_MAP: Record<string, string> = {
+  aboutPage: 'about-page',          // /about, /about/bye-laws
   siteConfig: 'site-config',
+  bookingConfig: 'booking-config',  // /facilities/rooms, /booking
   sport: 'sports',
   committeeMember: 'committee',
   milestone: 'milestones',
@@ -240,6 +242,7 @@ const TAG_MAP: Record<string, string> = {
   event: 'events',
   banquetHall: 'banquets',
   diningVenue: 'dining',
+  foodStall: 'food-stalls',         // /facilities/dining/food-court
   membershipType: 'membership',
   membershipConfig: 'membership-config',
   partnershipOpportunity: 'partners',

@@ -136,6 +136,7 @@ Template for all 6 venues.
 
 generateStaticParams: all 6 venue slugs from getDiningVenues()
 Data: getDiningVenueBySlug(slug) | ISR tag 'dining'
+      If slug === 'food-court': also fetch getFoodStalls() | ISR tag 'food-stalls'
 notFound() if no match
 
 Sections:
@@ -151,9 +152,15 @@ Sections:
    If venue.hasBar && venue.barMenuPdf: second PDF viewer or link "Bar Menu"
    If no PDF: "Menu available at the venue."
 
-5. Gallery — image grid from venue.gallery array. If empty: 4 placeholder boxes.
+5. FOOD COURT ONLY — Food Stalls Grid (render if slug === 'food-court' and foodStalls.length > 0):
+   Heading: "What's Inside"
+   3-col (lg) / 2-col (md) / 1-col (sm) card grid
+   Each stall card: image (urlFor or placeholder), name, cuisineType, Veg/Non-Veg badge (isVeg)
+   If no food stall documents yet: show [PENDING_CONTENT] placeholder with 4 blank stall cards
 
-6. Hours & Info — operating hours table (day | hours), reservation info text
+6. Gallery — image grid from venue.gallery array. If empty: 4 placeholder boxes.
+
+7. Hours & Info — operating hours table (day | hours), reservation info text
 
 generateMetadata from venue.metaTitle / venue.metaDescription
 ```

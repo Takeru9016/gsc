@@ -6,8 +6,24 @@
 
 ## SANITY SCHEMAS
 
-### Singletons (4)
+### Singletons (5)
 Singletons are document types with a single instance. Locked in Sanity desk structure.
+
+---
+
+#### `aboutPage`
+About page content and bye-laws PDF. One document.
+
+```typescript
+{
+  _type: 'aboutPage',
+  _id: 'aboutPage',
+  historyText: portableText,       // Founding story, growth, legacy — rendered on /about
+  historyImage: image,             // Historic photo — right column on /about
+  byeLawsPdfUrl: string,           // Cloudinary URL of bye-laws PDF — shown on /about/bye-laws
+  byeLawsUpdatedAt: date,          // Last updated date shown to visitors
+}
+```
 
 ---
 
@@ -37,6 +53,7 @@ Global site configuration. One document, always exists.
     logo: image,
     url: string,
   },
+  // Note: byeLawsPdfUrl lives in aboutPage singleton, not here
   metaTitle: string,
   metaDescription: string,
   ogImage: image,
@@ -564,10 +581,13 @@ export const achievementSubmissions = pgTable('achievement_submissions', {
 
 | Sanity Document     | Cache Tag              | Revalidates                         |
 |---------------------|------------------------|-------------------------------------|
+| aboutPage           | `about-page`           | /about, /about/bye-laws             |
 | siteConfig          | `site-config`          | Footer, Navbar, Partners logos      |
+| bookingConfig       | `booking-config`       | /facilities/rooms, /booking         |
 | sport               | `sports`               | /sports, /sports/[slug]             |
 | committeeMember     | `committee`            | /about/team                         |
 | milestone           | `milestones`           | /about                              |
+| foodStall           | `food-stalls`          | /facilities/dining/food-court       |
 | achievement         | `achievements`         | /achievements                       |
 | event               | `events`               | /events, /events/[slug]             |
 | banquetHall         | `banquets`             | /facilities/banquets/[hall]         |
